@@ -1,256 +1,97 @@
--- my adonis anticheat bypass. not affiliated with TH3YU Hub
-local NamecallInstanceDetector = nil
-for Index, Table in getgc(true) do
-    if typeof(Table) ~= "table" then continue end
-    if not rawget(Table, "namecallInstance") then continue end
-    for SecondIndex, StackContainerTable in Table do
-        if typeof(StackContainerTable) ~= "table" then continue end
-        for ThirdIndex, Upvalues in StackContainerTable do
-            if StackContainerTable[ThirdIndex] ~= "kick" then continue end
-            if typeof(StackContainerTable[ThirdIndex + 1]) ~= "function" then continue end
-            local FrozenDetectionFunction = StackContainerTable[ThirdIndex + 1]
-            for _, DetectionIdentifier in getconstants(FrozenDetectionFunction) do
-                if DetectionIdentifier == "namecallInstance" then
-                    NamecallInstanceDetector = FrozenDetectionFunction
-                end
-            end
-        end
-    end
-end
-assert(NamecallInstanceDetector, "Error while finding anticheat.")
-hookfunction(NamecallInstanceDetector, function()
-    return false
-end)
-
--- this is tha actual TH3YU src
---TH3YU HUB
--- If u found this u can use it and leak it But dont take credits
--- U can use this script in any game u want but u cant claim it as its yours
--- Made by TYLERTEONE
--- Credits to REVIVE HUB
-
---[[local url = "https://discord.com/api/webhooks/1391432986842370109/EhyikddGKkjm91Hno2rVE2XoRYTPedz-MQRPeMiLo6dF0r-5MLhgerREK959TJb82ne6"
-local data = {
-    ["content"] = " ",
-    ["embeds"] = {
-        {
-            ["title"] = "**Someone Executed Th3yu Hub (Camp)** in: " .. game.PlaceId,
-            ["description"] = "",
-            ["type"] = "rich",
-            ["color"] = tonumber(0x7269da),
-            ["fields"] = {
-                {
-                    ["name"] = "PlaceID:",
-                    ["value"] = game.PlaceId,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Game Name:",
-                    ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Username:",
-                    ["value"] = game.Players.LocalPlayer.Name,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "HWID:",
-                    ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "JobID:",
-                    ["value"] = game.JobId,
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Executor:",
-                    ["value"] = identifyexecutor(),
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Version",
-                    ["value"] = "Luna",
-                    ["inline"] = false
-                }
-            }
-        }
-    }
-}
-local newdata = game:GetService("HttpService"):JSONEncode(data)
-local headers = {
-    ["content-type"] = "application/json"
-}
-request = http_request or request or HttpPost or syn.request
-local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-request(abcdef)]]
-
-local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/main/source.lua", true))()
+local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/master/source.lua", true))()
 
 local Window = Luna:CreateWindow({
-    Name = "REVIV3 HUB (Camp)", 
-    Subtitle = ".gg/jMXkSN57WF", 
-    LogoID = "82795327169782", 
-    LoadingEnabled = false, 
-    LoadingTitle = "T_T", 
-    LoadingSubtitle = "Total roblox drama script", 
-    ConfigSettings = {
-        RootFolder = nil, 
-        ConfigFolder = "Big Hub" 
-    },
-    KeySystem = false, 
-    KeySettings = {
-        Title = "Luna Example Key",
-        Subtitle = "Key System",
-        Note = "Best Key System Ever! Also, Please Use A HWID Keysystem like Pelican, Luarmor etc. that provide key strings based on your HWID since putting a simple string is very easy to bypass",
-        SaveInRoot = false, 
-        SaveKey = true, 
-        Key = {"Example Key"},
-        SecondAction = {
-            Enabled = true,
-            Type = "Link", 
-            Parameter = "" 
-        }
-    }
+	Name = "THY3U HUB", -- This Is Title Of Your Window
+	Subtitle = "by tylertenone ", -- A Gray Subtitle next To the main title.
+	LogoID = "82795327169782", -- The Asset ID of your logo. Set to nil if you do not have a logo for Luna to use.
+	LoadingEnabled = true, -- Whether to enable the loading animation. Set to false if you do not want the loading screen or have your own custom one.
+	LoadingTitle = "Welcome To Thy3u Hub!🎃", -- Header for loading screen
+	LoadingSubtitle = "by tylertenone", -- Subtitle for loading screen
+
+	ConfigSettings = {
+		RootFolder = nil, -- The Root Folder Is Only If You Have A Hub With Multiple Game Scripts and u may remove it. DO NOT ADD A SLASH
+		ConfigFolder = "thyeuhub" -- The Name Of The Folder Where Luna Will Store Configs For This Script. DO NOT ADD A SLASH
+	},
+
+	KeySystem = true, -- As Of Beta 6, Luna Has officially Implemented A Key System!
+	KeySettings = {
+		Title = "thy3uhubkey",
+		Subtitle = "KeySystem.",
+		Note = "key is subtotylertenone",
+		SaveInRoot = false, -- Enabling will save the key in your RootFolder (YOU MUST HAVE ONE BEFORE ENABLING THIS OPTION)
+		SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+		Key = {"subtotylertenone"}, -- List of keys that will be accepted by the system, please use a system like Pelican or Luarmor that provide key strings based on your HWID since putting a simple string is very easy to bypass
+		SecondAction = {
+			Enabled = true, -- Set to false if you do not want a second action,
+			Type = "Link", -- Link / Discord.
+			Parameter = "" -- If Type is Discord, then put your invite link (DO NOT PUT DISCORD.GG/). Else, put the full link of your key system here.
+		}
+	}
 })
 
 Window:CreateHomeTab({
-	SupportedExecutors = {"Solara", "Xeno", "Delta"}, -- A Table Of Executors Your Script Supports. Add strings of the executor names for each executor.
-	DiscordInvite = "jMXkSN57WF", -- The Discord Invite Link. Do Not Include discord.gg/ | Only Include the code.
+	SupportedExecutors = {}, -- A Table Of Executors Your Script Supports. Add strings of the executor names for each executor.
+	DiscordInvite = "1234", -- The Discord Invite Link. Do Not Include discord.gg/ | Only Include the code.
 	Icon = 1, -- By Default, The Icon Is The Home Icon. If You would like to change it to dashboard, replace the interger with 2
 })
 
-local Tab = Window:CreateTab({
-    Name = "Main 🏡"
-    Icon = "view_in_ar",
-    ImageSource = "Material",
-    ShowTitle = true 
+Luna:Notification({ 
+	Title = "You executed this script!",
+	Icon = "notifications_active",
+	ImageSource = "Material",
+	Content = "tested on, delta, fluxus codex etc."
 })
 
-Tab:CreateSection("Total Roblox Drama")
+local MakeTab = Window:CreateTab({
+	Name = "Info",
+	Icon = "notifications_active",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
 
+MakeTab:CreateSection("This script is inspired by Syla Hub! Also more features coming soon..")
 
+local MakeTab = Window:CreateTab({
+	Name = "Main",
+	Icon = "view_headline",
+	ImageSource = "Material",
+	ShowTitle = true -- This will determine whether the big header text in the tab will show
+})  
 
-local Button = Tab:CreateButton({
-    Name = "Auto Win Any Obby",
-    Description = "Win Any Obby", 
-    Callback = function()
-        if game.Workspace.Assets:FindFirstChild("Finish",true) then
+local Button = MakeTab:CreateButton({
+	Name = "Become Male (free)",
+	Description = "use this when u get voted out.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Gender",
+    [2] = "Male"
+}
+
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+    	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "AutoWin",
+	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+if game.Workspace.Assets:FindFirstChild("Finish",true) then
             local v = game.Workspace.Assets:FindFirstChild("Finish",true)
             v.CanCollide = false
             v.Transparency = 1
             wait()
             v.Position = game.Players.LocalPlayer.Character.Torso.Position
         end
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Auto Win Block Push",
-    Description = "Basically make you win :3", 
-    Callback = function()
-        for i, v in ipairs(workspace:GetDescendants()) do
-            if v:IsA("Part") and v.Name == "SingularBox" then
-                local distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-                if distance <= 100 then
-                    for i2, v2 in ipairs(workspace:GetDescendants()) do
-                        if v2:IsA("Part") and v2.Name == "Gold" then
-                            v.Position = v2.Position + Vector3.new(0, 3, 0)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Position + Vector3.new(0, 3, 0))
-                            break
-                        end
-                    end
-                    break
-                end
-            end
         end
-    end
 })
-
-
-local Button = Tab:CreateButton({
-    Name = "Eat The Pancake",
-    Description = "I will eat ur pancake if u press the button in the pancake challenge",
-    Callback = function()
-        for _, v in pairs(game.Workspace:GetDescendants()) do
-            if v:IsA("Model") and v.Name == game.Players.LocalPlayer.Name then
-                local clickDetector = v:FindFirstChild("ClickDetector")
-                if clickDetector then
-                    fireclickdetector(clickDetector)
-                    fireclickdetector(clickDetector)
-                end
-            end
-        end
-    end
-})
-
-local ExploiterDetection = Tab:CreateButton({
-    Name = "Detect The Skids (aka exploiters)",
-    Description = "Scans for exploiters :3",
-    Callback = function()
-        local Players = game:GetService("Players")
-        local detectedExploiters = {}
-
-        for _, player in pairs(Players:GetPlayers()) do
-            local character = player.Character or player.CharacterAdded:Wait()
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            local rootPart = character:FindFirstChild("HumanoidRootPart")
-            
-            if humanoid and rootPart then
-                -- Detect abnormal WalkSpeed or JumpPower values
-                if humanoid.WalkSpeed > 16 or humanoid.JumpPower > 50 then
-                    table.insert(detectedExploiters, player.Name .. " - Abnormal Movement")
-                end
-
-                -- Detect Teleportation (large sudden changes in position)
-                local lastPosition = rootPart.Position
-                wait(1) -- Short delay to compare positions
-                local currentPosition = rootPart.Position
-                local distanceTraveled = (currentPosition - lastPosition).Magnitude
-
-                if distanceTraveled > 100 then -- Arbitrary threshold for teleportation detection
-                    table.insert(detectedExploiters, player.Name .. " - Teleportation")
-                end
-            end
-        end
-
-        if #detectedExploiters > 0 then
-            print("Potential Exploiters Detected:")
-            for _, exploiter in pairs(detectedExploiters) do
-                print(exploiter)
-            end
-        else
-            print("No exploiters detected..")
-        end
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Break Spleef.",
-    Description = "Removes all the spleef blocks.", 
-    Callback = function()
-        for i,v in pairs(game.Workspace.Assets:GetDescendants()) do
-			if v.Name == "SpleefPart" then 
-				firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
-			end
-		end
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Kill Everybody",
-    Description = "Jusk kill everyone and also.. please dont use shiftlock when u press the button", 
-    Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/eMsKX4nF"))()
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Get The Immunity Idol",
-    Description = "You will get the idol :D", 
-    Callback = function()
-        for i, v in pairs(workspace.Idols:GetDescendants()) do
+local Button = MakeTab:CreateButton({
+	Name = "Get Safety Statue",
+	Description = "you will get safety statue!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         for i, v in pairs(workspace.Idols:GetDescendants()) do
             if v.Name == "Bag" then
                 v.hit.Transparency = 1
                 v.hit.CanCollide = false
@@ -268,36 +109,14 @@ local Button = Tab:CreateButton({
             end
         end
     end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Reset The Day",
-    Description = "Resets the day by sending blocks and bugs", 
-    Callback = function()
-        for i = 1, 100 do
-            local buggyPart = Instance.new("Part")
-            buggyPart.Name = "BuggedPart_" .. tostring(i)
-            buggyPart.Size = Vector3.new(1, 1, 1)
-            buggyPart.Position = Vector3.new(math.random(-100, 100), math.random(0, 50), math.random(-100, 100))
-            buggyPart.Parent = workspace
-
-            pcall(function()
-                buggyPart.CFrame = nil
-            end)
-
-            warn("Bug #" .. i .. " introduced!")
-        end
-
-        print("Workspace flooded with bugs")
-    end
-})
-
-local Toggle = Tab:CreateToggle({
-    Name = "Auto-Win Math Mania",
-    Description = "So yeah",
-    CurrentValue = false,
-    Callback = function(Value)
-        local number = 0
+   
+  })  
+  
+local Button = MakeTab:CreateButton({
+	Name = "Math Mania!",
+	Description = "when u click on this button it makes u win math mania! :D", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         local number = 0
 
         for i = 1, 10 do
             task.wait()
@@ -337,15 +156,15 @@ local Toggle = Tab:CreateToggle({
             end
         end
     end
-}, "Toggle")
-
-
-local Toggle = Tab:CreateToggle({
-    Name = "Auto get Coins and Gems",
-    Description = nil,
-    CurrentValue = false,
-    Callback = function(Value)
-        collectcoinsloop = Value
+   
+})  
+  
+local Toggle = MakeTab:CreateToggle({
+	Name = "Get all coins and gems",
+	Description = "get all gems and coins to win automatically. ",
+	CurrentValue = false,
+    	Callback = function(Value)
+       collectcoinsloop = Value
         while collectcoinsloop == true do
             task.wait(0.00001)
             for i, v in pairs(workspace:GetDescendants()) do
@@ -361,14 +180,15 @@ local Toggle = Tab:CreateToggle({
             end
         end
     end
-}, "Toggle")
-
-local Toggle = Tab:CreateToggle({
-    Name = "Notify Votes",
-    Description = "Notifies you :D",
-    CurrentValue = false,
-    Callback = function(Value)
-        if Value then
+   
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps  
+  
+ local Toggle = MakeTab:CreateToggle({
+	Name = "Notify Votes",
+	Description = "u will get notified who voted who.",
+	CurrentValue = false,
+    	Callback = function(Value)
+   if Value then
             if not _G.VoteConnection then
                 _G.VoteConnection = game.ReplicatedStorage.Season.Voting.Votes.ChildAdded:Connect(function(v)
                     local PlayerVoted = game.ReplicatedStorage.Season.Players[v.Value].Value
@@ -389,325 +209,114 @@ local Toggle = Tab:CreateToggle({
             end
         end
     end
-}, "Toggle")
-
-local ToggleConnection
-
-local Toggle = Tab:CreateToggle({
-    Name = "Notify who got Statue",
-    Description = "So yeah",
-    CurrentValue = false,
-    Callback = function(Value)
-        -- Disconnect previous connection if it exists
-        if ToggleConnection then
-            ToggleConnection:Disconnect()
-            ToggleConnection = nil
-        end
-
-        -- Only create the event if the toggle is enabled
-        if Value then
-            ToggleConnection = game:GetService("ReplicatedStorage").Season.Twists.Idol:GetPropertyChangedSignal("Value"):Connect(function()
-                local idolValue = game:GetService("ReplicatedStorage").Season.Twists.Idol.Value
-                
-                if idolValue and game.ReplicatedStorage.Season.Players:FindFirstChild(idolValue) then
-                    local PlayerPicked2 = game.ReplicatedStorage.Season.Players[idolValue].Value
-                    local SEND2 = PlayerPicked2 .. " got the statue!"
-                    
-                    Luna:Notification({
-                        Title = "Votes",
-                        Icon = "notifications_active",
-                        ImageSource = "Material",
-                        Content = SEND2
-                    })
-                end
-            end)
-        end
+    
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps  
+  
+local Button = MakeTab:CreateButton({
+	Name = "Break Spleef",
+	Description = "break spleef by making the spleef blocks disappear.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+          for i,v in pairs(game.Workspace.Assets:GetDescendants()) do
+			if v.Name == "SpleefPart" then 
+				firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+			end
+		end
     end
-}, "Toggle")
-
-
-local connection -- Variable to store the event listener
-
-local Toggle = Tab:CreateToggle({
-    Name = "Expose Votes!!",
-    Description = "U can expose the votes!!!",
-    CurrentValue = false,
-    Callback = function(Value)
-        if Value == true then
-            -- Prevent multiple connections
-            if connection then
-                connection:Disconnect()
-                connection = nil
-            end
-            
-            -- Create the event connection and store it
-            connection = game.ReplicatedStorage.Season.Voting.Votes.ChildAdded:Connect(function(v)
-                if Value then -- Check if toggle is still on
-                    local PlayerVoted = game.ReplicatedStorage.Season.Players[v.Value].Value
-                    local PlayerPicked = game.ReplicatedStorage.Season.Players[v.Name].Value
-                    local SEND = PlayerVoted .. " voted for " .. PlayerPicked
-                    local A_1 = SEND
-                    local A_2 = "All"
-                    local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-                    Event:FireServer(A_1, A_2)
+    
+})  
+  
+ local Button = MakeTab:CreateButton({
+	Name = "Win BlockPush!",
+	Description = "win blockpush! :3", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        for i, v in ipairs(workspace:GetDescendants()) do
+            if v:IsA("Part") and v.Name == "SingularBox" then
+                local distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                if distance <= 100 then
+                    for i2, v2 in ipairs(workspace:GetDescendants()) do
+                        if v2:IsA("Part") and v2.Name == "Gold" then
+                            v.Position = v2.Position + Vector3.new(0, 3, 0)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Position + Vector3.new(0, 3, 0))
+                            break
+                        end
+                    end
+                    break
                 end
-            end)
-        else
-            -- Toggle is turned off, disconnect the event
-            if connection then
-                connection:Disconnect()
-                connection = nil
             end
         end
-    end
-}, "Toogle")
-
-
-local Tab = Window:CreateTab({
-    Name = "Misc",
-    Icon = "add_to_home_screen",
-    ImageSource = "Material",
-    ShowTitle = true
+    
+    	end
 })
 
-Tab:CreateSection("Kewl New Stuff :)")
-
-local Input = Tab:CreateInput({
-	Name = "Buy Character",
-	Description = "Doesnt need to be a real character",
-	PlaceholderText = "Bypasses ChatFilter",
+local Input = MakeTab:CreateInput({
+	Name = "Become Anything",
+	Description = "become anything if u type in the chatbox",
+	PlaceholderText = "BypassesChatFilter",
 	CurrentValue = "", -- the current text
 	Numeric = false, -- When true, the user may only type numbers in the box (Example walkspeed)
 	MaxCharacters = nil, -- if a number, the textbox length cannot exceed the number
 	Enter = true, -- When true, the callback will only be executed when the user presses enter.
-    	Callback = function(Value)
-            local args = {
+    	Callback = function(Text)
+ local args = {
                 [1] = "Character",
                 [2] = Value
               }
               game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
-      
     	end
 }, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
-local Button = Tab:CreateButton({
-    Name = "Remove Barriers",
-    Description = "Remove invisible walls", -- Description fixed
-    Callback = function()
-        for i, v in pairs(workspace:GetDescendants()) do
-            if v.Name == "Glass" then
-                v:Destroy()
-            end
-        end
-    end
+local Button = MakeTab:CreateButton({
+	Name = "Kill Everbody In SwordFight",
+	Description = "kill everyone in sword fight..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+ loadstring(game:HttpGet("https://pastebin.com/raw/eMsKX4nF"))()
+    	end
 })
 
-
-local Button = Tab:CreateButton({
-    Name = "Breaks the sound",
-    Description = "A cool Sound Break Suggested by: chybamaksnwm", 
-    Callback = function()
-        loadstring(game:HttpGet('https://pastebin.com/raw/VRiAmLra'))() 
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Infinite Yield",
-    Description = "wow super cool infiniteyield !!!!!!1!!", 
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source", true))()
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "See everyone's usernames",
-    Description = "Sees Username on their Head", 
-    Callback = function()
-        for i,v in pairs(game.Workspace:GetDescendants()) do
-            if v.ClassName == "TextLabel" then
-                local currenttextright = v.Text
-                task.wait()
-                v.Text = v.Text.. " ("..v.Parent.Parent.Parent.Parent.Name..")"
-            end
-        end
-
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Chat spy",
-    Description = "Sees teamers", 
-    Callback = function()
-        enabled = true
---if true will check your messages too
-spyOnMyself = true
---if true will chat the logs publicly (fun, but kinda risky)
-public = false --this has to BE ON TRUE OR YOU CANT BYPASS CHAT it makes /e visible to everyon
---if true will use /me to stand out
-publicItalics = false
---customize private logs
-privateProperties = {
-    Color = Color3.fromRGB(0,255,255); 
-    Font = Enum.Font.SourceSansBold;
-    TextSize = 18;
+local Button = MakeTab:CreateButton({
+	Name = "become female",
+	Description = "become gender female and use after u got voted out.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Gender",
+    [2] = "Female"
 }
---////////////////////////////////////////////////////////////////
-local StarterGui = game:GetService("StarterGui")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local saymsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
-local getmsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("OnMessageDoneFiltering")
-local instance = (_G.chatSpyInstance or 0) + 1
-_G.chatSpyInstance = instance
- 
-local function onChatted(p,msg)
-    if _G.chatSpyInstance == instance then
-        if p==player and msg:lower():sub(1,4)=="+spy" then
-            enabled = not enabled
-            wait(0.3)
-            privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
-            StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
-        elseif enabled and (spyOnMyself==true or p~=player) then
-            msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ')
-            local hidden = true
-            local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
-                if packet.SpeakerUserId==p.UserId and packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All" or (channel=="Team" and public==false and Players[packet.FromSpeaker].Team==player.Team)) then
-                    hidden = false
-                end
-            end)
-            wait(1)
-            conn:Disconnect()
-            if hidden and enabled then
-                if public then
-                    saymsg:FireServer((publicItalics and "/me " or '').."{SPY} [".. p.Name .."]: "..msg,"All")
-                else
-                    privateProperties.Text = "{SPY} [".. p.Name .."]: "..msg
-                    StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
-                end
-            end
-        end
-    end
-end
- 
-for _,p in ipairs(Players:GetPlayers()) do
-    p.Chatted:Connect(function(msg) onChatted(p,msg) end)
-end
-Players.PlayerAdded:Connect(function(p)
-    p.Chatted:Connect(function(msg) onChatted(p,msg) end)
-end)
-privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
-StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
-local chatFrame = player.PlayerGui.Chat.Frame
-chatFrame.ChatChannelParentFrame.Visible = true
-chatFrame.ChatBarParentFrame.Position = chatFrame.ChatChannelParentFrame.Position+UDim2.new(UDim.new(),chatFrame.ChatChannelParentFrame.Size.Y)
-    end
+
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+    	end
 })
 
-local Button = Tab:CreateButton({
-    Name = "Shaders",
-    Description = "Cool", -- Description fixed
-    Callback = function()
-        loadstring(game:HttpGet(('https://pastebin.com/raw/uqD7VqQU'), true))()
-    end
+local Button = MakeTab:CreateButton({
+	Name = "Become System",
+	Description = "become a system in the game files (with )", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Character",
+    [2] = "UsageService"
+}
+
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+    	end
 })
 
+local Button = MakeTab:CreateButton({
+	Name = "Become Mojo!!",
+	Description = "become mojo", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Character",
+    [2] = "Mojo"
+}
 
-local Button = Tab:CreateButton({
-    Name = "Comeback for free as Female!!",
-    Description = "Free Comeback", -- Description fixed
-    Callback = function()
-        local args = {
-            [1] = "Gender",
-            [2] = "Female"
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
-    end
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+    	end
 })
-
-local Button = Tab:CreateButton({
-    Name = "Comeback for free as Male!",
-    Description = "Free Comeback", -- Description fixed
-    Callback = function()
-        local args = {
-            [1] = "Gender",
-            [2] = "Male"
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
-    end
-})
-
-
-
-local Tab = Window:CreateTab({
-    Name = "Teleports 🎀😍",
-    Icon = "airplay",
-    ImageSource = "Material",
-    ShowTitle = true -- This will determine whether the big header text in the tab will show
-})
-
-Tab:CreateSection("The teleports of CAMP")
-
-local Button = Tab:CreateButton({
-    Name = "House",
-    Description = "Teleports u", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(134, -20.7499866, -439.449951, 0.529884458, -0, -0.848069847, 0, 1, -0, 0.848069847, 0, 0.529884458)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Dock",
-    Description = "Teleports u to it", -- Description fixed
-    Callback = function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62, -15, -306)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Voting Area",
-    Description = "Teleports u", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32, 101, -501)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Confesionals",
-    Description = "Teleports u to it", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(308, -9, -327)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Challenge Area",
-    Description = "Teleports u", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(135, -4, -204)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Exile",
-    Description = "Teleports u to it", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-114, -8, -150)
-    end
-})
-
-local Button = Tab:CreateButton({
-    Name = "Spectator Island",
-    Description = "Teleports u", -- Description fixed
-    Callback = function()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2, -7, 20)
-    end
-})
-
-
-local Button = Tab:CreateButton({
-    Name = "Comeback As A Crash Name (60 COINS)",
-    Description = "A Big Comeback", -- Description fixed
-    Callback = function()
-        local args = {
-            [1] = "Character",
-            [2] = "Th3yu Hu Crashed The Fucking Server Cry About It Fucktards  &lt;̸̴̶̶̵̷̵̸̶̶̷̴̵̸̶̷̵̷̶̵̵̷̸̷̵̵̸̵̴̵̴̵̵̵̷̸̸̴̸̸̸̸̷̵̸̸̴̴̷̷̶̴̵̸̶̸̴̶̵̸̶̵̸̵̸̴̧̡̢̡̧̧̧̧̨̧̢̧̧̨̨̧̨̡̡̡̡̧̧̢̢̨̢̧̢̢̧̢̢̨̢̢̨̡̡̧̧̢̧̨̡̨̡̧̨̢̢̢̢̨̧̢̨̧̡̡̢̢̢̡̢̨̨̡̨̨̨̡̡̢̡̨̨̢̡̧̡̡̡̡̧̢̡̢̡̢̡̢̨̧̨̨̡̧̧̧̧̢̡̧̢̡̧̧̨̡̡̢̨̡̧̡̡̡̨̢̨̡̧̡̨̡̨̢̧̨̨̧̧̧̡̧̡̢̢̧̡̡̧̡̨̢̧̡̢̨̧̨̧̡̨̢̢̨̡̡̨̨̧̢̨̨̨̨̧̧̧̡̧̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛͍̟̺̻͍̖̻̯͎͍̞̖̮͚̫̩̻̯͈̱̯̖͎̪͚͖͔͎͍͍̥̖̮̣͚̦̤̗͚̭̺̜͈̫̝̱̪͚͙̪̜̦͇̲̲̳̠͕͍̰͕̱̙͎̝͔̩̦̱̳̺̫̥̪͈̪͖̙͙̗̳̳̣̤̥̻̯͔̳͔̻̤̦̺̦̼̳͖̦̖̭͇͓̘̯͍̝̯͙̙̠̣̲̼̠͓͔̱͓̻̞͚̻̱̮̻̤͎̳͙̩̼͍̱̩͚͎̗̺͎̙̘̹̪̞̯̜̩̰̲̹̫̹̺̯͔̻̙̬͖̦͉̮̩̞͉̞̘̳̩̙̰̠̠̹͍͓̝̤̪̳̞̭͓̻͎͇̥̩̮̙̳͚͓̭͉̙̲̣͇̯̖̝̜̣̦̱̘͔̲̬̫͚̮͕̭̺̝̦̠̩̝͖̯̥̣͉̫̰̱̦̟̗̥̫̗͈̱̬͙͎̪͓͔̰͈̖̘̟͎̱̦͔̹͕̞͙͇͕̣̟̲̲̰̹̠̫̻̬̟̞̮͓̬̩̝̦͍͔̳̬̞̰͔͙̥̣̻̩̘̱̲̙̤̠̪͎̬̻͚͕̜͈͈̰̳̻̤̜͚̣̤͇̭͈͇͓̠͚̖̱̙̭͇̱̤̝̟̰̯̫̬̣͔̮̼̬͕̥̱͖͓̺͓̹̳͍̜͕̞͕̺̺̯͖̜̘̲̺̣̫̘͍̣̭̬̹̘̪͎̭̟̟͚̲̭̻̱̣̥̥͉͈̼̰̮̞̺̼̰̭̬̫͇̪͇̦̩̯͔̲͙͉̱̗̥̺̹͙͉̲͚͇̺̲̼̙̝͍̗͉͖̳̖̠̯̠̜͕͔̭̹͕̞̤̭̘̰̹̼͇̦̝̣̺̦̩̳̬͙̭̩̱̣͙̣̪̲͇͈̥̺̪̳̞͔͍͕̹̱͕̗̺͖̟̠͈̼̼̝͈̪̳̥͓͕̟̖͎̣̩̠͇̞̫̞̟͎͔̺͓̼̘̲̤̟͎̲͉͚̟̟̘̠̺̥̲̘͕̩͎̲̜͎̞̤̹̫͓̙͕̟̗͓̥̪͎̜̭̫͔͈̣̗̬͉̖̰͍̼̫̺͇͓̘̥͖̤̬̪̰͚̹͇͉̣͎̯̰͇̪̝̘͈̯͙̹̳̮̩͕͇̰̬̲̟͙̭̤̬̱̬̱͙̘̥͚̯̩̞͉̦̹̲̹̻̯̜̯͈̤̙͉̫̣̝̭͇̖͈̜͚̩̮̙͇̭͓̼̺͙̩̞͇͔͚̲̗̟̣̹͕͔͓̭̩̻͉̥̦͚̼͉͍̱̫̣̺̭̭̙͍͎͉͓̱̺̲͖̣̥̯̜͇͙̮͓͔͕̟̱̰̩̰̳̗̫̲̤̯͙̤̩̦͓͙͚͎͓̘̠͚̪͖͎͕̰̥̱͖̦̻͍̥̮̺̰̳͚͎̩̮̭̤̹͇̝̪̭̭̰̟͚̣̱̦͇͎̹̟͔͍̖͓̘̲̞͎̼̘̙̺̳̘̮̼̺͖̭͉̱̲̥̱͍͖͉̥͕̼̤̫̱̙̦̘̥͎̹̺͍̝͕̻̖̹̞͉͍̲̪̦̥͖̝̗̗̦̭͓̗̲̤̠̹̦͇͍̱̣̟͖̥̤͈̜̼̦͔̖̻͔͉̖̞͎̝̘̟̟͔̦͙̬̥̳͕̻͇̰̜̺̫̺͍̮͓̳̥̼̰͙͍̳̟̟͖̱͓̦̫̤̞̣̫̱̩͕̠̻̺̩͖͎̤̘̞̹̺̙̻̲͔̝̫̭̙̹̦͚̦̱̝̥̳̘̮͔̘̺̩͈̣̬͉͔̰̰͕͓͕͍͉̤̝̫̗̞̖̯̖̗̫͓̞͈̠̩̹͉̤͕̰̦̜̮̝͉̲͍͚̻̺̪͓̘̜̘̬̖̬̜̹̥̥͔̙͙̟͕̣̖͉̹͍̝̮̪̼͇̣̠̹̬̪͎̪͙̱̣͈̗͕͓͓̥̱̱͚̲͓̮̞̤̝͕̦̞̩̝̫̖̼̝͖̗̜̳͓̰̞̞̻͙̖̺̦͇̦͓͚̜͇̼̞̺̮̭̰̗͕̘̙͎̘̰̗̼̩͔̗̠̱̱̣͓̲̠̦̼͍̦̹̻̼̝̬̖̳̮̬̮̖͙͇̩͎̜͚͖̹͙͙͎̙͕̱̫̘̮̬̥̙͖͖̜̩̪̺̙͎̜̩̳͉̲̺͔̝̖͔̞̮̝̯͕̹͍̲̰̲̥̭͖̗̳͚̥͓̲͎̼̮͖̖̤̣̭̳̩͎͓͇͓͎͇͚͚̫̠͎͙̗̜̥̲͍̪̻͔̼̺̰̖͇̪̲̖̼̩̫̖̝̹̥̺̬͔͍̤̩͓̠̜̟̪̠̩̬͓̩̤͍̟̗̺͈̰͔̘͉̼̭̯̤͚͓̩̝̖͔̜̤̤̱̜̗̯̫̳̯̖̣̹̻͔̝̜̘̩̠̲̜̺̤̼̱̠̬͖̲̼̬̳̠̜̪̗͙̬̪͖̥̰̦͎͓̩͍͎͈̙͈͍̜̠̠̳͚͙̺̟͔͖̖̲̟̳͙̺̤̙͔̣̥̣̫̳̬͖̺̥̺͙̤̬̤̤̟̲̰̞͔̺̠̦͚̩̠̞̱̩̩̼̖̳̭̹̞̩̠̘̟͍͎͍͖͈̩̺̲̝̼͎͖̤̩͇̦̻̣̗͚͓͉͚̯̻̹͕̣͈͓̠̘͉̮̜̰̟̥̞̭̩̱̖̟̳̣̣̞̗͚̝̦̖͖͓͈͓̼̖͈͇̻̭͍̰̖̯̫̞͈̭̦̤̠̼͈̘͚̠̬̠̤̤̱͎̲̫̮̣̤̲͇̯̼̥̼̤̝͙̪̠̩̞̻̹̞̰̦͍̰̦̗̜̜̥͓̼͙̝̠̮͉̙̤̤̟͚̰̣̻͙̱͙̮͖̲̞͓͈̟̪̥̣̩̞̭̭̱̬͓̻͕̬̩̘͇͇͉͔͍͔̱̝̼̜̘̜̗̻̮̘̣̯̬͎̣͓̬̗̦̺̦̹̩̲̪̝̺̮̪̻̲͖̺͎̖̻̞͙̝̹̺̙̱̗̪̙̣̍͊̂̓̅̓̀͒̓̔́͆̈́̔͆̔͑̑̈͑͐͒͆̄͆̾̓̇̓̓̎͗̏̇͂̋̀͑̃͊̈͗̑̃̇̇͆̿̌͊̐̄̍͛͗̉̋̂̌͗̽̀́͛̒́̊̒̒̿̀̿̾̔͒̒̎͌̽͛͊̅͊̊̂̾̅͗̀͌̀͑̓̀̓͗͗͒̿̔̔͊̿̌̂̈́̃̂̆̾͌̐̽̈̎̅͑̈́̏̇͆́̒͆̓̿̊̔͑̋̌͊̈́́̎́̈̐́̆͋̄͛͑̋́́̇́͂̏̔̒̊͒́̾͌͑͂̎͛̋̋̾̌̐̒̂̐́͋̈́͒͆̅͆̉̈́́̑̏͛̓̉̃̅̄͆̓͆̑͛̋̇͆̂̀̏̒͆̄̿̓́́̅̔́̄̎̄͆̋̈́͒̎͛̇̈́̐͊̌̇͒̆̄͗̈́͗͐́̆͑͗͂́̋͑͋̓͛̈̃́͂̈́̌̔̑̋͌͗̀̉̌̆̊̍́͆̿̀̀̂̆̄͂͐͐͊̊̍̔̽̽̅̍̑̃̾̀͊͊͆̒͑̄̂̉͑̀́͐̀͗̀́̂̄̔͗͊̔̋̔̑̑͊̀͌̇̎̈́́̀͛͒͛͛̌̽̆̒͛̉̀̔̌̀̾͛͋͒͒͊̉̾̽͊̑̉͋͒́͐͒͐̈́̈̒̊͛̾̃͋̋̏̏̀̇͑̓̐̂̒̏͗̈́͂̔̑̆̑̆̉̐͂̇̏̃̇̽̾͛̈́͑̄͛̾͋̋̓͋̿̿͒͑͐̂̒̈́͒̔͒̄̑͛̓̈́͌̇̉͐̒̄͂̑̽̃̑̀̓͑̇̉̆͌͗̄̈͑̒͆͆͒̄̾̿͌̀̏́̅͂̈́̌̏̌͛̏͐͛̅̈́̔̿̔̌͐̽͌̾̽͊̿͂̐̈́̄̀̈́̄̀̊̓͋̍̀͛̉͒͆̉̋̈́͑̀̐̓̀̓́̀̊͊̔̇́̏̄̈́̑̓̊̓̔́̌̿́̒̿̀̏̈́͐̄͋͐̀́̅́͛̀̌͆̾̐͆̂̓̈́̄̏̓͆̋̂́̑͊͗̐̾̆͋͐̋̒̀̈͂̃͌̔͐̓͗̉̋͗̂̾͐͑̀̑̇͐̈́̑̔͐͒̄̈͐͆̽̆͐̎̓̃͊͊͒̓̊͒̄͋̀̈́̆̍̉̆̐̔̊̍̏͗̍̍̊̎̒͆͒̂̆̈̎̓̔͌̅̍̒͗̀̎̈́̐͆̂͊̒̅̽̀͊͛̍͑̇̏̉̑̈́̊̓͑͒̀̂́̀̋͗̂̓͆̎́͊̾͆̊̍͊̌̈̾͂̓̃̄͒̐̊̽͒̈́̎͗̂̔̊͂̉͗̽̏̑̍̒̎͑͋̋̅͐͂̍̌͑̑͋̈́̅̿̈̽̃̆͆̏͑̾̑̃̎̈̑̒̾̌̈̿̾́̂͗̓̀̏͐̎̍̆̔́͒̓͊͌͋́̍̆̏͗̀̈́̍̈́̃͐͌͛̀̉̾̋̓̾̐́̓́̊̍͊͊́́̍͒̀̔͑̇͒̓̒̈́͊͗͑̆̏̀̈́̄̈́̿̎͌̽̐̇͊̌͒́́̆͐̎͌͒̌̐͋͋̈̄̇́̾͌͌̐͌̏̌̌̓̃̉̊́̆̉̔͌̀̇̒͗̃̔́̍͒͂̓̽̀̀͊̀́͌͊̉͗̈́͋͌͗̃̑̓̃̈́͒̔̈́̌͂́̽̒́̔̓̋́̄͗̑͋͐̌͛̀̋͌́̐̅̇̋̈̄̇͊̂̽̂̃͋͊͑̎̀̊͂́̉̀̌͌̀̂̿̑̾̂̓̏̅̃̆͑̐̋̎́͛̈͒̽̿͋̎͆̅͛̋͆̅̆̅͑͋̋̈́͆́̿̐̃̏͐̈́̊͛͛̈́̎̀̆͗͌̃̑̇̃̈́̊͊͊͌͗̎̎͐̽̀̈͌̉̿̅͒̂̇͒́̊̊͆͛͂͂͗͛̐̌̊̿͑̈̄̌͑͌̊͑̌̆̃̄̍͒̏̏̏̓͆͌̇͐͂̈̆̍̀͌̾̊̔̍͂̽̌̀͌͛́̋̑̓̇̃̆́̃̈́̏͗̾̿̅͗͒̏̈́͛̿̽̂́̄̔̄͗̔̓͑̄̈́̽̓̈́̄̊͛̂̀̑͋̈́̿́͛͋͊̊̋͒̅́̊̆̊̈̇̐̅̎͒̒͑̾̑͂̔͌̈́̑̽̈̿́̀̐̔͌́̓̅̿̓̆͑͊͒̿́̍͛̔̈̔̈́̌̀͂̈̃̑̑̃̽̓̒̾̈́̆͑̾̎͑̍̎̈́̍͆̋̀́̑̀̃͌̓̇́̔̃́̓̑͆͋͗̉͒͛̽̈́̒́͆̓̾͆̋̽̍̈́͛̂̈́̊̓̉̇̊̃̅͛̉̃̀͒̋̓̌͐̑̇̈́́̄̃͋͌̈́͗̆͛̐͌͌̈́̊̀̇̾̎́̊̋̍̈̈́̃̄̀̆̓͐͗̾̇͛̍̀̒̋̾͒̇͒̈́̑̏͛͐͛̈̓̇̾̉̄̐̒̄̀͊̀͂̂̀́͋́̈́͂̆̈́̃̌̿̌͒̾̋́̈̎̑͋̋́̑͊͑̃̌͒̃̌̍̽́̽̆͊̿̒̂̓̀̐̇̾͆͊̆̈́͂͛͒̑͆͆̆̍̉͗̄́͋̍̀̈́̅̈́̇́͊̓̃̽̈́͋̒͋̅́̂͆́̋̌̓͑͆̿͑́̋̊̾̉͒̂̆͌̋͊̒̆̏̋̒̀̔̈́͂͊̊̅̉̈́̔̌̋̐̀͋̔̈́͊͑͂̄̆̅̂͛̋͆̂̀̓͘̚̚̚̚̕̚̕̚̕̚̕̚͘̕̕̕͘̕͘̕͘̕͘̕̕̕̕̕̕͘̕̚̕͘̚͘͘͘̚̚̕̕̚̕̚̚͘̚̚̕̚͘̕̚̕̕̚̚̚̚͘̚͘̕̚̚̕͘̚͘̚̕̕̚̚̚͘͘͘̕͘̚̕͘̚̚̚̚̚̕̕̚͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͠͠͝͝͝͠͠͝͝͠͝͠͝͝͝͝͠͝͝͝͝͠͝͝͝͝͝͝͝͝͝͠͝͝͝͝͠͠͠͝͠͠͠͝͠͝͝͝͠͝͝͝͝͝͝͠͠͝͝͝͝͝͝͝͝͝͝͝͠͝͝͝͝͝͠͝͠͝͝͝͝͝͝͝͝͝͝͝͠͠͝͝͝͝͝͠͝͠͝͠͝͝͝͝͝͠͝͠͠ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅA̵̶̴̷̴̷̸̷̵̷̵̷̷̶̶̸̸̷̵̴̵̵̷̸̷̷̷̵̴̴̸̸̵̴̸̵̷̸̴̵̵̷̸̵̴̷̷̴̷̵̷̵̶̷̶̷̸̶̸̷̷̵̸̵̵̵̴̸̶̢̢̧̢̧̧̧̧̧̧̡̨̢̧̨̢̢̡̧̨̢̨̡̧̡̡̨̨̢̧̢̨̧̢̧̧̡̢̡̧̧̨̨̨̨̧̡̨̧̢̨̡̨̨̡̨̢̨̢̨̧̡̨̡̨̧̢̧̢̨̨̨̨̡̢̢̨̢̨̢̨̧̢̧̡̨̨̧̡̧̧̢̡̨̡̢̨̨̢̡̧̧̧̢̧̢̧̡̢̢̢̡̡̢̨̨̧̡̢̧̧̢̧̢̧̨̨̢̢̢̡̨̢̧̨̢̡̡̧̡̢̡̡̨̢̡̧̡̢̡̧̢̡̨̨̢̢̢̨̡̧̢̨̧̨̨̢̧̡̧̢̢̡̧̧̡̨̧̡̢̡̨̡̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̤̣̩̯̥̱̳͔̞͈̫̩̤͈̦͎̬̭͕͎͎̹͈͖̹̦͈̥̮͈̹̳͚̼͙̺͙̣̝͕͔͓̼̦͎͉͉̼͇̞̮͚͉̼̲͍̠͓̞̳̖͈͍̼̰͈͉̮̬͎͓̠͓̯̭͇̻̟̝̜̺͚̟͈̤͕͇̼̲̠̯̯͍̯̺͔̣̥͈͎̥̘̜͖͚͙̟̝̫̦̠̲̦̟̝̖͇̟͓̺̭̥̦͔̼̖̪̤̫̪̖̟̯̤̳͉̠̼̳̮͇̲̳̯̤̤̝̠̤̟͙̰̟͈̗̼̻̩̙̝̫̙̹̣͈̜̝̺̜̻̗̗̯̯̞̝̼̭̟̺̝̹̙̲̤̣͕̹͔̣̟͖͚̭̯̟̳̥̟̫̘̥̞̣͔̫̰̲̬̫̱̱̩̤͕͇̪̬͖̖̪̙̲̣͈̼͎̠̲͇͖͚͕̦̫͓̙̱̰̯̤̻̘̱̟̯̖̞̬͎̗̤̪̫̟̲̣̙̪̮̰͈̟̞̣̞͈̗̩̭̤͔͍͔̼̙͇̲̭͉̙̤̤̞͈͉͚̟͉̙͉̯͖͚̪̲̬̥̟̲̠͔̙̗̼̮͈̮͙̮̠̞̩̘͇̹̤̲̟̪̼̰̣̤̥̪̫̳̭̞̯̪͇͈̭͍̮̫̭̲͓̮͕̻͓̤̠̬̠̘̻̼̼̻͍̻͖͖̱͈̰̞̜̗̠̹͔̘̘̻̪̗̖̥̦̯̱̟̪̬̳̱͖̣͇̪̺̝̳̻͓̻̳̮̮̩̠͍̩̪͍̹̼̩̼̥̞̙̥̣̫̻̮̯̟̭̗͔̞̺͔͈̘͇̗̙̗͙͔͕̟͇̜̦̖̹̲̜̟̮̬̹̺͔͔̪̗͍̮̩̥͈̤̯̟͍̞̖̞̗̗̟̭͖̜͖̱̭͙̮͚̤͎͎͉̟͔̗̙̭̠͙̰̳̞͚̝͉̖̳͙̠͔̤̪͍͓̻̻̼̤̭͎̬̰̞͔̤̭̺̲̮̤̘̹̜̲̼̮̲̥͖̪̮̝̱̳̳̹͈̗̬͍̫͍̻̞͈̞̠̰͉̰̩̞̦͕̻̺̫̟͔͍͈̖̘͓̼̞̰̭̤̮͈̲̹̝͉̜̱̗̤͕̻̩̦̰̩͕̻͎̙̪͙̬͖̯͍͔̣̗̲̼̩̻̰̜̤̹̬̮̬̥̮̯̣̝̯͕̞̼̜͙̜͕͔̞̲̦̣͖͕̦͚̗̱̘͎͈͔̱̲̖̗̮̱̖̟̫͇̦̺͎͖̬̳̳̭̪͈̥̰̗̳͍̫͚͈̺͈̻͚͎̹͉̮̝̬̠̹͉̳̮̺̬͕͉͉̬̝͕̠͚͉̦͖͓̻̤̺͓͙̮̞̘̜͔̗͎̤͕͇̪̪̣̻͚̟͈̹͕̼͔̠͓͈̘̝̭̘̯͉̻̦̳͎̙̪̠̤̜͔̫̫̳̦̞̥̰͕̫̦̩̲̙͉̮̭͖̼̝̖̳͖̭̩̼͙͓̼͕̼͙͍̘̮̜̬͇̳̹̣̱̺͎͍̜̼̺̥͉͍̤̳̪͕͉̝̭̦̞͕̼̥͓̘͖̫͍̰̫̥̤̘̪̗̮͎̬͉̜̖͙͚͔͎̝͕͖̣̼̳̺̱̭̺͖̥̼̱̱͖̙̹̞̻̟̱̟̼̟̩̖͉̫̞͕̠̳̠̞̠̘̲̰̤̥̹̺͉̤̩̦͖̗̣̪͓͇̼̳̹͖͔͔͚̥̣͔̳̮̺̯̫̣̲̘̬͙̞̝͔̹̙͇͚̪̲̥̦̤̬̤̯̼͚̞̫̗̳̭͎͚̥̰̯̺̜̺̳͔̲̫͍͈̩̼̬̘̲͓̙̘̠̝̯̝̭̞̺͔̜̙͕̗̞̦͖͓̝̟̪̹̣̮͓͇̯̩̥̫̭̘͈͎͕̦̘̩͙͖͔͓̮̻̹͕̪̲͉̖̰̺̜̹̠̪̝̼̹̰͓̬̯̬͚̗͖̙̮̺͓͎̜̯̥̜̮͇͙̭͓̫͉̜̱͓͉̖͚̬̳̯͔̱̖͎̝̜͖̲̭̣̰͍̼͎̯̠̮̱̠̫͇̺̱̞̱͖̲̻͍͔̥̭̲̗̤͓̣̙͍͖̯̬̘͍̭̰̺̗̜̞͎̜̖̘̠̱͎͕̖͔̜̦̩̗̬̹̯̞͓̱̯̰̯̲͚̤̲͔͉̘̮̖̟̯̬̭̞̦̺̰͓̘̖͉̲̬̰̹̤̞͕̟̟̜̤̭͈̖̺͎̗̖̖͕͉̻̹̱͇̤͖̣͇̺̲̟̞̬͚̺̲̙̭̼̻̞̣̝͕̹̟̹͔͚̞̳͔͈͔͖̗̞͇͔̜̩͍̖̱͈͔̼̤̭̲̘̰̗̱̮̙̹̬̟̰̞̝̤͓̠̫̞̞͖̙̜̺͓̪͕̟̱̲͔͖̫̠̪͎̯̯͇̭̻̞͎̙͕̤̙͉͚̱͍̤̮̦̙̺̲̼̹͙̖̙̟͖̤̤͉̭͖͍̻͈͓̯̬̘̲̞̣̞͙͇̜̹̫̫̻̟͇̫̱̙̹̥̘͕͉͉͓̫̪̭̩̻̼̠͎͙͙̯̺̘̺̹̹̼̘̱̟̻̹̮̼̖͉͇̤̞͖̳̠̼͈̙̟͙͔͈̙̥̞̞̪̘̤̗̯̬̖̟͇̼̳̼̫̦̩͕̥̗̹̝͚͇͖͓̖̗̥̫͖̳͔̙̙̮̰͖͕̤͍̖͎̙͈̟̙̬̳͎̮͖͕̠̖̩̪̝̜̪̩̩̣̝̠͔͇͎̗͇̹̹̙̞̯̖̜̼͙̟̠̙̞͔̳͈͎̣̲͉̣̹͍̻̭͔̼̺̥͙̜̯̦̠̗̮̰͓̟̖̘͇̱̥͇͔͓͍̱͕̋͂̉̑̔̍̃̌̏̋̌̍̂̈́̅́͌͊̓̂̀̿͐̂̈́̀̿̇̆̈͒̀̈́͆̿͋͆̅̽͂͋̀̑́͌̂͆́̐̿̎̈͐̏͑̀̆̈́̿̇̈́̋̋̓̔̽͌͌̄̐̏̈́̊̃̓̀͗́͑͗̆͆̑̾̽͗̀̌̒̎̉̑͐͐̂͛̀͒͛̍̎͌̉͆̈́͑́̈́̇̐́͗̐͒͊̋͒̆̆̓͒͒̐͂̊̿͊͌̄̎̄̓̿̀̽̽͛̿͒̎̈̀̌̋̌̈́͂̌̍̀̇̿̀͋̉̌̈̆̔͑̏̅̀̀̈́͑͛̈̅̌̐̌̆̆̌̀̀͊̈́͆̆̑͒̒̀̓̉̅̋̈̉͋̾̈̍͌̉͑͌́̐͐̔͛̈̽͌͗̒̎̈͛̇͂̓͐̆͑̂̀̃͑̈́̈́͌̐̿͆̏͆̓̀̀̈́̌͒̽̏̋͆̐͛̽͛̿͒̅̍͛͌̏̀́̌̓̈̾̓̌̇͌̽̆̊̃̾̍̌̒̀̾̈́̉͑̓̽́̓̊̊̌̿̎͌͒́͂̌̅͗͑̃̑͐̔̂̋͒̅̑͗̒̈͐̂͆̈́̆͛͗͂̍̈́͒̌̎͒̾̽̇̒̓̎͆͐̾́̃͌͋͂̓̃̃̓̔̂̔͌̈́̂͌̆̐̈̔̓̈́͆̓͌̐͑͌͆͆̃͛̾̽̀̀́͒̔́̎̈́̆̈́͆̑̀̔̆́̔̾̿̀̍̆̅̌̊̆͐͌̈́̐̋͆̿̅̑̑̆̈́̃̍́̓͂̉̀̓̊̍̾̓̀̐̃̐̋͊̇͌̄̌͗̑͂͌̆͋̈́́͊̏̾̔͌̒͊͆̈́̽̅͊͑͑̀̾͌͂̄́̀͋̎̇̋̍̈̅̆̒̓̾̌͆͌̒̒͂͋̈́̇̂̃̀͆̓̎͌̅̆̍̇̊́̏̓͗̀͒̽̍̽̉̀̓̏̔͆̇̍̓͛̅̅̇̈̈̔̈̑̎͑͑̄͂̌̓͊͊́̿͆̽̏̈́̓̎͑̈͂̀̏́̆́̎̃̾̀̏͐̐̏̉̎̿͂̎̈́͐͊̉̌̔̀͑̏̅̆̋̈̀̌̄̒͐̄̈́̒̐̈́̾̎̈͒̌̈̏͐̍͌̿͒̈́͒̏͛͑͒̆́̾̆͂͒͋̇̌̈́̍͛̔͛͑͋̿̒̍̆̽̍̏̈̓̽̍̔͌̆͛͑̏̓̃̒͗͒̋̔̽́̀̀̓̒̊̎̃̔͗͊́̓̿̌̂͆̉̏͒̇̓͒͊̊̎̃̋͋̋̍̋͗̎̽̌̓̌̇͆̆̀̀̽̅̔͛̃̂̂͑̈́̎̂̒̃̒̃̑̌̂͆͗̌̄̀̿̍̌̎̊̂̇̃͐̈͑̄͌̾̌̀̔̃́͛̀͗̈̿̋̒̈́̑̽̓̆̅̾̊̾̅́̐͆́̅́̂͌͊̇̏͆̒͊͒̈͑̋̾̓̏̓̎͗̍̀̔̐͐̓͗̉̈́̃͌̒̆̎͐̈́͋̏͊̆̉̌̈́̇͋͒̋̿́͑̆̏͌̇̊͂͛̈́̔̑̎̑̈́̀̿̒̓̾̏̉͆͌̓͋̄̈́͆͛͌͊͌͑̿̉̊͒̓̌̔̅̅́̈́̏̏̋͂̆̒͗̾̈́̈́̄̔̈̀̅̈́̓͑̓̆̓̏͆̋̃̾̈́̽͗̍̒̍̃͆̓͑͋͆͒̔̀͛̅̿̑̑͆̈̈́̋́́̽̽͆̍̃̄͌̎͂͂̍̇̀͒̔̍̏͐̊̀̈̃̊̐͂́̌̄̓̑͌̑̈́̆͋̉̓̋͗̿͐̑̊͛̈͗̇̉̅̇͒̌̅͂̌̓̍̏͊̀͐͐͋̇̿̒̃͛͗̏̃͑́̿͂́̅̏̔͋͐͋͊̊͆̇̅͐̒̈́̈́̍̂͊͂́̉́̆̅͊͆̄̋̓͑̉̊͊̊͒͌̊̄̔͒̃̀̔͊̋̏̓̈̌̋̈́͋̔̐̈́̾́̑̿̈͑̀̽̾̉̾̀͊̋̄̉́̍͋̿̈́̐͂̓͗̈́̄̉̀̍͋̓͗͂́͊̈́̾̂̀͗̆͋̌̃̓̔̐̑̓͛̃͌́͋͒̀͒̈́̌̉̇̍̅̍̀̿͑͐̒̐̂̑̓͊́̇̒̑́̾̀̌͌͗̍̄̽͆͆̈̅́́͗̈́̾̓͐̎̌̋͂̓͐̀̆͋̈́̈́͒̉̈́̒̈̋̀̊̔͊͗͒̊͛͆̋͆̽͊͆͊̈́͒̽̒͋̍̐̆̾̾̂͋̽̎̔̑͆͆̅̂̎͐̇̽̃̃̇̑̏̋̍̄͗͐͑̓͒̋̅̀̍́̊͛̔̓̽͆͊̃͑̈́̿̋̃́̄̓̔̈́̈́̎́̍͋́̆̈́̈́̍̍̇̿̒͋͂̈̎͊̇͆̌́̿͂̾͑͋̍̋͗͊̈̾̏̏̓̆̾̍̽͂̅͗̄̊͛̾̍͊̎̎̈́͆̉̅̈́̀̂̽́͋̂̃̾̈̈́̈̃́̈́͛̇̽̓̆̾͊͂̀̆̊̈̅͑̑̾̉͗̾̿̋͌̀͒̋̒̾̒̾̋̐͂̂́͊̉̀̒͛̈́̑̿̏̋́̋̓̎̎̓͊̓̄̉̽̂̎̈̂́͋̆̔̒̍̑̍͊̄̈́́̑̆̈́̔̈́̃̈̏̈́͒̈͒͊̊̂͗̑̏̆̈́̀͐̈́̾́̎͗̋̎̊̔̌͛̅̓͌̈̃̓̉̑̀̑̊͌͌̀͗͗͒̍͑͗̇͐̾͗̄̒̏̿́͆̋̀͗̍̂̆̒͋̐̒̽̌͑̑́̆̈́̉͊̇́̈́̈́̃̒̎͌̒̈́̓́̓̓̏̽͑̔̊̀͌́̋͌̓̈́̑͛̂̃̿̈́͑̓̈́̂̑̌̈́͐̑͛͂̑́̔̊͑̋̿̇̐̀̑͑̑̂̽͊͆̒̇̔̄͗̽̌̍̍̽̋̄̉͗͋̈́͊̒͊̀̍̈́̽͂̉̑͌̀̚̚̕͘̕̚̚̕̚͘̕̕̕͘͘͘͘̚̕̚̕̕̚̚̚̚͘̕͘̚̕̚͘̚͘͘̚̚̕̕̚̚̕̕͘̕̚̚̕͘͘̕͘̕͘͘̚̚̚̕͘̚̚̚͘̚̕͘̕͘̕͘͘̕̕̕͘̚̚̕͘̚̕͘̚̚̕̕̚͘͘͘͘̕̚̕͘͘͘͘̕̕̚̕̚͘͘̕͘̚͘̚̕͘̕͘͘̕͘̕̕̚͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͝͠͠͝͝͝͝͝͝͝͝͝͠͠͝͝͠͠͠͠͝͝͠͝͝͠͝͝͠͝͝͝͝͝͠͠͝͠͠͠͝͝͝͝͝͠͝͝͝͝͠͠͝͝͠͠͝͠͝͝͠͠͝͝͠͠͝͠͝͝͠͝͝͝͠͝͝͝͝͝͠͝͠͝͝͝͝͝͝͝͝͝͠͝͝͝͝͠͝͠͠͝͝͝ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅ
