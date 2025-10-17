@@ -54,7 +54,7 @@ local Label = MakeTab:CreateLabel({
 	Style = 3 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
 })
 
-MakeTab:CreateSection("This script is inspired by Syla Hub! Also more features coming soon..")
+MakeTab:CreateSection("This script is inspired by Syla Hub! Also more features coming soon..                                    ChangeLogs: Crash Name")
 
 local MakeTab = Window:CreateTab({
 	Name = "Main",
