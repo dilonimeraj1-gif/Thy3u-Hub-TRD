@@ -277,6 +277,24 @@ local Input = MakeTab:CreateInput({
     	end
 }, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
+local Input = MakeTab:CreateInput({
+	Name = "Buy Character With ",
+	Description = "",
+	PlaceholderText = "Bypasses ChatFilter",
+	CurrentValue = "", -- the current text
+	Numeric = false, -- When true, the user may only type numbers in the box (Example walkspeed)
+	MaxCharacters = nil, -- if a number, the textbox length cannot exceed the number
+	Enter = true, -- When true, the callback will only be executed when the user presses enter.
+    	Callback = function(Value)
+    local args = {
+    [1] = "Character",
+    [2] = game:GetService("Players").LocalPlayer.Name .. ""
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
+
+    	end
+}, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
 local Button = MakeTab:CreateButton({
 	Name = "Kill Everbody In SwordFight",
 	Description = "kill everyone in sword fight..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
@@ -299,6 +317,22 @@ local args = {
 
 game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
     	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "become bee movie",
+	Description = "Become the Whole bee Movie", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Character",
+    [2] = "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible. Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little. Barry! Breakfast is ready! Ooming! Hang on a second. Hello? - Barry? - Adam? - Oan you believe this is happening? - I can't. I'll pick you up. Looking sharp. Use the stairs. Your father paid good money for those. Sorry. I'm excited. Here's the graduate. We're very proud of you, son. A perfect report card, all B's. Very proud. Ma! I got a thing going here. - You got lint on your fuzz. - Ow! That's me! - Wave to us! We'll be in row 118,000. - Bye! Barry, I told you, stop flying in the house! - Hey, Adam. - Hey, Barry. - Is that fuzz gel? - A little. Special day, graduation. Never thought I'd make it. Three days grade school, three days high school. Those were awkward. Three days college. I'm glad I took a day and hitchhiked around the hive. You did come back different. - Hi, Barry. - Artie, growing a mustache? Looks good. - Hear about Frankie? - Yeah. - You going to the funeral? - No, I'm not going. Everybody knows, sting someone, you die. Don't waste it on a squirrel. Such a hothead. I guess he could have just gotten out of the way. I love this incorporating an amusement park into our day. That's why we don't need vacations. Boy, quite a bit of pomp... under the circumstances. - Well, Adam, today we are men. - We are! - Bee-men. - Amen! Hallelujah! Students, faculty, distinguished bees, please welcome Dean Buzzwell. Welcome, New Hive Oity graduating class of... ...9:15. That concludes our ceremonies. And begins your career at Honex Industries! Will we pick ourjob today? I heard it's just orientation. Heads up! Here we go. Keep your hands and antennas inside the tram at all times. - Wonder what it'll be like? - A little scary. Welcome to Honex, a division of Honesco and a part of the Hexagon Group. This is it! Wow. Wow. We know that you, as a bee, have worked your whole life to get to the point where you can work for@porkitypeppapreppy:According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible. Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little. Barry! Breakfast is ready! Ooming! Hang on a second. Hello? - Barry? - Adam? - Oan you believe this is happening? - I can't. I'll pick you up. Looking sharp. Use the stairs. Your father paid good money for those. Sorry. I'm excited. Here's the graduate. We're very proud of you, son. A perfect report card, all B's. Very proud. Ma! I got a thing going here. - You got lint on your fuzz. - Ow! That's me! - Wave to us! We'll be in row 118,000. - Bye! Barry, I told you, stop flying in the house! - Hey, Adam. - Hey, Barry. - Is that fuzz gel? - A little. Special day, graduation. Never thought I'd make it. Three days grade school, three days high school. Those were awkward. Three days college. I'm glad I took a day and hitchhiked around the hive. You did come back different. - Hi, Barry. - Artie, growing a mustache? Looks good. - Hear about Frankie? - Yeah. - You going to the funeral? - No, I'm not going. Everybody knows, sting someone, you die. Don't waste it on a squirrel. Such a hothead. I guess he could have just gotten out of the way. I love this incorporating an amusement park into our day. That's why we don't need vacations. Boy, quite a bit of pomp... under the circumstances. - Well, Adam, today we are men. - We are! - Bee-men. - Amen! Hallelujah! Students, faculty, distinguished bees, please welcome Dean Buzzwell. Welcome, New Hive Oity graduating class of... ...9:15. That concludes our ceremonies. And begins your career at Honex Industries! Will we pick ourjob today? I heard it's just orientation. Heads up! Here we go. Keep your hands and antennas inside the tram at all times. - Wonder what it'll be like? - A little scary. Welcome to Honex, a division of Honesco and a part of the Hexagon Group. This is it! Wow. Wow. We know that you, as a bee, have worked your whole life to get to the point where you can work for",
+}
+
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+ end
 })
 
 local Button = MakeTab:CreateButton({
@@ -401,10 +435,63 @@ local Toggle = MakeTab:CreateToggle({
     
 }, "Toggle")
 
-local Label = MakeTab:CreateLabel({
-	Text = "Misc is Here! Cool stuff is in the misc tab!",
-	Style = 2 
-})
+local Dropdown = MakeTab:CreateDropdown({
+	Name = "Become ",
+    	Description = nil,
+	Options = {"","",""},
+    	CurrentOption = {""},
+    	MultipleOptions = false,
+    	SpecialType = nil,
+    	Callback = function(Options)
+     	getgenv().SelectedUnicode = string.sub(Option, 1, 3)
+	end
+}, "Dropdown") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Input = MakeTab:CreateInput({
+	Name = "Become  (use with dropdown)",
+	Description = "",
+	PlaceholderText = "Bypasses",
+	CurrentValue = "", -- the current text
+	Numeric = false, -- When true, the user may only type numbers in the box (Example walkspeed)
+	MaxCharacters = nil, -- if a number, the textbox length cannot exceed the number
+	Enter = true, -- When true, the callback will only be executed when the user presses enter.
+    	Callback = function(Value)
+ local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+
+player.Chatted:Connect(function(message)
+	if getgenv().SelectedUnicode then
+		local args = {
+			[1] = "Character",
+			[2] = player.Name .. " " .. getgenv().SelectedUnicode 
+		}
+		ReplicatedStorage:WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
+	end
+end)
+
+    	end
+}, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Slider = MakeTab:CreateSlider({
+	Name = "Walkspeed",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 100, -- The Starting Value
+    	Callback = function(Value)
+       	 game.Players.localPlayer.Character.Humanoid.WalkSpeed = (Value)
+    	end
+}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Slider = MakeTab:CreateSlider({
+	Name = "Jump Power",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 100, -- The Starting Value
+    	Callback = function(Value)
+       	game.Players.localPlayer.Character.Humanoid.JumpPower = (Value)
+    	end
+}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
 MakeTab:CreateSection("Misc")
 
@@ -545,4 +632,9 @@ game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
 local Label = MakeTab:CreateLabel({
 	Text = "Tomorrow is a big update! Stay tuned!",
 	Style = 2
+})
+
+local Label = MakeTab:CreateLabel({
+	Text = "Here It Is! Look at main!",
+	Style = 1
 })
