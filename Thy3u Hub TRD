@@ -477,7 +477,7 @@ local Slider = MakeTab:CreateSlider({
 	Name = "Walkspeed",
 	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
 	Increment = 5, -- Basically The Changing Value/Rounding Off
-	CurrentValue = 100, -- The Starting Value
+	CurrentValue = 16, -- The Starting Value
     	Callback = function(Value)
        	 game.Players.localPlayer.Character.Humanoid.WalkSpeed = (Value)
     	end
@@ -487,7 +487,7 @@ local Slider = MakeTab:CreateSlider({
 	Name = "Jump Power",
 	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
 	Increment = 5, -- Basically The Changing Value/Rounding Off
-	CurrentValue = 100, -- The Starting Value
+	CurrentValue = 50, -- The Starting Value
     	Callback = function(Value)
        	game.Players.localPlayer.Character.Humanoid.JumpPower = (Value)
     	end
