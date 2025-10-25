@@ -222,21 +222,7 @@ local Toggle = MakeTab:CreateToggle({
         end
     end
 
-local Button = Tab:CreateButton({
-    Name = "Auto Finish the Pancake Challange 🥞 ",
-    Description = "pancake challenge finish lol",
-    Callback = function()
-        for _, v in pairs(game.Workspace:GetDescendants()) do
-            if v:IsA("Model") and v.Name == game.Players.LocalPlayer.Name then
-                local clickDetector = v:FindFirstChild("ClickDetector")
-                if clickDetector then
-                    fireclickdetector(clickDetector)
-                    fireclickdetector(clickDetector)
-                end
-            end
-        end
-    end
-})
+
 
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps  
   
@@ -253,6 +239,23 @@ local Button = MakeTab:CreateButton({
     
 })  
   
+local Button = MakeTab:CreateButton({
+	Name = "Win Pancake Challenge 🥞 !",
+	Description = "auto eat pancake", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+          for _, v in pairs(game.Workspace:GetDescendants()) do
+            if v:IsA("Model") and v.Name == game.Players.LocalPlayer.Name then
+                local clickDetector = v:FindFirstChild("ClickDetector")
+                if clickDetector then
+                    fireclickdetector(clickDetector)
+                    fireclickdetector(clickDetector)
+                end
+            end
+        end
+    	end
+})
+
+
  local Button = MakeTab:CreateButton({
 	Name = "Win BlockPush!",
 	Description = "win blockpush! :3", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
