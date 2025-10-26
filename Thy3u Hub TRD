@@ -124,11 +124,12 @@ local Label = MakeTab:CreateLabel({
 	Style = 2
 })
 
-local Button = MakeTab:CreateButton({
-	Name = "Math Mania!",
-	Description = "when u click on this button it makes u win math mania! :D", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         local number = 0
+local Toggle = MakeTab:CreateToggle({
+	Name = "Win Math Mania!",
+	Description = "you win math mania automatically.",
+	CurrentValue = false,
+    	Callback = function(Value)
+local number = 0
 
         for i = 1, 10 do
             task.wait()
@@ -169,7 +170,7 @@ local Button = MakeTab:CreateButton({
         end
     end
    
-})  
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
   
 local Toggle = MakeTab:CreateToggle({
 	Name = "Get all coins and gems",
@@ -426,7 +427,7 @@ local Toggle = MakeTab:CreateToggle({
 	Description = "notifies you who got the statue.",
 	CurrentValue = false,
     	Callback = function(Value)
-      -- Disconnect previous connection if it exists
+             -- Disconnect previous connection if it exists
         if ToggleConnection then
             ToggleConnection:Disconnect()
             ToggleConnection = nil
