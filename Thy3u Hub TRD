@@ -243,7 +243,7 @@ local Button = MakeTab:CreateButton({
 	Name = "Win Pancake Challenge!",
 	Description = "auto eat pancake", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-          for _, v in pairs(game.Workspace:GetDescendants()) do
+                  for _, v in pairs(game.Workspace:GetDescendants()) do
             if v:IsA("Model") and v.Name == game.Players.LocalPlayer.Name then
                 local clickDetector = v:FindFirstChild("ClickDetector")
                 if clickDetector then
