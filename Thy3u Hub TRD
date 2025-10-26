@@ -515,7 +515,7 @@ local Slider = MakeTab:CreateSlider({
 
 MakeTab:CreateSection("Misc")
 
-local Button = MakeTab:CreateButton({
+local ExploiterDetection = MakeTab:CreateButton({
 	Name = "Detect Shitty Exploiters. ",
 	Description = "detects skids", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
@@ -553,7 +553,7 @@ local Button = MakeTab:CreateButton({
         else
             print("No exploiters detected..")
         end
-    	end
+    end
 })
 
 local Button = MakeTab:CreateButton({
