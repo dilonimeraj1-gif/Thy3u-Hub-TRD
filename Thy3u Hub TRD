@@ -274,6 +274,26 @@ end
     end
 })
 
+local Button = MakeTab:CreateButton({
+	Name = "Dodgeball/Paintball Protection",
+	Description = "NOTE:DO NOT RESET ONLY USED ON DODGEBALL AND PAINTBALL.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+  local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Set infinite health
+humanoid.MaxHealth = math.huge
+humanoid.Health = math.huge
+
+-- Prevent health from dropping (loop to reset if changed)
+humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+    if humanoid.Health < math.huge then
+        humanoid.Health = math.huge
+    end
+end)
+    	end
+})
 
  local Button = MakeTab:CreateButton({
 	Name = "Win BlockPush!",
