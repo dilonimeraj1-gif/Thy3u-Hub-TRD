@@ -251,11 +251,12 @@ for _, v in pairs(game.Workspace:GetDescendants()) do
     if v:IsA("TextLabel") and v.Text == playerName then
         local parent = v.Parent
         while parent do
-            local clickDetector = parent:FindFirstChildOfClass("ClickDetector")
-            if clickDetector then
-                for i = 1, 100 do  -- Fire multiple times to eat the full stack
-                    fireclickdetector(clickDetector)
-                    wait(0.01)  -- Short delay to simulate rapid clicks without flooding
+            local cd = parent:FindFirstChildOfClass("ClickDetector")
+            if cd then
+                for i = 1, 50 do
+                    fireclickdetector(cd)
+                    fireclickdetector(cd)
+                    wait(0.01)
                 end
                 break
             end
