@@ -906,7 +906,7 @@ end
 })
 
 local Toggle = Tab:CreateToggle({
-    Name = "Toggle Example",
+    Name = "Get PreHistoric Coins",
     Description = nil,
     CurrentValue = false,
     Callback = function(Value)
@@ -925,7 +925,7 @@ end
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
 local Toggle = Tab:CreateToggle({
-    Name = "Toggle Example",
+    Name = "Get Guitars",
     Description = nil,
     CurrentValue = false,
     Callback = function(Value)
@@ -1038,3 +1038,36 @@ local Button = MakeTab:CreateButton({
         end
     	end
 })
+
+local Toggle = MoviesTab:CreateToggle({
+	Name = "Notify Who Got the idol.",
+	Description = "notifies you who got the statue.",
+	CurrentValue = false,
+    	Callback = function(Value)
+             -- Disconnect previous connection if it exists
+        if ToggleConnection then
+            ToggleConnection:Disconnect()
+            ToggleConnection = nil
+        end
+
+        -- Only create the event if the toggle is enabled
+        if Value then
+            ToggleConnection = game:GetService("ReplicatedStorage").Season.Twists.Idol:GetPropertyChangedSignal("Value"):Connect(function()
+                local idolValue = game:GetService("ReplicatedStorage").Season.Twists.Idol.Value
+                
+                if idolValue and game.ReplicatedStorage.Season.Players:FindFirstChild(idolValue) then
+                    local PlayerPicked2 = game.ReplicatedStorage.Season.Players[idolValue].Value
+                    local SEND2 = PlayerPicked2 .. " got the statue!"
+                    
+                    Luna:Notification({
+                        Title = "Votes",
+                        Icon = "notifications_active",
+                        ImageSource = "Material",
+                        Content = SEND2
+                    })
+                end
+            end)
+        end
+    end
+    
+}, "Toggle")
