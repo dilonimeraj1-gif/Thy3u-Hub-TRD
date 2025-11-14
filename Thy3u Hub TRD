@@ -716,3 +716,282 @@ local MoviesTab = Window:CreateTab({
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
 })
+
+MoviesTab:CreateSection("Main 🎥 ")
+
+local Slider = MoviesTab:CreateSlider({
+	Name = "Walkspeed",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 16, -- The Starting Value
+    	Callback = function(Value)
+       	 game.Players.localPlayer.Character.Humanoid.WalkSpeed = (Value)
+    	end
+}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Slider = MoviesTab:CreateSlider({
+	Name = "Jump Power",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 46, -- The Starting Value
+    	Callback = function(Value)
+       	game.Players.localPlayer.Character.Humanoid.JumpPower = (Value)
+    	end
+}, "Slider")
+
+local Button = MoviesTab:CreateButton({
+    Name = "Remove The Annoying Monster..!",
+    Description = "Removes that ogre", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+        for _, npc in ipairs(workspace:GetDescendants()) do
+    if npc.Name == "MonsterNpc" and npc:IsA("Model") then
+        npc:Destroy()
+    end
+end
+    end
+})
+
+local Button = MoviesTab:CreateButton({
+    Name = "Instant-Eat-Bowl!",
+    Description = "yes!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+        for _, v in pairs(game.Workspace:GetDescendants()) do
+	if v.Name == "Bowl" and v:FindFirstChild("ClickDetector") then
+		local player = game.Players.LocalPlayer
+		if v:FindFirstChild("Player") and v.Player.Value == player.Name then
+			for i = 1, 10 do
+				fireclickdetector(v.ClickDetector)
+			end
+		else
+			fireclickdetector(v.ClickDetector)
+		end
+	end
+end
+    end
+})
+
+local Label = MoviesTab:CreateLabel({
+	Text = "Now, heres a tip: If u press on a button and it doesnt do anything, make sure if its the right challenge!",
+	Style = 2
+})
+
+local Button = MoviesTab:CreateButton({
+	Name = "Become Male (free)",
+	Description = "use this when u get voted out.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local args = {
+    [1] = "Gender",
+    [2] = "Male"
+}
+
+game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
+    	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "AutoWin",
+	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+if game.Workspace.Assets:FindFirstChild("Finish",true) then
+            local v = game.Workspace.Assets:FindFirstChild("Finish",true)
+            v.CanCollide = false
+            v.Transparency = 1
+            wait(0.00001)
+            v.Position = game.Players.LocalPlayer.Character.Torso.Position
+        end
+        end
+})
+local Button = MakeTab:CreateButton({
+	Name = "Get Safety Statue",
+	Description = "you will get safety statue!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         for i, v in pairs(workspace.Idols:GetDescendants()) do
+            if v.Name == "Bag" then
+                v.hit.Transparency = 1
+                v.hit.CanCollide = false
+                wait(0.00001)
+                v.hit.Position = game.Players.LocalPlayer.Character.Torso.Position
+                task.wait()
+                v:Destroy()
+                wait()
+            elseif v.Name == "SafetyStatue" then
+                v.hit.Transparency = 1
+                v.hit.CanCollide = false
+                wait(0.00000001)
+                v.hit.Position = game.Players.LocalPlayer.Character.Torso.Position
+                wait(0.01)
+            end
+        end
+    end
+
+  })  
+  
+local Toggle = MoviesTab:CreateToggle({
+	Name = "Win Math Mania!",
+	Description = "you win math mania automatically.",
+	CurrentValue = false,
+    	Callback = function(Value)
+local number = 0
+
+        for i = 1, 10 do
+            task.wait()
+
+            if Value == true then
+                number = number + 1
+                local mathManiaGui = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MathMania")
+
+                if mathManiaGui and mathManiaGui:FindFirstChild(tostring(number)) then
+                    local questionGui = mathManiaGui[tostring(number)]
+                    local s = questionGui.MainText.Text
+
+                    -- Remove equals, question mark, spaces
+                    local clean = s:gsub("=", ""):gsub("?", ""):gsub(" ", "")
+                    local result = loadstring("return " .. clean)()
+
+                    if result then
+                        questionGui.Box.Text = tostring(result)
+                        task.wait(0.1)
+
+                        local button = questionGui:FindFirstChild("Enter")
+                        if button then
+                            local events = {"MouseButton1Click", "MouseButton1Down", "Activated"}
+
+                            for _, event in pairs(events) do
+                                if getconnections and button[event] then
+                                    for _, connection in pairs(getconnections(button[event])) do
+                                        if connection.Function then
+                                            connection:Fire()
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+   
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Button = MoviesTab:CreateButton({
+    Name = "Win The Pirate Challenge!",
+    Description = "auto wins it", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+	if v.Name == "MainKey" then
+		local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+		if v:IsA("BasePart") then
+			hrp.CFrame = v.CFrame
+		elseif v:IsA("Model") then
+			hrp.CFrame = v:GetPivot()
+		end
+		task.wait(0.1)
+	end
+end
+for i,v in pairs(game.Workspace:GetDescendants()) do
+	if v.Name == "win" or v.Name == "Finish" then
+		local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+		if v:IsA("BasePart") then
+			hrp.CFrame = v.CFrame
+		elseif v:IsA("Model") then
+			hrp.CFrame = v:GetPivot()
+		end
+	end
+end
+    end
+})
+
+local Button = MoviesTab:CreateButton({
+	Name = "Auto Win The PreHistoric Challenge",
+	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        collectcoinsloop = Value
+while collectcoinsloop == true do
+	task.wait(0.00001)
+	for i, v in pairs(workspace:GetDescendants()) do
+		if v.Name == "Coin" then
+			v.Transparency = 1
+			wait()
+			v.Position = game.Players.LocalPlayer.Character.Torso.Position
+		end
+	end
+end
+        end
+})
+
+local Button = MoviesTab:CreateButton({
+    Name = "Collect all guitars.",
+    Description = "collects it automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+           collectcoinsloop = Value
+        while collectcoinsloop == true do
+            task.wait(0.00001)
+            for i, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "Gem" then
+                    v.Transparency = 1
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                elseif v.Name == "Coin" then
+                    v.Transparency = 1
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                end
+            end
+        end
+    end
+})
+
+local Toggle = MoviesTab:CreateToggle({
+	Name = "Notify Votes",
+	Description = "u will get notified who voted who.",
+	CurrentValue = false,
+    	Callback = function(Value)
+   if Value then
+            if not _G.VoteConnection then
+                _G.VoteConnection = game.ReplicatedStorage.Season.Voting.Votes.ChildAdded:Connect(function(v)
+                    local PlayerVoted = game.ReplicatedStorage.Season.Players[v.Value].Value
+                    local PlayerPicked = game.ReplicatedStorage.Season.Players[v.Name].Value
+                    local SEND = PlayerVoted .. " voted for " .. PlayerPicked
+                    Luna:Notification({ 
+                        Title = "Votes Notification",
+                        Icon = "notifications_active",
+                        ImageSource = "Material",
+                        Content = SEND
+                    })
+                end)
+            end
+        else
+            if _G.VoteConnection then
+                _G.VoteConnection:Disconnect()
+                _G.VoteConnection = nil
+            end
+        end
+    end
+
+
+
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps  
+
+local Button = MoviesTab:CreateButton({
+	Name = "Protection",
+	Description = "yay protection!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+humanoid.MaxHealth = math.huge
+humanoid.Health = math.huge
+
+humanoid.HealthChanged:Connect(function(health)
+    if health < math.huge then
+        humanoid.Health = math.huge
+    end
+end)
+    	end
+})
+
