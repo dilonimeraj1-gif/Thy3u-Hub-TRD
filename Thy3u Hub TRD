@@ -711,7 +711,7 @@ local Label = MakeTab:CreateLabel({
 })
 
 local MoviesTab = Window:CreateTab({
-    Name = "Movies (WIP)",
+    Name = "Movies 🎥",
     Icon = "add_to_home_screen",
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
@@ -791,7 +791,7 @@ game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
     	end
 })
 
-local Button = MakeTab:CreateButton({
+local Button = MoviesTab:CreateButton({
 	Name = "AutoWin",
 	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
@@ -905,10 +905,11 @@ end
     end
 })
 
-local Button = MoviesTab:CreateButton({
-	Name = "Auto Win The PreHistoric Challenge",
-	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
+local Toggle = Tab:CreateToggle({
+    Name = "Toggle Example",
+    Description = nil,
+    CurrentValue = false,
+    Callback = function(Value)
         collectcoinsloop = Value
 while collectcoinsloop == true do
 	task.wait(0.00001)
@@ -920,14 +921,15 @@ while collectcoinsloop == true do
 		end
 	end
 end
-        end
-})
+    end
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
-local Button = MoviesTab:CreateButton({
-    Name = "Collect all guitars.",
-    Description = "collects it automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    Callback = function()
-           collectcoinsloop = Value
+local Toggle = Tab:CreateToggle({
+    Name = "Toggle Example",
+    Description = nil,
+    CurrentValue = false,
+    Callback = function(Value)
+                collectcoinsloop = Value
         while collectcoinsloop == true do
             task.wait(0.00001)
             for i, v in pairs(workspace:GetDescendants()) do
@@ -943,7 +945,7 @@ local Button = MoviesTab:CreateButton({
             end
         end
     end
-})
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
 local Toggle = MoviesTab:CreateToggle({
 	Name = "Notify Votes",
@@ -995,3 +997,44 @@ end)
     	end
 })
 
+local Button = MakeTab:CreateButton({
+	Name = "Teleports you to exile",
+	Description = "if its dodgeball/paintball use this", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-114, -8, -150)
+    	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "Show Usernames on top!",
+	Description = "explanatory", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+            if v.ClassName == "TextLabel" then
+                local currenttextright = v.Text
+                task.wait()
+                v.Text = v.Text.. " ("..v.Parent.Parent.Parent.Parent.Name..")"
+            end
+        end
+    	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "Sound Breaker",
+	Description = "breaks the sound. (info use with female)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/VRiAmLra'))() 
+    	end
+})
+
+local Button = MakeTab:CreateButton({
+	Name = "Remove Barriers",
+	Description = "very fun", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       for i, v in pairs(workspace:GetDescendants()) do
+            if v.Name == "Glass" then
+                v:Destroy()
+            end
+        end
+    	end
+})
