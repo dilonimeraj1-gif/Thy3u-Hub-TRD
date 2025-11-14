@@ -711,7 +711,7 @@ local Label = MakeTab:CreateLabel({
 })
 
 local MoviesTab = Window:CreateTab({
-    Name = "Tab Example",
+    Name = "Movies (WIP)",
     Icon = "add_to_home_screen",
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
