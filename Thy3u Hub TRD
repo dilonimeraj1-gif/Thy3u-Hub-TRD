@@ -716,6 +716,3 @@ local MoviesTab = Window:CreateTab({
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
 })
-
-MoviesTab:CreateSection("Main 🎥")
-})
