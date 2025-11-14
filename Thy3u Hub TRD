@@ -916,11 +916,11 @@ collectcoinsloop = Value
             for i, v in pairs(workspace:GetDescendants()) do
                 if v.Name == "Coin" then
                     v.Transparency = 1
-                    wait()
+                    wait(0.1)
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                elseif v.Name == "Coin" then
+                elseif v.Name == "Gem" then
                     v.Transparency = 1
-                    wait()
+                    wait(0.1)
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 end
             end
