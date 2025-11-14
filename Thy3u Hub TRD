@@ -893,7 +893,7 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
 	end
 end
 for i,v in pairs(game.Workspace:GetDescendants()) do
-	if v.Name == "win" or v.Name == "Finish" then
+	if v.Name == "win" or v.Name == "Finish" and v.Name == "closed" then
 		local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
 		if v:IsA("BasePart") then
 			hrp.CFrame = v.CFrame
@@ -907,26 +907,30 @@ end
 
 local Toggle = MoviesTab:CreateToggle({
     Name = "Get PreHistoric Coins",
-    Description = nil,
+    Description = "win prehistoric challenge",
     CurrentValue = false,
     Callback = function(Value)
-        collectcoinsloop = Value
-while collectcoinsloop == true do
-	task.wait(0.00001)
-	for i, v in pairs(workspace:GetDescendants()) do
-		if v.Name == "Coin" then
-			v.Transparency = 1
-			wait()
-			v.Position = game.Players.LocalPlayer.Character.Torso.Position
-		end
-	end
-end
+collectcoinsloop = Value
+        while collectcoinsloop == true do
+            task.wait(0.00001)
+            for i, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "Coin" then
+                    v.Transparency = 1
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                elseif v.Name == "Coin" then
+                    v.Transparency = 1
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                end
+            end
+        end
     end
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
 local Toggle = MoviesTab:CreateToggle({
     Name = "Get Guitars",
-    Description = nil,
+    Description = "get the guitars",
     CurrentValue = false,
     Callback = function(Value)
                 collectcoinsloop = Value
