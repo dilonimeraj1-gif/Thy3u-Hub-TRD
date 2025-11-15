@@ -920,6 +920,36 @@ end
     end
 })
 
+local Button = MoviesTab:CreateButton({
+    Name = "Kill Everyone In Beach",
+    Description = "Kills Everyone!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+local player = game.Players.LocalPlayer
+player.Character.ChildAdded:Connect(function(tool)
+	if tool:IsA("Tool") and (string.lower(tool.Name):find("pool") or string.lower(tool.Name):find("noodle")) then
+		local hrp = player.Character.HumanoidRootPart
+		for i, p in pairs(game.Players:GetPlayers()) do
+			if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") then
+				hrp.CFrame = p.Character.HumanoidRootPart.CFrame
+				p.Character.Humanoid.Died:Wait()
+			end
+		end
+	end
+end)
+local gear = game.ReplicatedStorage:FindFirstChild("Gear")
+if gear then
+	for i, v in pairs(gear:GetChildren()) do
+		if string.lower(v.Name):find("pool") or string.lower(v.Name):find("noodle") then
+			local mytool = v:Clone()
+			mytool.Parent = player.Backpack
+			mytool:Equip()
+			break
+		end
+	end
+end
+    end
+})
+
 local Toggle = MoviesTab:CreateToggle({
     Name = "Get PreHistoric Coins",
     Description = "win prehistoric challenge",
