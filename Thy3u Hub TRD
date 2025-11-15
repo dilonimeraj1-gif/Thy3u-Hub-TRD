@@ -786,7 +786,6 @@ local Toggle = MoviesTab:CreateToggle({
         end
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
-
 local Label = MoviesTab:CreateLabel({
 	Text = "Tip: If a button doesnt work.. idk!",
 	Style = 2
@@ -821,6 +820,7 @@ if game.Workspace.Assets:FindFirstChild("Finish",true) then
         end
         end
 })
+
 local Button = MoviesTab:CreateButton({
 	Name = "Get Safety Statue",
 	Description = "you will get safety statue!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
