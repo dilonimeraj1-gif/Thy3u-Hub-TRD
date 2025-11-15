@@ -893,7 +893,7 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
 	end
 end
 for i,v in pairs(game.Workspace:GetDescendants()) do
-	if v.Name == "win" or v.Name == "Finish" and v.Name == "closed" then
+	if v.Name == "win" or v.Name == "Finish" then
 		local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
 		if v:IsA("BasePart") then
 			hrp.CFrame = v.CFrame
@@ -913,16 +913,12 @@ local Toggle = MoviesTab:CreateToggle({
 collectcoinsloop = Value
         while collectcoinsloop == true do
             task.wait(0.00001)
-            for i, v in pairs(workspace:GetDescendants()) do
+            for i, v in pairs(workspace.Assets:GetDescendants()) do
                 if v.Name == "Coin" then
                     v.Transparency = 1
                     wait(0.1)
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                elseif v.Name == "Gem" then
-                    v.Transparency = 1
-                    wait(0.1)
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                end
+                    v.Position = game.Players.LocalPlayer.Character.Head.Position
+                 end
             end
         end
     end
