@@ -877,6 +877,18 @@ local number = 0
    
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
+local Button = MakeTab:CreateButton({
+	Name = "Auto Collect Egg",
+	Description = "Collects It", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+	if v.Name == "Egg" and v:IsA("Model") then 
+		firetouchinterest(game.Players.LocalPlayer.Character.Torso, v, 0)
+	end
+end
+    	end
+})
+
 local Button = MoviesTab:CreateButton({
     Name = "Win The Pirate Challenge!",
     Description = "auto wins it", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
@@ -893,7 +905,7 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
 	end
 end
 for i,v in pairs(game.Workspace:GetDescendants()) do
-	if v.Name == "win" or v.Name == "Finish" then
+	if v.Name == "win" or v.Name == "Finish" and v.Name == "Chest" then
 		local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
 		if v:IsA("BasePart") then
 			hrp.CFrame = v.CFrame
@@ -916,8 +928,9 @@ collectcoinsloop = Value
             for i, v in pairs(workspace.Assets:GetDescendants()) do
                 if v.Name == "Coin" then
                     v.Transparency = 1
+                    v.CanCollide = false
                     wait(0.1)
-                    v.Position = game.Players.LocalPlayer.Character.Head.Position
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
                  end
             end
         end
@@ -997,11 +1010,13 @@ end)
     	end
 })
 
+MoviesTab:CreateSection("Misc 🎦 ")
+
 local Button = MoviesTab:CreateButton({
-	Name = "Teleports you to exile",
-	Description = "if its dodgeball/paintball use this", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+	Name = "Teleports you to lobby",
+	Description = "if its medical/western use this!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-114, -8, -150)
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684 -70 -637)
     	end
 })
 
@@ -1021,7 +1036,7 @@ local Button = MoviesTab:CreateButton({
 
 local Button = MoviesTab:CreateButton({
 	Name = "Sound Breaker",
-	Description = "breaks the sound. (info use with female)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+	Description = "breaks the sound. (info: doesnt work)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
         loadstring(game:HttpGet('https://pastebin.com/raw/VRiAmLra'))() 
     	end
