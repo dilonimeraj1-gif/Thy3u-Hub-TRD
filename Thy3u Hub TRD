@@ -739,6 +739,8 @@ local Slider = MoviesTab:CreateSlider({
     	end
 }, "Slider")
 
+MoviesTab:CreateDivider()
+
 local Button = MoviesTab:CreateButton({
     Name = "Remove The Annoying Monster..!",
     Description = "Removes that ogre", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
@@ -1010,6 +1012,8 @@ humanoid.HealthChanged:Connect(function(health)
 end)
     	end
 })
+
+MoviesTab:CreateDivider()
 
 MoviesTab:CreateSection("Misc 🎦 ")
 
