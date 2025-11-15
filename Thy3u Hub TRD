@@ -930,13 +930,24 @@ player.Character.ChildAdded:Connect(function(tool)
 		local hrp = player.Character.HumanoidRootPart
 		for i, p in pairs(game.Players:GetPlayers()) do
 			if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") then
-				hrp.CFrame = p.Character.HumanoidRootPart.CFrame
-				hrp.Anchored = true
 				local targetHRP = p.Character.HumanoidRootPart
+				local radius = 3
+				local behindOffset = -targetHRP.CFrame.LookVector * radius
+				local behindPos = targetHRP.Position + behindOffset
+				local behindCFrame = CFrame.lookAt(behindPos, targetHRP.Position)
+				hrp.CFrame = behindCFrame
+				hrp.Anchored = true
 				spawn(function()
+					local startTime = os.clock()
 					repeat
+						local elapsed = os.clock() - startTime
+						local progress = math.min(1, elapsed / 5)
+						local theta = progress * math.pi / 2
+						local offsetDir = -targetHRP.CFrame.LookVector * math.cos(theta) + targetHRP.CFrame.RightVector * math.sin(theta)
+						local pos = targetHRP.Position + offsetDir * radius
+						local cframe = CFrame.lookAt(pos, targetHRP.Position)
 						if hrp and hrp.Parent then
-							hrp.CFrame = targetHRP.CFrame
+							hrp.CFrame = cframe
 						end
 						game:GetService("RunService").Heartbeat:Wait()
 					until not p.Character or not p.Character.Parent or not p.Character:FindFirstChild("Humanoid") or p.Character.Humanoid.Health <= 0
