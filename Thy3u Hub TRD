@@ -1153,3 +1153,73 @@ local Toggle = MoviesTab:CreateToggle({
     end
     
 }, "Toggle")
+
+local ExpeditionTab = Window:CreateTab({
+    Name = "Expedition 🗺 (WIP IN BETA)",
+    Icon = "add_to_home_screen",
+    ImageSource = "Material",
+    ShowTitle = true -- This will determine whether the big header text in the tab will show
+})
+
+ExpeditionTab:CreateSection("Main 🌏 ")
+
+local Slider = ExpeditionTab:CreateSlider({
+	Name = "Walkspeed",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 16, -- The Starting Value
+    	Callback = function(Value)
+       	 game.Players.localPlayer.Character.Humanoid.WalkSpeed = (Value)
+    	end
+}, "Slider") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Slider = ExpeditionTab:CreateSlider({
+	Name = "Jump Power",
+	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
+	Increment = 5, -- Basically The Changing Value/Rounding Off
+	CurrentValue = 46, -- The Starting Value
+    	Callback = function(Value)
+       	game.Players.localPlayer.Character.Humanoid.JumpPower = (Value)
+    	end
+}, "Slider")
+
+ExpeditionTab:CreateDivider()
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "AutoWin",
+	Description = "make u win automatically!!(faster)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+if game.Workspace.Assets:FindFirstChild("Finish",true) then
+            local v = game.Workspace.Assets:FindFirstChild("Finish",true)
+            v.CanCollide = false
+            v.Transparency = 1
+            wait(0.000000000000001)
+            v.Position = game.Players.LocalPlayer.Character.Torso.Position
+        end
+        end
+})
+
+local Button = MoviesTab:CreateButton({
+	Name = "Get Safety Statue",
+	Description = "you will get safety statue! (faster)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+         for i, v in pairs(workspace.Idols:GetDescendants()) do
+            if v.Name == "Bag" then
+                v.hit.Transparency = 1
+                v.hit.CanCollide = false
+                wait(0.000000000000000000001)
+                v.hit.Position = game.Players.LocalPlayer.Character.Torso.Position
+                task.wait()
+                v:Destroy()
+                wait()
+            elseif v.Name == "SafetyStatue" then
+                v.hit.Transparency = 1
+                v.hit.CanCollide = false
+                wait(0.0000000000000000000001)
+                v.hit.Position = game.Players.LocalPlayer.Character.Torso.Position
+                wait(0.01)
+            end
+        end
+    end
+
+  })  
