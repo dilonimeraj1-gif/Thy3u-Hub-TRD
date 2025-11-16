@@ -875,10 +875,30 @@ local Button = MoviesTab:CreateButton({
 	Name = "Auto Collect Egg",
 	Description = "Collects It", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-for i,v in pairs(game.Workspace:GetDescendants()) do
-	if v.Name == "Egg" and v:IsA("Model") then 
-		firetouchinterest(game.Players.LocalPlayer.Character.Torso, v, 0)
-	end
+local plr = game.Players.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart")
+local eggs = workspace.Assets:FindFirstChild("Eggs")
+if eggs and (eggs:IsA("Folder") or eggs:IsA("Model")) then
+    for i,v in pairs(eggs:GetDescendants()) do
+        if v.Name == plr.Name and v:IsA("BasePart") then
+            if v:FindFirstChild("TouchInterest") then
+                firetouchinterest(v, hrp, 1)
+                wait(0.1)
+                firetouchinterest(v, hrp, 0)
+            end
+        end
+    end
+else
+    for i,v in pairs(workspace.Assets:GetDescendants()) do
+        if v.Name == plr.Name and v:IsA("BasePart") then
+            if v:FindFirstChild("TouchInterest") then
+                firetouchinterest(v, hrp, 1)
+                wait(0.1)
+                firetouchinterest(v, hrp, 0)
+            end
+        end
+    end
 end
     	end
 })
@@ -1063,7 +1083,7 @@ local Button = MoviesTab:CreateButton({
 	Name = "Teleports you to lobby",
 	Description = "if its medical/western use this!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684 -70 -637)
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684, -70, -637)
     	end
 })
 
