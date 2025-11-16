@@ -1156,7 +1156,7 @@ local Toggle = MoviesTab:CreateToggle({
 
 local ExpeditionTab = Window:CreateTab({
     Name = "Expedition 🗺 (WIP IN BETA)",
-    Icon = "add_to_home_screen",
+    Icon = "airplay",
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
 })
@@ -1199,7 +1199,7 @@ if game.Workspace.Assets:FindFirstChild("Finish",true) then
         end
 })
 
-local Button = MoviesTab:CreateButton({
+local Button = ExpeditionTab:CreateButton({
 	Name = "Get Safety Statue",
 	Description = "you will get safety statue! (faster)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
