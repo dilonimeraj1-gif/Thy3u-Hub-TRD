@@ -745,11 +745,11 @@ local Button = MoviesTab:CreateButton({
     Name = "Remove The Annoying Monster..!",
     Description = "Removes that ogre", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     Callback = function()
-        for _, npc in ipairs(workspace:GetDescendants()) do
-    if npc.Name == "MonsterNPC" and npc:IsA("Model") then
-        npc:Destroy()
-    end
-end
+               for i, v in pairs(workspace.Assets:GetDescendants()) do
+            if v.Name == "MonsterNPC" then
+                v:Destroy()
+            end
+        end
     end
 })
 
@@ -757,24 +757,15 @@ local Button = MoviesTab:CreateButton({
     Name = "Instant-Eat-Bowl!",
     Description = "yes!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     Callback = function()
-        for _, v in pairs(game.Workspace:GetDescendants()) do
-	if v.Name == "Bowl" and v:FindFirstChild("ClickDetector") then
-		local player = game.Players.LocalPlayer
-		if v:FindFirstChild("Player") and v.Player.Value == player.Name then
-			for i = 1, 10 do
-				fireclickdetector(v.ClickDetector)
-			end
-		else
-			fireclickdetector(v.ClickDetector)
-		end
-	end
+        for i, v in pairs(game.Workspace.Assets:GetDescendants()) do
+    if v.Name == "Bowl" and v:IsA("Model") and v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+        for j = 1, 10 do
+            local cd = Instance.new("ClickDetector")
+            cd.Parent = v
+        end
+    end
 end
     end
-})
-
-local Label = MoviesTab:CreateLabel({
-	Text = "Tip: If a button doesnt work.. idk!",
-	Style = 2
 })
 
 local Button = MoviesTab:CreateButton({
