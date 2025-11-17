@@ -1235,10 +1235,12 @@ local Toggle = ExpeditionTab:CreateToggle({
             for i, v in pairs(workspace:GetDescendants()) do
                 if v.Name == "Gem" then
                     v.Transparency = 1
+                    v.CanCollide = false
                     wait()
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 elseif v.Name == "Coin" then
                     v.Transparency = 1
+                    v.CanCollide = false
                     wait()
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 end
@@ -1263,6 +1265,7 @@ local Toggle = ExpeditionTab:CreateToggle({
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 elseif v.Name == "Coin" then
                     v.Transparency = 1
+                    v.CanCollide = false
                     wait()
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 end
@@ -1319,3 +1322,145 @@ local number = 0
    
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
+local Button = ExpeditionTab:CreateButton({
+	Name = "Break Amazon,
+	Description = "break Amazon by making the spleef blocks disappear.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+          for i,v in pairs(game.Workspace.Assets:GetDescendants()) do
+			if v.Name == "SpleefPart" then 
+				firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v, 0)
+			end
+		end
+    end
+    
+})  
+
+local Button = ExpeditionTab:CreateButton({
+    Name = "Kill Everyone In Beach",
+    Description = "Kills Everyone! (notice: reset when everyone is killed)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    Callback = function()
+local player = game.Players.LocalPlayer
+player.Character.ChildAdded:Connect(function(tool)
+	if tool:IsA("Tool") and (string.lower(tool.Name):find("sword") or string.lower(tool.Name):find("sword")) then
+		local hrp = player.Character.HumanoidRootPart
+		for i, p in pairs(game.Players:GetPlayers()) do
+			if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") then
+				local targetHRP = p.Character.HumanoidRootPart
+				local radius = 3
+				local behindOffset = -targetHRP.CFrame.LookVector * radius
+				local behindPos = targetHRP.Position + behindOffset
+				local behindCFrame = CFrame.lookAt(behindPos, targetHRP.Position)
+				hrp.CFrame = behindCFrame
+				hrp.Anchored = true
+				spawn(function()
+					local startTime = os.clock()
+					repeat
+						local elapsed = os.clock() - startTime
+						local progress = math.min(1, elapsed / 5)
+						local theta = progress * math.pi / 2
+						local offsetDir = -targetHRP.CFrame.LookVector * math.cos(theta) + targetHRP.CFrame.RightVector * math.sin(theta)
+						local pos = targetHRP.Position + offsetDir * radius
+						local cframe = CFrame.lookAt(pos, targetHRP.Position)
+						if hrp and hrp.Parent then
+							hrp.CFrame = cframe
+						end
+						game:GetService("RunService").Heartbeat:Wait()
+					until not p.Character or not p.Character.Parent or not p.Character:FindFirstChild("Humanoid") or p.Character.Humanoid.Health <= 0
+				end)
+				p.Character.Humanoid.Died:Wait()
+			end
+		end
+	end
+end)
+local gear = game.ReplicatedStorage:FindFirstChild("Gear")
+if gear then
+	for i, v in pairs(gear:GetChildren()) do
+		if string.lower(v.Name):find("sword") or string.lower(v.Name):find("sword") then
+			local mytool = v:Clone()
+			mytool.Parent = player.Backpack
+			mytool:Equip()
+			break
+		end
+	end
+end
+    end
+})
+
+ExpeditionTab:CreateDivider()
+
+ExpeditionTab:CreateSection("Misc 🌐")
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Teleports you to lobby",
+	Description = "if its medical/western use this!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684, -70, -637)
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Show Usernames on top!",
+	Description = "explanatory", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+            if v.ClassName == "TextLabel" then
+                local currenttextright = v.Text
+                task.wait()
+                v.Text = v.Text.. " ("..v.Parent.Parent.Parent.Parent.Name..")"
+            end
+        end
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Sound Breaker",
+	Description = "breaks the sound. (info: doesnt work)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/VRiAmLra'))() 
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Remove Barriers",
+	Description = "very fun", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       for i, v in pairs(workspace:GetDescendants()) do
+            if v.Name == "Glass" and v.Name == "ChallengeGlass" then
+                v:Destroy()
+            end
+        end
+    	end
+})
+
+local Toggle = ExpeditonTab:CreateToggle({
+	Name = "Notify Who Got the idol.",
+	Description = "notifies you who got the statue.",
+	CurrentValue = false,
+    	Callback = function(Value)
+             -- Disconnect previous connection if it exists
+        if ToggleConnection then
+            ToggleConnection:Disconnect()
+            ToggleConnection = nil
+        end
+
+        -- Only create the event if the toggle is enabled
+        if Value then
+            ToggleConnection = game:GetService("ReplicatedStorage").Season.Twists.Idol:GetPropertyChangedSignal("Value"):Connect(function()
+                local idolValue = game:GetService("ReplicatedStorage").Season.Twists.Idol.Value
+                
+                if idolValue and game.ReplicatedStorage.Season.Players:FindFirstChild(idolValue) then
+                    local PlayerPicked2 = game.ReplicatedStorage.Season.Players[idolValue].Value
+                    local SEND2 = PlayerPicked2 .. " got the statue!"
+                    
+                    Luna:Notification({
+                        Title = "Votes",
+                        Icon = "notifications_active",
+                        ImageSource = "Material",
+                        Content = SEND2
+                    })
+                end
+            end)
+        end
+    end
+    
+}, "Toggle")
