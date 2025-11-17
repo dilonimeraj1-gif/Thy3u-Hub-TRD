@@ -1224,3 +1224,100 @@ local Button = ExpeditionTab:CreateButton({
 
   })  
 
+local Toggle = ExpeditonTab:CreateToggle({
+	Name = "Win Sentosa Island (math mania)",
+	Description = "you win automatically in math mania.",
+	CurrentValue = false,
+    	Callback = function(Value)
+local number = 0
+
+        for i = 1, 10 do
+            task.wait()
+
+            if Value == true then
+                number = number + 1
+                local mathManiaGui = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MathMania")
+
+                if mathManiaGui and mathManiaGui:FindFirstChild(tostring(number)) then
+                    local questionGui = mathManiaGui[tostring(number)]
+                    local s = questionGui.MainText.Text
+
+                    -- Remove equals, question mark, spaces
+                    local clean = s:gsub("=", ""):gsub("?", ""):gsub(" ", "")
+                    local result = loadstring("return " .. clean)()
+
+                    if result then
+                        questionGui.Box.Text = tostring(result)
+                        task.wait(0.1)
+
+                        local button = questionGui:FindFirstChild("Enter")
+                        if button then
+                            local events = {"MouseButton1Click", "MouseButton1Down", "Activated"}
+
+                            for _, event in pairs(events) do
+                                if getconnections and button[event] then
+                                    for _, connection in pairs(getconnections(button[event])) do
+                                        if connection.Function then
+                                            connection:Fire()
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+   
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Toggle = ExpeditionTab:CreateToggle({
+    Name = "Get Clovers",
+    Description = "get the clovers",
+    CurrentValue = false,
+    Callback = function(Value)
+                collectcoinsloop = Value
+        while collectcoinsloop == true do
+            task.wait(0.00001)
+            for i, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "Gem" then
+                    v.Transparency = 1
+                    v.CanCollide = false
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                elseif v.Name == "Coin" then
+                    v.Transparency = 1
+                    v.CanCollide = false
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                end
+            end
+        end
+    end
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+
+local Toggle = ExpeditionTab:CreateToggle({
+    Name = "Get Rings",
+    Description = "get the rings",
+    CurrentValue = false,
+    Callback = function(Value)
+                collectcoinsloop = Value
+        while collectcoinsloop == true do
+            task.wait(0.00001)
+            for i, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "Gem" then
+                    v.Transparency = 1
+                    v.CanCollide = false
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                elseif v.Name == "Coin" then
+                    v.Transparency = 1
+                    v.CanCollide = false
+                    wait()
+                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
+                end
+            end
+        end
+    end
+}, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
