@@ -1335,57 +1335,6 @@ local Button = ExpeditionTab:CreateButton({
     
 })  
 
-local Button = ExpeditionTab:CreateButton({
-    Name = "Kill Everyone In Beach",
-    Description = "Kills Everyone! (notice: reset when everyone is killed)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    Callback = function()
-local player = game.Players.LocalPlayer
-player.Character.ChildAdded:Connect(function(tool)
-	if tool:IsA("Tool") and (string.lower(tool.Name):find("sword") or string.lower(tool.Name):find("sword")) then
-		local hrp = player.Character.HumanoidRootPart
-		for i, p in pairs(game.Players:GetPlayers()) do
-			if p ~= player and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") then
-				local targetHRP = p.Character.HumanoidRootPart
-				local radius = 3
-				local behindOffset = -targetHRP.CFrame.LookVector * radius
-				local behindPos = targetHRP.Position + behindOffset
-				local behindCFrame = CFrame.lookAt(behindPos, targetHRP.Position)
-				hrp.CFrame = behindCFrame
-				hrp.Anchored = true
-				spawn(function()
-					local startTime = os.clock()
-					repeat
-						local elapsed = os.clock() - startTime
-						local progress = math.min(1, elapsed / 5)
-						local theta = progress * math.pi / 2
-						local offsetDir = -targetHRP.CFrame.LookVector * math.cos(theta) + targetHRP.CFrame.RightVector * math.sin(theta)
-						local pos = targetHRP.Position + offsetDir * radius
-						local cframe = CFrame.lookAt(pos, targetHRP.Position)
-						if hrp and hrp.Parent then
-							hrp.CFrame = cframe
-						end
-						game:GetService("RunService").Heartbeat:Wait()
-					until not p.Character or not p.Character.Parent or not p.Character:FindFirstChild("Humanoid") or p.Character.Humanoid.Health <= 0
-				end)
-				p.Character.Humanoid.Died:Wait()
-			end
-		end
-	end
-end)
-local gear = game.ReplicatedStorage:FindFirstChild("Gear")
-if gear then
-	for i, v in pairs(gear:GetChildren()) do
-		if string.lower(v.Name):find("sword") or string.lower(v.Name):find("sword") then
-			local mytool = v:Clone()
-			mytool.Parent = player.Backpack
-			mytool:Equip()
-			break
-		end
-	end
-end
-    end
-})
-
 ExpeditionTab:CreateDivider()
 
 ExpeditionTab:CreateSection("Misc 🌐")
