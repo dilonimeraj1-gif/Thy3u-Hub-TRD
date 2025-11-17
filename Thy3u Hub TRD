@@ -1283,12 +1283,10 @@ local Toggle = ExpeditionTab:CreateToggle({
             for i, v in pairs(workspace:GetDescendants()) do
                 if v.Name == "Gem" then
                     v.Transparency = 1
-                    v.CanCollide = false
                     wait()
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 elseif v.Name == "Coin" then
                     v.Transparency = 1
-                    v.CanCollide = false
                     wait()
                     v.Position = game.Players.LocalPlayer.Character.Torso.Position
                 end
@@ -1302,23 +1300,17 @@ local Toggle = ExpeditionTab:CreateToggle({
     Description = "get the rings",
     CurrentValue = false,
     Callback = function(Value)
-                collectcoinsloop = Value
-        while collectcoinsloop == true do
-            task.wait(0.00001)
-            for i, v in pairs(workspace:GetDescendants()) do
-                if v.Name == "Gem" then
-                    v.Transparency = 1
-                    v.CanCollide = false
-                    wait()
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                elseif v.Name == "Coin" then
-                    v.Transparency = 1
-                    v.CanCollide = false
-                    wait()
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                end
-            end
+collectcoinsloop = true
+while collectcoinsloop do
+    task.wait(0.00001)
+    for i, v in pairs(workspace:GetDescendants()) do
+        if (v.Name == "Gem" or v.Name == "Coin") and v:FindFirstChild("Coins") then
+            v.Transparency = 1
+            task.wait()
+            v.Position = game.Players.LocalPlayer.Character.Torso.Position
         end
+    end
+end
     end
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
