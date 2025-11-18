@@ -1155,7 +1155,7 @@ local Toggle = MoviesTab:CreateToggle({
 }, "Toggle")
 
 local ExpeditionTab = Window:CreateTab({
-    Name = "Expedition 🗺 (WIP IN BETA)",
+    Name = "Expedition 🗺",
     Icon = "airplay",
     ImageSource = "Material",
     ShowTitle = true -- This will determine whether the big header text in the tab will show
@@ -1300,15 +1300,22 @@ local Toggle = ExpeditionTab:CreateToggle({
     Description = "get the rings",
     CurrentValue = false,
     Callback = function(Value)
-collectcoinsloop = true
-while collectcoinsloop do
+local collectRingLoop = true
+
+local player = game.Players.LocalPlayer
+
+while collectRingLoop do
     task.wait(0.00001)
-    for i, v in pairs(workspace:GetDescendants()) do
-        if (v.Name == "Gem" or v.Name == "Coin") and v:FindFirstChild("Coins") then
-            v.Transparency = 1
-            task.wait()
-            v.Position = game.Players.LocalPlayer.Character.Torso.Position
-        end
+    
+    local character = player.Character or player.CharacterAdded:Wait()
+    local ringHitbox = workspace:FindFirstChild("Assets")
+        and workspace.Assets:FindFirstChild("Maldives")
+        and workspace.Assets.Maldives:FindFirstChild("Coins")
+        and workspace.Assets.Maldives.Coins:FindFirstChild("Coin")
+        and workspace.Assets.Maldives.Coins.Coin:FindFirstChild("Gem")
+    
+    if ringHitbox and character and character:FindFirstChild("HumanoidRootPart") then
+        ringHitbox.Position = character.HumanoidRootPart.Position
     end
 end
     end
@@ -1326,3 +1333,116 @@ local Button = ExpeditionTab:CreateButton({
     end
     
 })  
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Auto Win Cheese",
+	Description = "AutoWins..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+          for _, v in ipairs(workspace:GetDescendants()) do
+    if v:IsA("Part") and v.Name == "SingularBox" then
+        local root = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if root and (v.Position - root.Position).Magnitude <= 100 then
+            
+            local finishFolder = workspace:FindFirstChild("Assets")
+                and workspace.Assets:FindFirstChild("France")
+                and workspace.Assets.France:FindFirstChild("CheesePush")
+                and workspace.Assets.France.CheesePush:FindFirstChild("Finish")
+            
+            if finishFolder and finishFolder:GetChildren()[4] then
+                for _, part in ipairs(finishFolder:GetChildren()[4]:GetChildren()) do
+                    if part:IsA("Part") then
+                        local tpPos = part.Position + Vector3.new(0, 3, 0)
+                        v.Position = tpPos
+                        if root then
+                            root.CFrame = CFrame.new(tpPos)
+                        end
+                        break
+                    end
+                end
+            end
+            break
+        end
+    end
+end
+    end
+    
+})  
+
+ExpeditionTab:CreateDivider()
+
+ExpeditionTab:CreateSection("Misc 🌐 ")
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Teleports you to lobby",
+	Description = "use this in meatball!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684, -70, -637)
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Show Usernames on top!",
+	Description = "explanatory", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+            if v.ClassName == "TextLabel" then
+                local currenttextright = v.Text
+                task.wait()
+                v.Text = v.Text.. " ("..v.Parent.Parent.Parent.Parent.Name..")"
+            end
+        end
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Sound Breaker",
+	Description = "breaks the sound. (info: doesnt work)", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/VRiAmLra'))() 
+    	end
+})
+
+local Button = ExpeditionTab:CreateButton({
+	Name = "Remove Barriers",
+	Description = "very fun", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+       for i, v in pairs(workspace:GetDescendants()) do
+            if v.Name == "Glass" and v.Name == "ChallengeGlass" then
+                v:Destroy()
+            end
+        end
+    	end
+})
+
+local Toggle = ExpeditonTab:CreateToggle({
+	Name = "Notify Who Got the idol.",
+	Description = "notifies you who got the statue.",
+	CurrentValue = false,
+    	Callback = function(Value)
+             -- Disconnect previous connection if it exists
+        if ToggleConnection then
+            ToggleConnection:Disconnect()
+            ToggleConnection = nil
+        end
+
+        -- Only create the event if the toggle is enabled
+        if Value then
+            ToggleConnection = game:GetService("ReplicatedStorage").Season.Twists.Idol:GetPropertyChangedSignal("Value"):Connect(function()
+                local idolValue = game:GetService("ReplicatedStorage").Season.Twists.Idol.Value
+                
+                if idolValue and game.ReplicatedStorage.Season.Players:FindFirstChild(idolValue) then
+                    local PlayerPicked2 = game.ReplicatedStorage.Season.Players[idolValue].Value
+                    local SEND2 = PlayerPicked2 .. " got the statue!"
+                    
+                    Luna:Notification({
+                        Title = "Votes",
+                        Icon = "notifications_active",
+                        ImageSource = "Material",
+                        Content = SEND2
+                    })
+                end
+            end)
+        end
+    end
+    
+}, "Toggle")
