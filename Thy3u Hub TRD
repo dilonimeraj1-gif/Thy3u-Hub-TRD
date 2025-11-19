@@ -1300,20 +1300,31 @@ local Toggle = ExpeditionTab:CreateToggle({
     Description = "get the rings",
     CurrentValue = false,
     Callback = function(Value)
-local collectRingLoop = true
+local collectRingLoop = Value
 
 local player = game.Players.LocalPlayer
 
 while collectRingLoop do
     task.wait(0.00001)
-    
+
     local character = player.Character or player.CharacterAdded:Wait()
-    local ringHitbox = workspace:FindFirstChild("Assets")
-        and workspace.Assets:FindFirstChild("Maldives")
-        and workspace.Assets.Maldives:FindFirstChild("Coins")
-        and workspace.Assets.Maldives.Coins:FindFirstChild("Coin")
-        and workspace.Assets.Maldives.Coins.Coin:FindFirstChild("Gem")
-    
+
+    local ringHitbox = workspace:FindFirstChild("Assets") 
+        and workspace.Assets:FindFirstChild("Maldives") 
+        and workspace.Assets.Maldives:FindFirstChild("Coins") 
+        and workspace.Assets.Maldives.Coins:FindFirstChild("Coin") 
+        and workspace.Assets.Maldives.Coins.Coin:FindFirstChild("RingHitbox")
+
+    if ringHitbox and character and character:FindFirstChild("HumanoidRootPart") then
+        ringHitbox.Position = character.HumanoidRootPart.Position
+    end
+
+    ringHitbox = workspace:FindFirstChild("Assets") 
+        and workspace.Assets:FindFirstChild("Maldives") 
+        and workspace.Assets.Maldives:FindFirstChild("Coins") 
+        and workspace.Assets.Maldives.Coins:FindFirstChild("Gem") 
+        and workspace.Assets.Maldives.Coins.Gem:FindFirstChild("RingHitbox")
+
     if ringHitbox and character and character:FindFirstChild("HumanoidRootPart") then
         ringHitbox.Position = character.HumanoidRootPart.Position
     end
