@@ -1346,6 +1346,21 @@ local Button = ExpeditionTab:CreateButton({
 })  
 
 local Button = ExpeditionTab:CreateButton({
+	Name = "Win Hawaii",
+	Description = "clicks the sand piles and makes u win!!(not tested)!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
+    	Callback = function()
+          for i, v in pairs(workspace:GetDescendants()) do
+	if v.Name == "Tiki" and v:FindFirstChild("ClickDetector") then
+		for _ = 1, 10 do
+			fireclickdetector(v.ClickDetector)
+		end
+	end
+end
+    end
+    
+})  
+
+local Button = ExpeditionTab:CreateButton({
 	Name = "Auto Win Cheese",
 	Description = "AutoWins..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
@@ -1387,7 +1402,7 @@ local Button = ExpeditionTab:CreateButton({
 	Name = "Teleports you to lobby",
 	Description = "use this in meatball!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-684, -70, -637)
+       		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-77, -28, -904)
     	end
 })
 
@@ -1418,7 +1433,7 @@ local Button = ExpeditionTab:CreateButton({
 	Description = "very fun", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
        for i, v in pairs(workspace:GetDescendants()) do
-            if v.Name == "Glass" and v.Name == "ChallengeGlass" then
+            if v.Name == "Glass" then
                 v:Destroy()
             end
         end
