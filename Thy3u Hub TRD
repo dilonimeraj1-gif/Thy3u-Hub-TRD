@@ -1,11 +1,11 @@
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/master/source.lua", true))()
 
 local Window = Luna:CreateWindow({
-	Name = "THY3U HUB | Camp V2", -- This Is Title Of Your Window
-	Subtitle = " Made By tylertenone.", -- A Gray Subtitle next To the main title.
+	Name = "THY3U HUB | GameModes V2", -- This Is Title Of Your Window
+	Subtitle = " Made By Tylertenone.", -- A Gray Subtitle next To the main title.
 	LogoID = "82795327169782", -- The Asset ID of your logo. Set to nil if you do not have a logo for Luna to use.
 	LoadingEnabled = true, -- Whether to enable the loading animation. Set to false if you do not want the loading screen or have your own custom one.
-	LoadingTitle = "Welcome To Thy3u Hub!🎃", -- Header for loading screen
+	LoadingTitle = "Loading Thy3u..🤶", -- Header for loading screen
 	LoadingSubtitle = "inspired by reviv3 hub and syla", -- Subtitle for loading screen
 
 	ConfigSettings = {
@@ -13,7 +13,7 @@ local Window = Luna:CreateWindow({
 		ConfigFolder = "thyeuhub" -- The Name Of The Folder Where Luna Will Store Configs For This Script. DO NOT ADD A SLASH
 	},
 
-	KeySystem = true, -- As Of Beta 6, Luna Has officially Implemented A Key System!
+	KeySystem = false, -- As Of Beta 6, Luna Has officially Implemented A Key System!
 	KeySettings = {
 		Title = "thy3uhubkey",
 		Subtitle = "KeySystem.",
@@ -66,7 +66,7 @@ local MakeTab = Window:CreateTab({
 MakeTab:CreateSection("Main  🏡 ")
 
 local Button = MakeTab:CreateButton({
-	Name = "Become Male (free)",
+	Name = "Become Male",
 	Description = "use this when u get voted out.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
 --[[
@@ -85,13 +85,13 @@ local Button = MakeTab:CreateButton({
 	Name = "AutoWin",
 	Description = "make u win automatically!!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-if game.Workspace.Assets:FindFirstChild("Finish",true) then
-            local v = game.Workspace.Assets:FindFirstChild("Finish",true)
-            v.CanCollide = false
-            v.Transparency = 1
-            wait()
-            v.Position = game.Players.LocalPlayer.Character.Torso.Position
-        end
+local finish = game.Workspace.Assets:FindFirstChild("Finish", true)
+		if finish then
+			finish.CanCollide = false
+			finish.Transparency = 1
+			wait()
+			finish.Position = game.Players.LocalPlayer.Character.Torso.Position
+		end
         end
 })
 local Button = MakeTab:CreateButton({
@@ -119,11 +119,6 @@ local Button = MakeTab:CreateButton({
    
   })  
   
-local Label = MakeTab:CreateLabel({
-	Text = "Info: There will be more features coming soon, like a crash name and etc! Stay tuned!",
-	Style = 2
-})
-
 local Toggle = MakeTab:CreateToggle({
 	Name = "Win Math Mania!",
 	Description = "you win math mania automatically.",
@@ -171,28 +166,32 @@ local number = 0
     end
    
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-  
+
+MakeTab:CreateDivider()
+
 local Toggle = MakeTab:CreateToggle({
-	Name = "Get all coins and gems",
+	Name = "Get all Coins and Gems",
 	Description = "get all gems and coins to win automatically. ",
 	CurrentValue = false,
     	Callback = function(Value)
-       collectcoinsloop = Value
-        while collectcoinsloop == true do
-            task.wait(0.00001)
-            for i, v in pairs(workspace:GetDescendants()) do
-                if v.Name == "Gem" then
-                    v.Transparency = 1
-                    wait()
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                elseif v.Name == "Coin" then
-                    v.Transparency = 1
-                    wait()
-                    v.Position = game.Players.LocalPlayer.Character.Torso.Position
-                end
-            end
+       local collecting = state
+
+while collecting do
+    task.wait(0.05)
+    
+    for i, v in pairs(workspace:GetDescendants()) do
+        if v.Name == "Gem" or v.Name == "Coin" then
+            v.Transparency = 1
+            v.CanCollide = false
+            v.Position = game.Players.LocalPlayer.Character.Torso.Position
         end
     end
+    
+    if not state then 
+        break 
+    end
+end
+end
    
 }, "Toggle") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps  
   
@@ -244,19 +243,13 @@ local Button = MakeTab:CreateButton({
 	Name = "Instant-Eat Pancake",
 	Description = "auto eat pancake", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-for _, v in pairs(workspace:GetDescendants()) do
-    if v.Name == "Pancake" and v:IsA("Model") then
-        local clickDetector = v:FindFirstChild("ClickDetector")
-        if clickDetector then
-            task.spawn(function()
-                for i = 1, 10 do
-                    fireclickdetector(clickDetector)
-                    task.wait(0.03)
-                end
-            end)
-        end
-    end
-end
+for i, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == game.Players.LocalPlayer.Name then
+				for _ = 1, 50 do
+					fireclickdetector(v.ClickDetector)
+				end
+			end
+		end
     end
 })
 
@@ -346,7 +339,7 @@ local Button = MakeTab:CreateButton({
 })
 
 local Button = MakeTab:CreateButton({
-	Name = "become female",
+	Name = "Become Female",
 	Description = "become gender female and use after u got voted out.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
 --[[
@@ -361,53 +354,6 @@ game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
     	end
 })
 
-local Button = MakeTab:CreateButton({
-	Name = "become bee movie",
-	Description = "Become the Whole bee Movie", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-local args = {
-    [1] = "Character",
-    [2] = "According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible. Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little. Barry! Breakfast is ready! Ooming! Hang on a second. Hello? - Barry? - Adam? - Oan you believe this is happening? - I can't. I'll pick you up. Looking sharp. Use the stairs. Your father paid good money for those. Sorry. I'm excited. Here's the graduate. We're very proud of you, son. A perfect report card, all B's. Very proud. Ma! I got a thing going here. - You got lint on your fuzz. - Ow! That's me! - Wave to us! We'll be in row 118,000. - Bye! Barry, I told you, stop flying in the house! - Hey, Adam. - Hey, Barry. - Is that fuzz gel? - A little. Special day, graduation. Never thought I'd make it. Three days grade school, three days high school. Those were awkward. Three days college. I'm glad I took a day and hitchhiked around the hive. You did come back different. - Hi, Barry. - Artie, growing a mustache? Looks good. - Hear about Frankie? - Yeah. - You going to the funeral? - No, I'm not going. Everybody knows, sting someone, you die. Don't waste it on a squirrel. Such a hothead. I guess he could have just gotten out of the way. I love this incorporating an amusement park into our day. That's why we don't need vacations. Boy, quite a bit of pomp... under the circumstances. - Well, Adam, today we are men. - We are! - Bee-men. - Amen! Hallelujah! Students, faculty, distinguished bees, please welcome Dean Buzzwell. Welcome, New Hive Oity graduating class of... ...9:15. That concludes our ceremonies. And begins your career at Honex Industries! Will we pick ourjob today? I heard it's just orientation. Heads up! Here we go. Keep your hands and antennas inside the tram at all times. - Wonder what it'll be like? - A little scary. Welcome to Honex, a division of Honesco and a part of the Hexagon Group. This is it! Wow. Wow. We know that you, as a bee, have worked your whole life to get to the point where you can work for@porkitypeppapreppy:According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway because bees don't care what humans think is impossible. Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little. Barry! Breakfast is ready! Ooming! Hang on a second. Hello? - Barry? - Adam? - Oan you believe this is happening? - I can't. I'll pick you up. Looking sharp. Use the stairs. Your father paid good money for those. Sorry. I'm excited. Here's the graduate. We're very proud of you, son. A perfect report card, all B's. Very proud. Ma! I got a thing going here. - You got lint on your fuzz. - Ow! That's me! - Wave to us! We'll be in row 118,000. - Bye! Barry, I told you, stop flying in the house! - Hey, Adam. - Hey, Barry. - Is that fuzz gel? - A little. Special day, graduation. Never thought I'd make it. Three days grade school, three days high school. Those were awkward. Three days college. I'm glad I took a day and hitchhiked around the hive. You did come back different. - Hi, Barry. - Artie, growing a mustache? Looks good. - Hear about Frankie? - Yeah. - You going to the funeral? - No, I'm not going. Everybody knows, sting someone, you die. Don't waste it on a squirrel. Such a hothead. I guess he could have just gotten out of the way. I love this incorporating an amusement park into our day. That's why we don't need vacations. Boy, quite a bit of pomp... under the circumstances. - Well, Adam, today we are men. - We are! - Bee-men. - Amen! Hallelujah! Students, faculty, distinguished bees, please welcome Dean Buzzwell. Welcome, New Hive Oity graduating class of... ...9:15. That concludes our ceremonies. And begins your career at Honex Industries! Will we pick ourjob today? I heard it's just orientation. Heads up! Here we go. Keep your hands and antennas inside the tram at all times. - Wonder what it'll be like? - A little scary. Welcome to Honex, a division of Honesco and a part of the Hexagon Group. This is it! Wow. Wow. We know that you, as a bee, have worked your whole life to get to the point where you can work for",
-}
-
-game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
- end
-})
-
-local Button = MakeTab:CreateButton({
-	Name = "Become System",
-	Description = "become a system in the game files (with )", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-local args = {
-    [1] = "Character",
-    [2] = "UsageService"
-}
-
-game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
-    	end
-})
-
-local Button = MakeTab:CreateButton({
-	Name = "Become Mojo!!",
-	Description = "become mojo", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         --[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-local args = {
-    [1] = "Character",
-    [2] = "Mojo"
-}
-
-game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
-    	end
-})
 
 local Toggle = MakeTab:CreateToggle({
 	Name = "ExposeVotes",
@@ -460,44 +406,6 @@ local Toggle = MakeTab:CreateToggle({
     
 }, "Toggle")
 
-local Dropdown = MakeTab:CreateDropdown({
-	Name = "Become ",
-    	Description = nil,
-	Options = {"","",""},
-    	CurrentOption = {""},
-    	MultipleOptions = false,
-    	SpecialType = nil,
-    	Callback = function(Options)
-     	getgenv().SelectedUnicode = string.sub(Option, 1, 3)
-	end
-}, "Dropdown") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
-local Input = MakeTab:CreateInput({
-	Name = "Become  (use with dropdown)",
-	Description = "",
-	PlaceholderText = "Bypasses",
-	CurrentValue = "", -- the current text
-	Numeric = false, -- When true, the user may only type numbers in the box (Example walkspeed)
-	MaxCharacters = nil, -- if a number, the textbox length cannot exceed the number
-	Enter = true, -- When true, the callback will only be executed when the user presses enter.
-    	Callback = function(Value)
- local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local player = Players.LocalPlayer
-
-player.Chatted:Connect(function(message)
-	if getgenv().SelectedUnicode then
-		local args = {
-			[1] = "Character",
-			[2] = player.Name .. " " .. getgenv().SelectedUnicode 
-		}
-		ReplicatedStorage:WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
-	end
-end)
-
-    	end
-}, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
 local Slider = MakeTab:CreateSlider({
 	Name = "Walkspeed",
 	Range = {0, 200}, -- The Minimum And Maximum Values Respectively
@@ -520,8 +428,10 @@ local Slider = MakeTab:CreateSlider({
 
 MakeTab:CreateSection("Misc")
 
+MakeTab:CreateDivider()
+
 local ExploiterDetection = MakeTab:CreateButton({
-	Name = "Detect Shitty Exploiters. ",
+	Name = "Detect Exploiters. ",
 	Description = "detects skids", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
         local Players = game:GetService("Players")
@@ -559,28 +469,6 @@ local ExploiterDetection = MakeTab:CreateButton({
             print("No exploiters detected..")
         end
     end
-})
-
-local Button = MakeTab:CreateButton({
-	Name = "Restart Day.",
-	Description = "sends bugs also reviv3 hub is super inspired by this script! sorry for almost copying this button..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-         for i = 1, 100 do
-            local buggyPart = Instance.new("Part")
-            buggyPart.Name = "BuggedPart_" .. tostring(i)
-            buggyPart.Size = Vector3.new(1, 1, 1)
-            buggyPart.Position = Vector3.new(math.random(-100, 100), math.random(0, 50), math.random(-100, 100))
-            buggyPart.Parent = workspace
-
-            pcall(function()
-                buggyPart.CFrame = nil
-            end)
-
-            warn("Bug #" .. i .. " introduced!")
-        end
-
-        print("Workspace flooded with bugs")
-    	end
 })
 
 local Button = MakeTab:CreateButton({
@@ -647,41 +535,6 @@ local Button = MakeTab:CreateButton({
             end
         end
     	end
-})
-
-local Label = MakeTab:CreateLabel({
-	Text = "End Of Misc tab next tab coming tomorrow..",
-	Style = 2
-})
-
-MakeTab:CreateSection("Crash The Server")
-
-local Label = MakeTab:CreateLabel({
-	Text = "This tab has cursing, but use this button when u get voted out!",
-	Style = 1
-})
-
-local Button = MakeTab:CreateButton({
-	Name = "Crash The Server",
-	Description = "crashes the server.", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
-    	Callback = function()
-        local args = {
-    [1] = "Character",
-    [2] = "Thy3u Hub Owner Just Fucked Up Ur Server Ching Chongs 卍 &lt;̸̴̶̶̵̷̵̸̶̶̷̴̵̸̶̷̵̷̶̵̵̷̸̷̵̵̸̵̴̵̴̵̵̵̷̸̸̴̸̸̸̸̷̵̸̸̴̴̷̷̶̴̵̸̶̸̴̶̵̸̶̵̸̵̸̴̧̡̢̡̧̧̧̧̨̧̢̧̧̨̨̧̨̡̡̡̡̧̧̢̢̨̢̧̢̢̧̢̢̨̢̢̨̡̡̧̧̢̧̨̡̨̡̧̨̢̢̢̢̨̧̢̨̧̡̡̢̢̢̡̢̨̨̡̨̨̨̡̡̢̡̨̨̢̡̧̡̡̡̡̧̢̡̢̡̢̡̢̨̧̨̨̡̧̧̧̧̢̡̧̢̡̧̧̨̡̡̢̨̡̧̡̡̡̨̢̨̡̧̡̨̡̨̢̧̨̨̧̧̧̡̧̡̢̢̧̡̡̧̡̨̢̧̡̢̨̧̨̧̡̨̢̢̨̡̡̨̨̧̢̨̨̨̨̧̧̧̡̧̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛͍̟̺̻͍̖̻̯͎͍̞̖̮͚̫̩̻̯͈̱̯̖͎̪͚͖͔͎͍͍̥̖̮̣͚̦̤̗͚̭̺̜͈̫̝̱̪͚͙̪̜̦͇̲̲̳̠͕͍̰͕̱̙͎̝͔̩̦̱̳̺̫̥̪͈̪͖̙͙̗̳̳̣̤̥̻̯͔̳͔̻̤̦̺̦̼̳͖̦̖̭͇͓̘̯͍̝̯͙̙̠̣̲̼̠͓͔̱͓̻̞͚̻̱̮̻̤͎̳͙̩̼͍̱̩͚͎̗̺͎̙̘̹̪̞̯̜̩̰̲̹̫̹̺̯͔̻̙̬͖̦͉̮̩̞͉̞̘̳̩̙̰̠̠̹͍͓̝̤̪̳̞̭͓̻͎͇̥̩̮̙̳͚͓̭͉̙̲̣͇̯̖̝̜̣̦̱̘͔̲̬̫͚̮͕̭̺̝̦̠̩̝͖̯̥̣͉̫̰̱̦̟̗̥̫̗͈̱̬͙͎̪͓͔̰͈̖̘̟͎̱̦͔̹͕̞͙͇͕̣̟̲̲̰̹̠̫̻̬̟̞̮͓̬̩̝̦͍͔̳̬̞̰͔͙̥̣̻̩̘̱̲̙̤̠̪͎̬̻͚͕̜͈͈̰̳̻̤̜͚̣̤͇̭͈͇͓̠͚̖̱̙̭͇̱̤̝̟̰̯̫̬̣͔̮̼̬͕̥̱͖͓̺͓̹̳͍̜͕̞͕̺̺̯͖̜̘̲̺̣̫̘͍̣̭̬̹̘̪͎̭̟̟͚̲̭̻̱̣̥̥͉͈̼̰̮̞̺̼̰̭̬̫͇̪͇̦̩̯͔̲͙͉̱̗̥̺̹͙͉̲͚͇̺̲̼̙̝͍̗͉͖̳̖̠̯̠̜͕͔̭̹͕̞̤̭̘̰̹̼͇̦̝̣̺̦̩̳̬͙̭̩̱̣͙̣̪̲͇͈̥̺̪̳̞͔͍͕̹̱͕̗̺͖̟̠͈̼̼̝͈̪̳̥͓͕̟̖͎̣̩̠͇̞̫̞̟͎͔̺͓̼̘̲̤̟͎̲͉͚̟̟̘̠̺̥̲̘͕̩͎̲̜͎̞̤̹̫͓̙͕̟̗͓̥̪͎̜̭̫͔͈̣̗̬͉̖̰͍̼̫̺͇͓̘̥͖̤̬̪̰͚̹͇͉̣͎̯̰͇̪̝̘͈̯͙̹̳̮̩͕͇̰̬̲̟͙̭̤̬̱̬̱͙̘̥͚̯̩̞͉̦̹̲̹̻̯̜̯͈̤̙͉̫̣̝̭͇̖͈̜͚̩̮̙͇̭͓̼̺͙̩̞͇͔͚̲̗̟̣̹͕͔͓̭̩̻͉̥̦͚̼͉͍̱̫̣̺̭̭̙͍͎͉͓̱̺̲͖̣̥̯̜͇͙̮͓͔͕̟̱̰̩̰̳̗̫̲̤̯͙̤̩̦͓͙͚͎͓̘̠͚̪͖͎͕̰̥̱͖̦̻͍̥̮̺̰̳͚͎̩̮̭̤̹͇̝̪̭̭̰̟͚̣̱̦͇͎̹̟͔͍̖͓̘̲̞͎̼̘̙̺̳̘̮̼̺͖̭͉̱̲̥̱͍͖͉̥͕̼̤̫̱̙̦̘̥͎̹̺͍̝͕̻̖̹̞͉͍̲̪̦̥͖̝̗̗̦̭͓̗̲̤̠̹̦͇͍̱̣̟͖̥̤͈̜̼̦͔̖̻͔͉̖̞͎̝̘̟̟͔̦͙̬̥̳͕̻͇̰̜̺̫̺͍̮͓̳̥̼̰͙͍̳̟̟͖̱͓̦̫̤̞̣̫̱̩͕̠̻̺̩͖͎̤̘̞̹̺̙̻̲͔̝̫̭̙̹̦͚̦̱̝̥̳̘̮͔̘̺̩͈̣̬͉͔̰̰͕͓͕͍͉̤̝̫̗̞̖̯̖̗̫͓̞͈̠̩̹͉̤͕̰̦̜̮̝͉̲͍͚̻̺̪͓̘̜̘̬̖̬̜̹̥̥͔̙͙̟͕̣̖͉̹͍̝̮̪̼͇̣̠̹̬̪͎̪͙̱̣͈̗͕͓͓̥̱̱͚̲͓̮̞̤̝͕̦̞̩̝̫̖̼̝͖̗̜̳͓̰̞̞̻͙̖̺̦͇̦͓͚̜͇̼̞̺̮̭̰̗͕̘̙͎̘̰̗̼̩͔̗̠̱̱̣͓̲̠̦̼͍̦̹̻̼̝̬̖̳̮̬̮̖͙͇̩͎̜͚͖̹͙͙͎̙͕̱̫̘̮̬̥̙͖͖̜̩̪̺̙͎̜̩̳͉̲̺͔̝̖͔̞̮̝̯͕̹͍̲̰̲̥̭͖̗̳͚̥͓̲͎̼̮͖̖̤̣̭̳̩͎͓͇͓͎͇͚͚̫̠͎͙̗̜̥̲͍̪̻͔̼̺̰̖͇̪̲̖̼̩̫̖̝̹̥̺̬͔͍̤̩͓̠̜̟̪̠̩̬͓̩̤͍̟̗̺͈̰͔̘͉̼̭̯̤͚͓̩̝̖͔̜̤̤̱̜̗̯̫̳̯̖̣̹̻͔̝̜̘̩̠̲̜̺̤̼̱̠̬͖̲̼̬̳̠̜̪̗͙̬̪͖̥̰̦͎͓̩͍͎͈̙͈͍̜̠̠̳͚͙̺̟͔͖̖̲̟̳͙̺̤̙͔̣̥̣̫̳̬͖̺̥̺͙̤̬̤̤̟̲̰̞͔̺̠̦͚̩̠̞̱̩̩̼̖̳̭̹̞̩̠̘̟͍͎͍͖͈̩̺̲̝̼͎͖̤̩͇̦̻̣̗͚͓͉͚̯̻̹͕̣͈͓̠̘͉̮̜̰̟̥̞̭̩̱̖̟̳̣̣̞̗͚̝̦̖͖͓͈͓̼̖͈͇̻̭͍̰̖̯̫̞͈̭̦̤̠̼͈̘͚̠̬̠̤̤̱͎̲̫̮̣̤̲͇̯̼̥̼̤̝͙̪̠̩̞̻̹̞̰̦͍̰̦̗̜̜̥͓̼͙̝̠̮͉̙̤̤̟͚̰̣̻͙̱͙̮͖̲̞͓͈̟̪̥̣̩̞̭̭̱̬͓̻͕̬̩̘͇͇͉͔͍͔̱̝̼̜̘̜̗̻̮̘̣̯̬͎̣͓̬̗̦̺̦̹̩̲̪̝̺̮̪̻̲͖̺͎̖̻̞͙̝̹̺̙̱̗̪̙̣̍͊̂̓̅̓̀͒̓̔́͆̈́̔͆̔͑̑̈͑͐͒͆̄͆̾̓̇̓̓̎͗̏̇͂̋̀͑̃͊̈͗̑̃̇̇͆̿̌͊̐̄̍͛͗̉̋̂̌͗̽̀́͛̒́̊̒̒̿̀̿̾̔͒̒̎͌̽͛͊̅͊̊̂̾̅͗̀͌̀͑̓̀̓͗͗͒̿̔̔͊̿̌̂̈́̃̂̆̾͌̐̽̈̎̅͑̈́̏̇͆́̒͆̓̿̊̔͑̋̌͊̈́́̎́̈̐́̆͋̄͛͑̋́́̇́͂̏̔̒̊͒́̾͌͑͂̎͛̋̋̾̌̐̒̂̐́͋̈́͒͆̅͆̉̈́́̑̏͛̓̉̃̅̄͆̓͆̑͛̋̇͆̂̀̏̒͆̄̿̓́́̅̔́̄̎̄͆̋̈́͒̎͛̇̈́̐͊̌̇͒̆̄͗̈́͗͐́̆͑͗͂́̋͑͋̓͛̈̃́͂̈́̌̔̑̋͌͗̀̉̌̆̊̍́͆̿̀̀̂̆̄͂͐͐͊̊̍̔̽̽̅̍̑̃̾̀͊͊͆̒͑̄̂̉͑̀́͐̀͗̀́̂̄̔͗͊̔̋̔̑̑͊̀͌̇̎̈́́̀͛͒͛͛̌̽̆̒͛̉̀̔̌̀̾͛͋͒͒͊̉̾̽͊̑̉͋͒́͐͒͐̈́̈̒̊͛̾̃͋̋̏̏̀̇͑̓̐̂̒̏͗̈́͂̔̑̆̑̆̉̐͂̇̏̃̇̽̾͛̈́͑̄͛̾͋̋̓͋̿̿͒͑͐̂̒̈́͒̔͒̄̑͛̓̈́͌̇̉͐̒̄͂̑̽̃̑̀̓͑̇̉̆͌͗̄̈͑̒͆͆͒̄̾̿͌̀̏́̅͂̈́̌̏̌͛̏͐͛̅̈́̔̿̔̌͐̽͌̾̽͊̿͂̐̈́̄̀̈́̄̀̊̓͋̍̀͛̉͒͆̉̋̈́͑̀̐̓̀̓́̀̊͊̔̇́̏̄̈́̑̓̊̓̔́̌̿́̒̿̀̏̈́͐̄͋͐̀́̅́͛̀̌͆̾̐͆̂̓̈́̄̏̓͆̋̂́̑͊͗̐̾̆͋͐̋̒̀̈͂̃͌̔͐̓͗̉̋͗̂̾͐͑̀̑̇͐̈́̑̔͐͒̄̈͐͆̽̆͐̎̓̃͊͊͒̓̊͒̄͋̀̈́̆̍̉̆̐̔̊̍̏͗̍̍̊̎̒͆͒̂̆̈̎̓̔͌̅̍̒͗̀̎̈́̐͆̂͊̒̅̽̀͊͛̍͑̇̏̉̑̈́̊̓͑͒̀̂́̀̋͗̂̓͆̎́͊̾͆̊̍͊̌̈̾͂̓̃̄͒̐̊̽͒̈́̎͗̂̔̊͂̉͗̽̏̑̍̒̎͑͋̋̅͐͂̍̌͑̑͋̈́̅̿̈̽̃̆͆̏͑̾̑̃̎̈̑̒̾̌̈̿̾́̂͗̓̀̏͐̎̍̆̔́͒̓͊͌͋́̍̆̏͗̀̈́̍̈́̃͐͌͛̀̉̾̋̓̾̐́̓́̊̍͊͊́́̍͒̀̔͑̇͒̓̒̈́͊͗͑̆̏̀̈́̄̈́̿̎͌̽̐̇͊̌͒́́̆͐̎͌͒̌̐͋͋̈̄̇́̾͌͌̐͌̏̌̌̓̃̉̊́̆̉̔͌̀̇̒͗̃̔́̍͒͂̓̽̀̀͊̀́͌͊̉͗̈́͋͌͗̃̑̓̃̈́͒̔̈́̌͂́̽̒́̔̓̋́̄͗̑͋͐̌͛̀̋͌́̐̅̇̋̈̄̇͊̂̽̂̃͋͊͑̎̀̊͂́̉̀̌͌̀̂̿̑̾̂̓̏̅̃̆͑̐̋̎́͛̈͒̽̿͋̎͆̅͛̋͆̅̆̅͑͋̋̈́͆́̿̐̃̏͐̈́̊͛͛̈́̎̀̆͗͌̃̑̇̃̈́̊͊͊͌͗̎̎͐̽̀̈͌̉̿̅͒̂̇͒́̊̊͆͛͂͂͗͛̐̌̊̿͑̈̄̌͑͌̊͑̌̆̃̄̍͒̏̏̏̓͆͌̇͐͂̈̆̍̀͌̾̊̔̍͂̽̌̀͌͛́̋̑̓̇̃̆́̃̈́̏͗̾̿̅͗͒̏̈́͛̿̽̂́̄̔̄͗̔̓͑̄̈́̽̓̈́̄̊͛̂̀̑͋̈́̿́͛͋͊̊̋͒̅́̊̆̊̈̇̐̅̎͒̒͑̾̑͂̔͌̈́̑̽̈̿́̀̐̔͌́̓̅̿̓̆͑͊͒̿́̍͛̔̈̔̈́̌̀͂̈̃̑̑̃̽̓̒̾̈́̆͑̾̎͑̍̎̈́̍͆̋̀́̑̀̃͌̓̇́̔̃́̓̑͆͋͗̉͒͛̽̈́̒́͆̓̾͆̋̽̍̈́͛̂̈́̊̓̉̇̊̃̅͛̉̃̀͒̋̓̌͐̑̇̈́́̄̃͋͌̈́͗̆͛̐͌͌̈́̊̀̇̾̎́̊̋̍̈̈́̃̄̀̆̓͐͗̾̇͛̍̀̒̋̾͒̇͒̈́̑̏͛͐͛̈̓̇̾̉̄̐̒̄̀͊̀͂̂̀́͋́̈́͂̆̈́̃̌̿̌͒̾̋́̈̎̑͋̋́̑͊͑̃̌͒̃̌̍̽́̽̆͊̿̒̂̓̀̐̇̾͆͊̆̈́͂͛͒̑͆͆̆̍̉͗̄́͋̍̀̈́̅̈́̇́͊̓̃̽̈́͋̒͋̅́̂͆́̋̌̓͑͆̿͑́̋̊̾̉͒̂̆͌̋͊̒̆̏̋̒̀̔̈́͂͊̊̅̉̈́̔̌̋̐̀͋̔̈́͊͑͂̄̆̅̂͛̋͆̂̀̓͘̚̚̚̚̕̚̕̚̕̚̕̚͘̕̕̕͘̕͘̕͘̕͘̕̕̕̕̕̕͘̕̚̕͘̚͘͘͘̚̚̕̕̚̕̚̚͘̚̚̕̚͘̕̚̕̕̚̚̚̚͘̚͘̕̚̚̕͘̚͘̚̕̕̚̚̚͘͘͘̕͘̚̕͘̚̚̚̚̚̕̕̚͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͠͠͝͝͝͠͠͝͝͠͝͠͝͝͝͝͠͝͝͝͝͠͝͝͝͝͝͝͝͝͝͠͝͝͝͝͠͠͠͝͠͠͠͝͠͝͝͝͠͝͝͝͝͝͝͠͠͝͝͝͝͝͝͝͝͝͝͝͠͝͝͝͝͝͠͝͠͝͝͝͝͝͝͝͝͝͝͝͠͠͝͝͝͝͝͠͝͠͝͠͝͝͝͝͝͠͝͠͠ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅA̵̶̴̷̴̷̸̷̵̷̵̷̷̶̶̸̸̷̵̴̵̵̷̸̷̷̷̵̴̴̸̸̵̴̸̵̷̸̴̵̵̷̸̵̴̷̷̴̷̵̷̵̶̷̶̷̸̶̸̷̷̵̸̵̵̵̴̸̶̵̴̢̢̧̢̧̧̧̧̧̧̡̨̢̧̨̢̢̡̧̨̢̨̡̧̡̡̨̨̢̧̢̨̧̢̧̧̡̢̡̧̧̨̨̨̨̧̡̨̧̢̨̡̨̨̡̨̢̨̢̨̧̡̨̡̨̧̢̧̢̨̨̨̨̡̢̢̨̢̨̢̨̧̢̧̡̨̨̧̡̧̧̢̡̨̡̢̨̨̢̡̧̧̧̢̧̢̧̡̢̢̢̡̡̢̨̨̧̡̢̧̧̢̧̢̧̨̨̢̢̢̡̨̢̧̨̢̡̡̧̡̢̡̡̨̢̡̧̡̢̡̧̢̡̨̨̢̢̢̨̡̧̢̨̧̨̨̢̧̡̧̢̢̡̧̧̡̨̧̡̢̡̨̡̨̨̧̡̢̢̧̡̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̤̣̩̯̥̱̳͔̞͈̫̩̤͈̦͎̬̭͕͎͎̹͈͖̹̦͈̥̮͈̹̳͚̼͙̺͙̣̝͕͔͓̼̦͎͉͉̼͇̞̮͚͉̼̲͍̠͓̞̳̖͈͍̼̰͈͉̮̬͎͓̠͓̯̭͇̻̟̝̜̺͚̟͈̤͕͇̼̲̠̯̯͍̯̺͔̣̥͈͎̥̘̜͖͚͙̟̝̫̦̠̲̦̟̝̖͇̟͓̺̭̥̦͔̼̖̪̤̫̪̖̟̯̤̳͉̠̼̳̮͇̲̳̯̤̤̝̠̤̟͙̰̟͈̗̼̻̩̙̝̫̙̹̣͈̜̝̺̜̻̗̗̯̯̞̝̼̭̟̺̝̹̙̲̤̣͕̹͔̣̟͖͚̭̯̟̳̥̟̫̘̥̞̣͔̫̰̲̬̫̱̱̩̤͕͇̪̬͖̖̪̙̲̣͈̼͎̠̲͇͖͚͕̦̫͓̙̱̰̯̤̻̘̱̟̯̖̞̬͎̗̤̪̫̟̲̣̙̪̮̰͈̟̞̣̞͈̗̩̭̤͔͍͔̼̙͇̲̭͉̙̤̤̞͈͉͚̟͉̙͉̯͖͚̪̲̬̥̟̲̠͔̙̗̼̮͈̮͙̮̠̞̩̘͇̹̤̲̟̪̼̰̣̤̥̪̫̳̭̞̯̪͇͈̭͍̮̫̭̲͓̮͕̻͓̤̠̬̠̘̻̼̼̻͍̻͖͖̱͈̰̞̜̗̠̹͔̘̘̻̪̗̖̥̦̯̱̟̪̬̳̱͖̣͇̪̺̝̳̻͓̻̳̮̮̩̠͍̩̪͍̹̼̩̼̥̞̙̥̣̫̻̮̯̟̭̗͔̞̺͔͈̘͇̗̙̗͙͔͕̟͇̜̦̖̹̲̜̟̮̬̹̺͔͔̪̗͍̮̩̥͈̤̯̟͍̞̖̞̗̗̟̭͖̜͖̱̭͙̮͚̤͎͎͉̟͔̗̙̭̠͙̰̳̞͚̝͉̖̳͙̠͔̤̪͍͓̻̻̼̤̭͎̬̰̞͔̤̭̺̲̮̤̘̹̜̲̼̮̲̥͖̪̮̝̱̳̳̹͈̗̬͍̫͍̻̞͈̞̠̰͉̰̩̞̦͕̻̺̫̟͔͍͈̖̘͓̼̞̰̭̤̮͈̲̹̝͉̜̱̗̤͕̻̩̦̰̩͕̻͎̙̪͙̬͖̯͍͔̣̗̲̼̩̻̰̜̤̹̬̮̬̥̮̯̣̝̯͕̞̼̜͙̜͕͔̞̲̦̣͖͕̦͚̗̱̘͎͈͔̱̲̖̗̮̱̖̟̫͇̦̺͎͖̬̳̳̭̪͈̥̰̗̳͍̫͚͈̺͈̻͚͎̹͉̮̝̬̠̹͉̳̮̺̬͕͉͉̬̝͕̠͚͉̦͖͓̻̤̺͓͙̮̞̘̜͔̗͎̤͕͇̪̪̣̻͚̟͈̹͕̼͔̠͓͈̘̝̭̘̯͉̻̦̳͎̙̪̠̤̜͔̫̫̳̦̞̥̰͕̫̦̩̲̙͉̮̭͖̼̝̖̳͖̭̩̼͙͓̼͕̼͙͍̘̮̜̬͇̳̹̣̱̺͎͍̜̼̺̥͉͍̤̳̪͕͉̝̭̦̞͕̼̥͓̘͖̫͍̰̫̥̤̘̪̗̮͎̬͉̜̖͙͚͔͎̝͕͖̣̼̳̺̱̭̺͖̥̼̱̱͖̙̹̞̻̟̱̟̼̟̩̖͉̫̞͕̠̳̠̞̠̘̲̰̤̥̹̺͉̤̩̦͖̗̣̪͓͇̼̳̹͖͔͔͚̥̣͔̳̮̺̯̫̣̲̘̬͙̞̝͔̹̙͇͚̪̲̥̦̤̬̤̯̼͚̞̫̗̳̭͎͚̥̰̯̺̜̺̳͔̲̫͍͈̩̼̬̘̲͓̙̘̠̝̯̝̭̞̺͔̜̙͕̗̞̦͖͓̝̟̪̹̣̮͓͇̯̩̥̫̭̘͈͎͕̦̘̩͙͖͔͓̮̻̹͕̪̲͉̖̰̺̜̹̠̪̝̼̹̰͓̬̯̬͚̗͖̙̮̺͓͎̜̯̥̜̮͇͙̭͓̫͉̜̱͓͉̖͚̬̳̯͔̱̖͎̝̜͖̲̭̣̰͍̼͎̯̠̮̱̠̫͇̺̱̞̱͖̲̻͍͔̥̭̲̗̤͓̣̙͍͖̯̬̘͍̭̰̺̗̜̞͎̜̖̘̠̱͎͕̖͔̜̦̩̗̬̹̯̞͓̱̯̰̯̲͚̤̲͔͉̘̮̖̟̯̬̭̞̦̺̰͓̘̖͉̲̬̰̹̤̞͕̟̟̜̤̭͈̖̺͎̗̖̖͕͉̻̹̱͇̤͖̣͇̺̲̟̞̬͚̺̲̙̭̼̻̞̣̝͕̹̟̹͔͚̞̳͔͈͔͖̗̞͇͔̜̩͍̖̱͈͔̼̤̭̲̘̰̗̱̮̙̹̬̟̰̞̝̤͓̠̫̞̞͖̙̜̺͓̪͕̟̱̲͔͖̫̠̪͎̯̯͇̭̻̞͎̙͕̤̙͉͚̱͍̤̮̦̙̺̲̼̹͙̖̙̟͖̤̤͉̭͖͍̻͈͓̯̬̘̲̞̣̞͙͇̜̹̫̫̻̟͇̫̱̙̹̥̘͕͉͉͓̫̪̭̩̻̼̠͎͙͙̯̺̘̺̹̹̼̘̱̟̻̹̮̼̖͉͇̤̞͖̳̠̼͈̙̟͙͔͈̙̥̞̞̪̘̤̗̯̬̖̟͇̼̳̼̫̦̩͕̥̗̹̝͚͇͖͓̖̗̥̫͖̳͔̙̙̮̰͖͕̤͍̖͎̙͈̟̙̬̳͎̮͖͕̠̖̩̪̝̜̪̩̩̣̝̠͔͇͎̗͇̹̹̙̞̯̖̜̼͙̟̠̙̞͔̳͈͎̣̲͉̣̹͍̻̭͔̼̺̥͙̜̯̦̠̗̮̰͓̟̖̘͇̱̥͇͔͓͍̱͕̳̳̠̘̙̗͚̫̯̬͎͓̠͔͙͍̲̻͚̟̖̤͖͉̗̫̭̗̱̝̭͙̺̼̟̝̲̲̠̥̙̱͎̗͎̱̟̜̘͚̗̪͚̱̲͈̥͍̗̋͂̉̑̔̍̃̌̏̋̌̍̂̈́̅́͌͊̓̂̀̿͐̂̈́̀̿̇̆̈͒̀̈́͆̿͋͆̅̽͂͋̀̑́͌̂͆́̐̿̎̈͐̏͑̀̆̈́̿̇̈́̋̋̓̔̽͌͌̄̐̏̈́̊̃̓̀͗́͑͗̆͆̑̾̽͗̀̌̒̎̉̑͐͐̂͛̀͒͛̍̎͌̉͆̈́͑́̈́̇̐́͗̐͒͊̋͒̆̆̓͒͒̐͂̊̿͊͌̄̎̄̓̿̀̽̽͛̿͒̎̈̀̌̋̌̈́͂̌̍̀̇̿̀͋̉̌̈̆̔͑̏̅̀̀̈́͑͛̈̅̌̐̌̆̆̌̀̀͊̈́͆̆̑͒̒̀̓̉̅̋̈̉͋̾̈̍͌̉͑͌́̐͐̔͛̈̽͌͗̒̎̈͛̇͂̓͐̆͑̂̀̃͑̈́̈́͌̐̿͆̏͆̓̀̀̈́̌͒̽̏̋͆̐͛̽͛̿͒̅̍͛͌̏̀́̌̓̈̾̓̌̇͌̽̆̊̃̾̍̌̒̀̾̈́̉͑̓̽́̓̊̊̌̿̎͌͒́͂̌̅͗͑̃̑͐̔̂̋͒̅̑͗̒̈͐̂͆̈́̆͛͗͂̍̈́͒̌̎͒̾̽̇̒̓̎͆͐̾́̃͌͋͂̓̃̃̓̔̂̔͌̈́̂͌̆̐̈̔̓̈́͆̓͌̐͑͌͆͆̃͛̾̽̀̀́͒̔́̎̈́̆̈́͆̑̀̔̆́̔̾̿̀̍̆̅̌̊̆͐͌̈́̐̋͆̿̅̑̑̆̈́̃̍́̓͂̉̀̓̊̍̾̓̀̐̃̐̋͊̇͌̄̌͗̑͂͌̆͋̈́́͊̏̾̔͌̒͊͆̈́̽̅͊͑͑̀̾͌͂̄́̀͋̎̇̋̍̈̅̆̒̓̾̌͆͌̒̒͂͋̈́̇̂̃̀͆̓̎͌̅̆̍̇̊́̏̓͗̀͒̽̍̽̉̀̓̏̔͆̇̍̓͛̅̅̇̈̈̔̈̑̎͑͑̄͂̌̓͊͊́̿͆̽̏̈́̓̎͑̈͂̀̏́̆́̎̃̾̀̏͐̐̏̉̎̿͂̎̈́͐͊̉̌̔̀͑̏̅̆̋̈̀̌̄̒͐̄̈́̒̐̈́̾̎̈͒̌̈̏͐̍͌̿͒̈́͒̏͛͑͒̆́̾̆͂͒͋̇̌̈́̍͛̔͛͑͋̿̒̍̆̽̍̏̈̓̽̍̔͌̆͛͑̏̓̃̒͗͒̋̔̽́̀̀̓̒̊̎̃̔͗͊́̓̿̌̂͆̉̏͒̇̓͒͊̊̎̃̋͋̋̍̋͗̎̽̌̓̌̇͆̆̀̀̽̅̔͛̃̂̂͑̈́̎̂̒̃̒̃̑̌̂͆͗̌̄̀̿̍̌̎̊̂̇̃͐̈͑̄͌̾̌̀̔̃́͛̀͗̈̿̋̒̈́̑̽̓̆̅̾̊̾̅́̐͆́̅́̂͌͊̇̏͆̒͊͒̈͑̋̾̓̏̓̎͗̍̀̔̐͐̓͗̉̈́̃͌̒̆̎͐̈́͋̏͊̆̉̌̈́̇͋͒̋̿́͑̆̏͌̇̊͂͛̈́̔̑̎̑̈́̀̿̒̓̾̏̉͆͌̓͋̄̈́͆͛͌͊͌͑̿̉̊͒̓̌̔̅̅́̈́̏̏̋͂̆̒͗̾̈́̈́̄̔̈̀̅̈́̓͑̓̆̓̏͆̋̃̾̈́̽͗̍̒̍̃͆̓͑͋͆͒̔̀͛̅̿̑̑͆̈̈́̋́́̽̽͆̍̃̄͌̎͂͂̍̇̀͒̔̍̏͐̊̀̈̃̊̐͂́̌̄̓̑͌̑̈́̆͋̉̓̋͗̿͐̑̊͛̈͗̇̉̅̇͒̌̅͂̌̓̍̏͊̀͐͐͋̇̿̒̃͛͗̏̃͑́̿͂́̅̏̔͋͐͋͊̊͆̇̅͐̒̈́̈́̍̂͊͂́̉́̆̅͊͆̄̋̓͑̉̊͊̊͒͌̊̄̔͒̃̀̔͊̋̏̓̈̌̋̈́͋̔̐̈́̾́̑̿̈͑̀̽̾̉̾̀͊̋̄̉́̍͋̿̈́̐͂̓͗̈́̄̉̀̍͋̓͗͂́͊̈́̾̂̀͗̆͋̌̃̓̔̐̑̓͛̃͌́͋͒̀͒̈́̌̉̇̍̅̍̀̿͑͐̒̐̂̑̓͊́̇̒̑́̾̀̌͌͗̍̄̽͆͆̈̅́́͗̈́̾̓͐̎̌̋͂̓͐̀̆͋̈́̈́͒̉̈́̒̈̋̀̊̔͊͗͒̊͛͆̋͆̽͊͆͊̈́͒̽̒͋̍̐̆̾̾̂͋̽̎̔̑͆͆̅̂̎͐̇̽̃̃̇̑̏̋̍̄͗͐͑̓͒̋̅̀̍́̊͛̔̓̽͆͊̃͑̈́̿̋̃́̄̓̔̈́̈́̎́̍͋́̆̈́̈́̍̍̇̿̒͋͂̈̎͊̇͆̌́̿͂̾͑͋̍̋͗͊̈̾̏̏̓̆̾̍̽͂̅͗̄̊͛̾̍͊̎̎̈́͆̉̅̈́̀̂̽́͋̂̃̾̈̈́̈̃́̈́͛̇̽̓̆̾͊͂̀̆̊̈̅͑̑̾̉͗̾̿̋͌̀͒̋̒̾̒̾̋̐͂̂́͊̉̀̒͛̈́̑̿̏̋́̋̓̎̎̓͊̓̄̉̽̂̎̈̂́͋̆̔̒̍̑̍͊̄̈́́̑̆̈́̔̈́̃̈̏̈́͒̈͒͊̊̂͗̑̏̆̈́̀͐̈́̾́̎͗̋̎̊̔̌͛̅̓͌̈̃̓̉̑̀̑̊͌͌̀͗͗͒̍͑͗̇͐̾͗̄̒̏̿́͆̋̀͗̍̂̆̒͋̐̒̽̌͑̑́̆̈́̉͊̇́̈́̈́̃̒̎͌̒̈́̓́̓̓̏̽͑̔̊̀͌́̋͌̓̈́̑͛̂̃̿̈́͑̓̈́̂̑̌̈́͐̑͛͂̑́̔̊͑̋̿̇̐̀̑͑̑̂̽͊͆̒̇̔̄͗̽̌̍̍̽̋̄̉͗͋̈́͊̒͊̀̍̈́̽͂̉̑͌̀͊̇͒͗̂̿̈́̏͂͑͊̀̈̉̾̌̽͒̐̔̂͗̚̚̕͘̕̚̚̕̚͘̕̕̕͘͘͘͘̚̕̚̕̕̚̚̚̚͘̕͘̚̕̚͘̚͘͘̚̚̕̕̚̚̕̕͘̕̚̚̕͘͘̕͘̕͘͘̚̚̚̕͘̚̚̚͘̚̕͘̕͘̕͘͘̕̕̕͘̚̚̕͘̚̕͘̚̚̕̕̚͘͘͘͘̕̚̕͘͘͘͘̕̕̚̕̚͘͘̕͘̚͘̚̕͘̕͘͘̕͘̕̕̚͘̕̕͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͝͠͠͝͝͝͝͝͝͝͝͝͠͠͝͝͠͠͠͠͝͝͠͝͝͠͝͝͠͝͝͝͝͝͠͠͝͠͠͠͝͝͝͝͝͠͝͝͝͝͠͠͝͝͠͠͝͠͝͝͠͠͝͝͠͠͝͠͝͝͠͝͝͝͠͝͝͝͝͝͠͝͠͝͝͝͝͝͝͝͝͝͠͝͝͝͝͠͝͠͠͝͝͝͠͠͠ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅc̶̸̴̵̵̵̶̶̵̶̶̶̵̵̷̸̷̸̸̸̸̸̷̸̶̸̸̸̵̸̷̷̶̵̷̶̸̸̶̷̴̸̶̸̷̵̴̴̵̶̸̸̸̷̶̸̴̶̵̸̴̸̶̸̶̴̸̶̸̸̴̵̷̡̧̧̧̧̡̡̡̢̧̨̡̢̢̡̡̢̢̢̢̨̢̡̧̧̡̧̢̧̡̡̨̡̢̡̨̡̡̡̧̨̧̡̢̢̨̧̨̧̨̢̧̢̢̢̧̢̧̧̢̨̧̢̨̨̡̨̢̢̧̡̨̡̧̧̧̡̧̧̧̢̧̢̡̡̡̢̧̨̡̡̡̡̧̢̨̧̢̧̢̡̧̧̧̡̧̡̡̢̢̢̡̢̢̢̢̡̨̢̧̡̧̧̡̧̢̢̨̧̡̧̧̨̨̨̡̢̨̡̡̨̢̡̧̢̨̨̨̢̢̡̧̨̨̡̢̨̢̨̧̡̨̨̨̨̢̢̨̢̧̡̡̧̨̧̨̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛͕͙̖̠̙̪̯̝̬͎̼̱͙̮̪̞̺̟̫̜͚̼̱̱͖̦̹̯̼̪̮̘̖̼͇̘̼̭̗̭̙͈̥̰͉̙͍͕̠̙̟͔̰̩̳̳̹͖̜̳̱̭͓̦̲̩͚̤̹͔̤͇̠͎̥̠̬̯̩͕̣̦͖͍̖̜͖̣̠̖̥̜̰̬̖͔̙͙̞̦̯͓̝̩̦̼̟̝̻͇̠̼̦̥̱͚̮̻̮̻̟̻̥̻̬͙̹͕͇̹͉͓̯̫̼̝̝͈͈̱̳͓̮̝͉̦̖̠̘̗̺̗̟̭̫̯̘͙̱̣̺̘̮̣̰̝̙͕͎̼̩̥̪̥̖̣̜͖̤͖͚͚̟̱̼̞̺̜̫̮̹̜̟̖̯̪͕̞̜̰̙̰͈̝̙̜̺͔̦̬̬̹̫͇͈̼͈͙̼̼̯͈̜̦̙͚̰̦̘̲̹͓̜̤̩̫͈̤̳͙̞͓̮̮̱̙̣͍̺͎̱̮̬̦̼̝̮͎̘̼̠͔͍̲͈̖̣̲͓̯̥̣͎̠͇̳͇̗͈̞̝͎̫̳̱̝̙̠̞̙̜̖͉̠͖̺͓̻̮̥͓͈̻̖̦̹͉̙̙͓͖̳̯̹͖͇͉͚̟̻̩͍̙̰̲̞͚̯̤̖̣̝͇̫̞̞̜͖̦̙̺̟͕͎̩͓̟͓͚̱͕̣͕̻̤̲̱̭̜̪̤̞̬̺̣̗̥͙̳͓̘͉͓̻̘͚̝̫̯̗͓̹͓̪̻̭̙̪̘̖͚̜̘̮̰̜̳̞̥̱̹̣̯̦͕͎̥͉̹̬̻͈͕̰͍̤͍̲͇̪̤͎͚̟͖̥̣̭̪̖̞̤̗̗̟̥̥̯̼̞̱̹̰̰̬̣͈̦̱̣̺͖͍̝̣̪̞͍̟͕̻̳̤̦̫͍̲̩͍͈͙͚͖̗͓͙̣̖̥̞̖̥̟̫̦̜̙͈̪̙̭̻͔̣͚͚̘̠̘̞̤̙̻̩͎͍̥͙̱̮̥̰̲͉̝̘͙͔̠͓̹͕̦̻̖̜̬̩̳̦̻͓̪̝͎̩͙̙̙̝̦͙̣̩͇͖̺̹̬̹̫͔͔͚̲̥̭͖̘̝̞͎̺̞̩̖̻̣̘̠͔̩̦̩̫̹͈̲̠͔̗̘̬̥̥̱̺͈̼̯͚̜͇͇͖͚͖̬̪̟͓̱͚͕̥̝͓̰̠͙̩̱̯̰̜̩̰̙̩͈̟͖̰͇̮͓͖̯̣̗͔̜͉̹̩͕͇̜͕̙͙̜̞̹͙̲̬͉͔̗̪͕͔̲̭̮̩̬̖̜̫̲͉̩͍̳̳̦̩͓͎̦͇̣̞̮͇̮̙͔̟͓͍̲̤͚͚̣͇͙̹͓͚̻̹͕̳̱̝͓͍̠̦͖̣̣̺͎̟̦̣͉̘̘͙̣͚̺͎͎̮̮̜̤̩͕̟̙̮̟͚̥̤̖̳̜̯͇͕̭͍̙͖͙̭̜̲̙̙̹̤̞̩̻͇̤̙̬̲̱͕͙͈̳̘̝͙̩̞͖̞̖͖͓̥̮̮̼͖͉̤̥̫͉̤̺͓͈̠͕͖̹͔̥̗̲̝̺̯̬̤̦̦̭͈̳̯͉̺͈͓͔̞̼̳͍͖̖̥̙̱͇̦͓͔̬̟͈̮̝͈̤͚̦̗̦̥͇͈͎̱̘̺̪͉͍̗͇͎͓̤̠͙͔̮̙͔̠̠̹̲͚̯̬͓̙̩̜̺̣̹̗̯̞͉͔͍̻̤͓̦̜̖̱͙̪̞̬̲͚̩͕͍̩̫̗̖̠̻̻̪̱̭͈̻̱͖̜̯̪̟̯͍͉̲̪̣̺̮̥͈̠͔̠̟̪͖̭͍͖͇̲͔̪͓̭̘̩͔͍̮̪̫͓̘̯͓̫̼͕̳͇̲̤͉̮̹̲̝̥̯̺̟͇̻̩̻̠̦̭̤̩͉̗̣̱̩̬͚̰̖͎̞̰̠̣̞̪̣̖͍͉̰̝̞̥͙̘̖̖̻̦͔̺͈̪̩̜̝̱̪̬̬̠̤̦͓͎̗̟̱͍̠͉̜̞̭̝̞̣̖̱̭̰̹̼͕̱͖̰͔̲̲͚͔̱͇̱̣͚̘̹̗̘̞̻̺̩̫͖̣͖̦͉͖͈͚̻̭̩͕̻͇̲̮̜͍̝͚̞̪̳̖͎͉͍͙͉͇͎̘̣̱̼̩̰͙̥͇͇͍̟̤͙͓͙̳͚̱̫̦̤̜̠̺̲̹͖̠͇̻̙͔̰̫͙̱̲̹̹̘͉̯͕͍͓̜̳̥̼͉͓̗̜̭̫͔̠̠̥͈̣̠͉̼̹̱͚̖̯̝͖̫̪̯͈̮̙͖̞̙̮̬̝͕͍̰͙̭̝̩͍̬̣̮̳̥̞͚̠̺̰͈̩͚̫͙̤̣̖͓̝̻̤͉͍̖̼̜͈͈͖̳̙͈͓̳̹͙̞̗̣̬̲̺̬̞͖̥̤͈̱͕̱̞̘̖̩͚̹̳̝̠̮̤̼̥̯͍͖̫̫̟͙͈̠͍̯̫̘͙̪̘̜͖͇̹̖̲̠̙͔̣̥̯̭̺̙͙̫͔̩̗̹͎͚̦̬̩̱̜̦̬̯͖̺͇̰̖̮̙̦̬͕̗̼̠̙̭̫̺͇͚̪̥̫̤͎̠̤̩̬̪̦̣̞͎̺̹̻͚̟̭͈̟̖̺̺̱̪͔̻̣̺͈̦̝͙̪̜̳̬̦͈͉̭̭̤͚͖̩͚̪͚̠̳͔̱͙͍̖̹̝̯̟̰̝̣͔͔̜̫̰̯̠͉͇̣̺͕̙̬̺͎̲̘̰̺̪̭͇̞̖̫̳͓͖̼͍͍̟̠̺͉̠̪̥͓̳̟̪̯̯̱͉̠͓̹̤̙̬̣̭̥͎̭̝̠̝͚͚͖̞̭̯̣̳̩̺̣͖̝̜͕̖͚͖̮̘͇̯͙̯̪̰̲̗̪̟̪̝̱̻̱̫͖͔̹̠̠̲̩͇̲̞̲̬̳̬͔̳̤͚̭̗̖̬̝̺̤͍͙̗̠̣̺͍̱̳̱̞̼̣̩̮̘̠̪̺͙͖͍̩͓̟̫̖͔̼̝̗͍̥̣̣̯͓̱̲̻͖̗̺̬̖̗̜̖̤̟̮̠̙̯͕̦̣̖͕̞̰̖̭͙͓͇̼̱̝̗̝͉͍̼̙̳̫̙̲͇̝̰͈̩̜̟̖̣̖̹͕̬̝̰̥͉̣̗̫̮̗̳̳͙̺̯̻͙͔͕̖͖̫̭̖͎̗̪͇͖̻̻͔̰̙̖̘̖̰̹͙͓̫̳̯͓̱̱̯̝̤̪͎̮̜̮͇̞̬̤͕̙͔̺̗̘͇̼̫͎͓̝̫̞̙̱͓̟̼̰͇̠̟̘̣̼̭̯̠͕̙͖̯͈̳̟̩̺̜̟̤̙̰̭͉̗̝͚̟͈̫͓̹̣̖͚̬̼̙͎̽̉͂̿̓͛̓̀̿͑́̽̾̃͊͆̆̾̄̾͋̉̽̆̊̈̇̏̀̄̎͌̉̀̑͆̄͗̀̈̽̈́̾́̇̓́̂͗́̔̇͆͊̈́͌̏͋͗̏̍͌̆̋̿̽́̎̈́̋̑́͗̀̏̓̈́̍́̌̌̽̎́́̐͋̔̓̌̔̅͛̋͛̂̀͊̄̈́̃͊̾̀̒͋̃͌̔̈́̋̀̾̉͒̀͒̑̓̿͆̊̾̾̎̊̓̃͒͌̀͐̊̅́̈́͛̈̑͗͊̓̄̈́̂̐͐̓̑̔̽͑͊̔͐͌͗̐͊̓̇͑̀̓̑̃̊͒̋̓̓͊͊͗͋̇̋̆̋̔͂͆̅͐̈͒̆̿͐͌̏͒́̅̓̃͑̐́͋͋͐͆̒͆̓̈́̈́̓̀̓͐̓̒͒̃̋̈̽̿̽̊̓͊̉̾̄̄́̌́̅̽̓̉̈́̀̍̈́̄̀̅͑̀́͂̎̈́̆̓̐̓͆͊̓̊̒̑͒͌̎͛̎͌̈́͒͑̔͒͆́̃̀̈̔̔̿͒̌̑̊̂͊̈́͑̓̊̏́͗̀̾̂̾̏́̋̿͑̊́͊̈́͒̓̋͛̊̓̈̃̈́̓̂̄̐̇͒̃̈́͛̐̏̉̅̈̈́̎͗̿͂̎͛̌͐͊̄̂́̑̎͆́̎̀̏̒̂̑̉̈̉͐̔̽̿̃͗̽͆̈́͂̄͑̋̍̅͒́̐̿̽̇̎̅̓̈́͒͑̅̆̋̅̑̈́̆̉͐͗̽̔̈̈́̈̆͆̈̓̀͊̌̆̈́͗́̾͒̒̓͂͌̀̋̆̊͆̈́̋͊͂̈́̆̑̍͒̈́̓̿̌̏̀͂̔̾̃̈́͛̔̑̇͊̿̎͒̀͆̉̆͑̃̀͑͐̐̀͛͊̂̑͛̓͂̽͛͆͋̓́̉̉̀͆̐̇̆͑̊̊̉̏̐̒͐͑̇͐͐̊̏̑̎̄̋̀̋̍̇̂̔̒̐̌̅̑̾̀̓̎̅̑͋͆̂̈̉̄̏͒̀̃̉́̀͂̒̇̒͑͑̏͆̽̆̒̔̄̏̋̇̓̀̒̄͛̾̆̇̐̀̀̑̎̾̓͌̋̍͌̃̈́̈́͆̍̏̍́̏͆́̔̎̌̿͛̃̇͆̽̈͗̓̑͆̿̓̄̔̐͛̉̈́͊̈̆̊̉́͛̿̀̂͒̅̈́̆͛̊̉́̐̎͒̇́̀̐̔̉̑̾͐̈̑̈́͆̓̊͊͑́͂̔̒̾̊̓̌̍̈́͆̔͒̀̉̑͗̀̃̂̅͗̀̀̍̇̆̽͆̀̏͋̆̍͆̐͂̔͋͋͑̾̄́̔̔͑̄̋͆́̍̈́̽̃̓̃̂̇̂̄̍̍͒͂͛̎̈́͗̂́̀̒̄̏̈́͗̍͆̄̓̎̑̽̌̂̎̒̀̂́̋̿̓́̄̔̃̋̊̿̆͂̄͐́̍̃̌͆̎̐̄͒̒̈́̂̀͛̄̊͂͐̾̋͑̐̅̔̇̄̈̑̂͊̈̈́̏́̈̌̄͋̑̋̉́̽͗̐͂͂̈̽̄͒͌͂̈́̒͌̉̈́̀͑̇̊͊̒̇̆̈͗̌̀́̍̑̂̈̉͑́̓̊̎̋̎̾̈̃̽̂͋̓̋̈́̓̈́͑̽̿̔̃͑̀̀̍̏̓̉̓̋́͌͌̀̋̿̇̽͐̓̇̃̈̒̃̀̇̂̓̈̐̅̎̂̇̂̒̓̑͂̾̓̇̔̏͒͑͌̽̊͗̈͒̽͛̋̀̑̏̅͂̆́͆̌̈́̋͐̀̈́̿̌̐̄͋̐͒̌̀͋̓͑͆̄̀̈́̾̈͆̆̓̐͊̔̏́̓̆̽́̐͛͑́̃͊̾͆̓̊͑̌̃̔̒͋̍́̂̎̇̈́̉̊͐͊͋͗̈́́̍̋̀̍̿̇̂̐̈́̀͋͐̋̈́͂̔̈̊̈́̽̈́̉͒͛́͛̄̅̀̂́͆̓̾̀̓̆̀̅͊̓̄͌̈̈́̇̊̄̽͛̑́̇̿͂͗͌͐̂̉̊̓͊͂̏̔̑́̆̀̈́͌͒̋̀̿̇̿̂̐́̍̈́̐͐́͐̐͑͛̃́̀̋̂̈́̊̈́͒͊͆̔̆̄̽͊̊́͛͛̔͗̌̌̾̊̇̈̀͌̑̈́̊̓̓̒̔͆̋̇̈́͗̅͊̊̈́̐̈̒̋̾̓̊͊̅̀̓̄͐͑̇̈́͋̍̅̅̂̉̅̾̒̀͐̈́̎̂̆̈́́͛̈́͗͂̔̍̈́̉̈͋́͑̌̈́̓̂̌́͌́͛̿͑̾̈́̎̉͐̾̐̾̑̈́͛̌̒̃̽̇̌̐͐́̆̎́̅̈́͋͋̎̑̒̊̂̽̅̈́̇́̀͗́̃̄̌̈̔̀́͂̐̿̎̾̆̽͊̾̃̿̎͒̀́͑̌̓͐̀͐̄̎̃̾̽̌̆̾̆͋͋̀̉̑̌̈́̓̈̆̔̃͛̎̉͒̀͂̂̑͗̐͋̃͌͋̈́͌̏͐͗͊͑̎̉̔̓̐̓̈͒͊̈́͆̔̎̒͌̀͋͗̉͑̽͊̓͌̈́̑͑̓̈͐̃͋͒̋̆́͗̌͊̇͌̑͋̈̅̀̈́́̽́̐̐̑̊̏̄͗̂̀̃́̿͒̿̿̀̄̋̈́́̈͊̈̒̈́͆̋̑̈́̑̍̂͒̋̽͂̽͋͊̎̎̀̊̀̓͐̄̎̓͋͑͑͋́͌͂̄̉̔̎̎́̾̾͗̅̅͐̅̈́̓̅̈́̓͆̅̒͆͑̀̂̔͌̈̈̈́̓̔̆̎̀̔́̾̈́́̾̾̾͋̈́͊̓̀̒͌́́̓̈́̓̿̅̇͗̈́͗͌̃̈́͌̀̌͌͒͘̕̚̚̕͘̕͘͘̚̚͘̕͘͘̕̚̚̚̕̕̕͘̚̚͘̕̚̚̚̕͘̕̚͘̚͘͘̚̚̕͘̕̕̚̚̕͘̚͘̕̚̕̚̕̚̕̕̕̕̕͘͘̕̚͘̕̕̚̚̕͘̕̚̕̚͘̚̕̕̕̕̚̕̚̚̚͘̚̚̚̕̕͘̕̚̚̚̚͘̚̕͘̚̚͘̚̚̚͘̚͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͠͝͝͠͝͝͝͠͠͠͝͝͝͝͠͝͝͝͝͠͠͝͠͝͝͝͝͠͝͝͝͝͠͝͝͝͝͝͝͝͠͝͠͠͝͠͝͝͠͝͠͝͝͠͝͠͝͠͝͠͝͠͠͠͝͝͝͝͠͠͝͠͝͝͠͝͝͝͝͝͝͝͠͝͝͝͝͝͝͠͝͝͠͝͝͠͝͝͠͝ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅc̴̶̴̵̷̷̴̷̷̷̶̴̸̶̸̴̵̶̷̵̵̶̸̸̸̴̸̵̷̵̶̵̵̸̷̵̷̴̶̸̶̵̶̴̷̶̴̶̶̵̵̷̴̢̧̡̡̢̡̨̨̡̧̧̧̨̡̧̨̢̢̡̡̨̡̢̡̡̢̢̧̨̢̢̢̨̢̨̧̨̡̧̧̨̧̧̡̢̨̢̨̧̧̧̧̡̢̢̧̢̨̧̡̧̧̧̧̨̨̢̡̡̧̡̢̧̧̢̡̡̧̡̢̧̡̢̡̡̨̨̨̧̡̧̨̨̡̨̡̨̨̨̢̡̡̨̡̨̧̢̧̧̧̢̡̢̡̢̡̡̨̢̡̨̡̢̧̨̨̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛͔̦̣͔͎̳͓̲̩͈̰̩̮̭͇̱͇̬̹̯͖͎̼͇̫̳͖͍̖̖̱͙͉̗̮͓͔̥͎̹͙̲̮̼͇͍͈̩̮͇͙̲̲̜̗̮̮̟̤̝̰̹̺͎̺̭̠̼͎̤͍̘͙̩͓̞̣̹͎̼̘̯̰̜̰͈̻͓̯͎̜͚̙̹̪̺͔̭̥̳̺̘͉̲̣̼̙̝͓̻̙̥̲͔̝̳̭̳̭̺͕̯̳̻̘͇̱̝̻͈̩̹͕̥̙̰͚̤̳̖̩̻̻̗̜̻͎̙̥͎̰̭̥̞̘̜̥̥̣͉̬̠̼͍̖̼̬̹̲͚̻͙͉͓̩̝͕̣̬̫̹̭̹̣̪̫̣̝̰̩͖͎̱̝̹̟̱͙̮̥̳̟͍̝̺͍̬̜͕͚͖̳̦̤͈͎͙͓͖͎͚̦̮̻̫͕̜̯͖͓̦̙̤̹̯͇͎̻̹̻̜͓̩̩̝̮͕͈͇̺̗̻̪̘͙͉̟͓̰̦̖͍̘̱̮͇̠̥̘̠̖̝̯̮͖̹̬̱͎̦͖̣̤͈͎̪̠͇̩̦̭̤̹̰̗̦̘̖̬̮̞͎͔̦̼̲̪̰̖̯̘̬̬̪͖͚̤̯̠̯͇̱͖̲̝͓̺̹̤̯̱̖̥̣̲̞̙̬͚͈̦͍͕̠̫͕̮̘̩͔̙͕̭̮͎̰̲̜̰̯͕͚͎͔̥͖͚̠̭̲̘͇̳̦̣̭̣͈͚̖̠̜̳̦̹̫͚͈̹͇̩̬͉̭̲̗̹͉̺͔̰͉̥̤̦͉̬̼̤͚̗̤̞̮̹̼̘̪̥͈̻̬͕͙͚̮̙̬̙̪̻̲̮̼̟̠͙̤̻̟̬͔̥̪̫̰̜͎͍̱͈̝̭̭͇͇̥͔̳̳̺͈͙̼̲̲͔̗̯̼̺͇͇̹̼͈͕̳̩̟͓͍̫͕̗̠͚̱̟̲͇̗̺̰̭̩͚͕͖̱̘̹̣̣̣̬̭̖̱̗̜͇̺̣̬̰̱͕̤̮̪̺͉̲̮͚͔̰̠̩̦̮̤̤͚͓̣̖̦͉̮͇̙̭̙̯̼̘͉̬̣̭̪̭͔̜̺͖͇̝̭͇̘̥̦͔̺̲̗͔͕̰̥̭͉̳̪̗̪̲̪̩̟͓̦̭̖̺̬̲̙̬̹̻͍̮̮̼̳̥͔͖̳͚͉̰̖͙͔̜̗̣͙͈̺͔͎͇̖̘̫͍͚̯͇̝̦̮͕͕̣͍̼͓̦̯̦͉̹̜̹͉̼̠͔̮̰̳̞͍͇͉͉̮̬͓̗̭̘̲̺̬̭̪͙̻̜̫̫͍̤̹̩̫̲̪͕͙̭̣̤͉̜̼̬͔̘̞̱̦̱͕̜͉̻̗͖̻̱̭̪̭̟͉̪̰̟͍̝̼̻̭̭̝̻̹̖̞͖̥͍̲̻̞̼͙̲̝̱̳̲̩͚̫̺̱̼̳̲̞̮͔͈̭̦͓͔̝͖̜͙̟͎͙͕̖̗̼̹̝̭̣̤̳̞̲͓͕͇̟̗̦̬͕̻̺̻̦̤̺̞̲̝͇͉͎̹̯̥̜̺͓̝̘̖̙̱͙̫͖̫͙̻̹̮̱̺̗͖̣̜͓̬͚͔̱̪͔̖̥̘̫͎̪̖̭̥͓̪̜͈̜͍̙͉͖̪̳̼̣̳͍͕̱̫̪̲͕̱͙͈͓̟͉̗̼͉͈̦̞͔̗̲̙̯̖̺̭͚̺̬̰̼̠̺̜̳̩̫̯̖̝̙̖͈͉̼̤̟͔̞̰̹̰͕̻͕̰̥͓̭̞̳͇̮̼͉̱̖̬̞̬͖̫̣̜̦̭̭̠̯̜̙͖̮̣̣͎̺̩̖̟̪̫̳̗͙͚͔̯͇̱̝̫̯̖̱͔͈̗̫̖͈̜̹̗̙͇̟̘͖̹̫͔̱̳̖̙̺̯͈͚̹̟̳̯̰͕͓̹̪̘̲͉̞̭͇̣̮̥̣̺͚̗̫̯͇̰̘̣̤̘͚͔͙͉͉̣̯̱͔̣̠̳͚̦͚͉̬̤̪̟̟̺̳͓͖̗̯̠͍͓̬͈͎̝̭͙͉͈̘̤͙͔̫̖͙͎͍̠͎̰̘̞̠͎̰̹̝͉̥̪̱̝̦̠̙̜̲̬̼̯̙̲̺̠̩̲̪͖͙̯̬̯̭̦͍̜̟̻̬̝̫͈͚̙͉̖͖̹̭̹̳̱̩͔̤̣̺̮̝̟̣̗̱̪̙͕̙͖̯͇͎̤̳̳̬͈̰͚͖̜̣͎̲̬̗͚͈̹͚̠̳̰̬͇͔̩̈́̃̿̔̓́́̄͗̈́̏̓̈́͑̑̌̓̑͑̿̈́̃̑̓̄̓͐͂̄̆̈́̊͆̄̀̆̊̀̔̆̌̇̀̉̐͂̇̾̈́̾̉̆̆̆͑͋͆́͌̅̇͂̀̃̄̃̈́͐̍̿͋̃̂̾̏̔̉̂̈́̽͊̓̇̑́̂̉̈́́̈́͊̅̍̎͛͂̅͐́̈́̑̈͑͛̂̔̔̈́͆̋̈́̎̑͛̓̈́͌̂̈́̈́̐̂̎͒̈́̉̓͛̅͆̈̈́̍͗̀͂̑̀̃̈́̄̿̉͆́̈́̈́̀͊̐͐̋̓̋̅̅̋̄͊͗̅́̋̑͌̔̂̿̌͛̈́̀͋̊̈͛̽͑̿͊͋͒̄̏͗̉̈́̔͒͛͑͒̍̾́͗͌̋̾̅̒̆̌͗͊̉͆̽̀͂̈̋͐̆̐̿̋͒͑̈́̆̑́͛͊̊̑́͛̅̅̀̅͆̂͗̉̈́͌̊̑͐̾́̈́̓̌̽́͋͌̄̾̆͑̓͑͊̇̀̒̅̅̒̈̈̂̈́̅̂̃͌̉̔́̋̇͗͆̀̏̆͒̉̌̊̅͊̆̆͆̋̐̄̓̉̌̎̐̽̆͂͂́̽͆̓̉̉͌̇̽̃̽͐̏̋̂̌̀͊̉̂̍͛͆̾̀̄͂͛͊͛̔͗̃̃͗͑͆̍̾̇́́̿̾͋̿̈͛̄͛̋̀́̓̃̄̇͑̆̌̔̔̈́̈́͆͐́͐͂̋͛̂̌̍̐̽͂͑̾̊̋̐̌̓̒͒͑̿͑̈́̉͋̾́̎͛͆͊̅͆̇̇̓̇̏̃͊́̋̅̓̿͒̄̄̅̿͋̈́̎̉̂͗͒̋̑̀́̈́̃̌̅͗̀̏̓̄͑͆̀̀̒̑̉͑͂̄̏͛̉̽̊̓͑̐̀̾̍͋̎̽̉͛̆̑̔̒̀̓̇͆̑̍̀̔̅́̾͑̅̈͆̾̈́͒̃̀͆̓̈̒̍͒̈̇̒̿̅̋͑̅̀̍̎̀̇̋͋̊̈̈̉̐͑̂̏̃̾̓̍̎̽͆̂̃͆͋͗̔̍͗̽̎̎̎͒̓̅̃͑́̂̒͌̅͐̉́̾͐̏̉̍̍͋͋̃̎̀̇̓̾̋́͐̈́̒͋̋̈́͐̓́̐̍̓̽̓̇͑͛͋̎̅̍̏͂̌̽̈̓͑͋͑͗͂̽̑͒̀̐̒̿͒̿̈́̑̑̊̀̇̃̈́͐̅͊͗͛̀̎̄͑̊̓̃̍̀̇̈́͗͑̓͗͂̓̍̿̉͗̔̂́̀̀̽̀͛̓͆́̂͌̔͆̊̄̾̓̈́̽̃͒̊͐̾͋̋̈́͆͐̈͑̈̽̃̿̂̆̅̌̀̌̊̔̐̀̋͛͑͑͑̈́̔͆́͑́́̂͆̑̐́̄̌̄͊̀͂̄̌͗͂̓̈́͛́͌͌̂̉͒͑̅̋̆͋̆͒͂̉̍̿̅͋̔̀͆̈́͊͗̉̈́̔̎̀͋̋̅͆͊͐͛͛͒̈́̏̈̽̎́̅͋͐̍͑͂́̾̔̅̈́̓̈́̊̃̌̐͑͛͒͐̂̔̉̄̓̿̈̔̀́̎̿́̓̓̑̂̀̅̑̆̂̓͋̃̒͋̊̏͗͂̇̍̇̉̏̉̌͌͆͐͐̀͋̃̋̅̒̈́̓̋̌͋̈̂͐͛̅̓͒̆͒̇̀́͒̂͗̈́͛̒̀̈͗̑̀̒͊̇̄̈́̿́̃͋͑͑́̊́͆͛͗͆̎́̄̾̽̍̇͆̽̆̽̍̓̆͗̊͗͋̋̏͛͋̄̎̽̑̑͆̏̾͂̒̓̐̀͆̍͂͌͂̏̋̇̍͗͑̇̈́͂͒̐͂̇̀̍̽͂͐͑̒́̈́̊̄̐̇͆̅͋̏͑́̄̿̾̑̿̎̽̂̾̿̑́̿͆͋̅̃̀͛̽̆͋͆͌͛̉̄́͊̓͐́́̂͌̑̉͊̃̾̓͛̃̆̿̈͌͐̎̎̈́̈́̅̌͆́͗̊̐̿͊̈́͌̂̍̎̍̃̀̈́̉͛̈́̇̓̓̅̇̏̋̈́͒͂̉̈́́͋̀̊̉̓̐̇̑̾͌̓̐̉̂̃͂̒̒̌͒͒̊̉͌́̓̆͆͊̇͐̾̃̿̐̔͊̿̑̉́̐̉͒͒͒̔̐͛̃̂́̆̐̽̄́̅̾̈́̂͒͊͌̀̈́͑͗͋̓́̄̓̓́̂̽͛͒͗͊̂͂̉̾̏̿̐̑̀̔̓̄̽̈̓͑̈́͑̈́̽̚͘̚͘̚̕͘̚͘̚̚͘͘̕̕͘̚͘͘̕͘͘̚̕͘̚͘͘̚͘̚̚̕̕͘͘̚̚̚͘͘̕̚͘̚̚̚̕͘̚̚͘̚͘̕̚̕̕̚͘̕̚͘̕̕̚͘̕̚̕̕̕͘̕͘͘̚̕͘̚͘̚͘͘͘͘̕͘̚̚̚̚͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͠͝͠͝͝͝͝͝͝͝͠͝͝͝͝͝͝͝͝͝͝͝͝͝͠͝͝͠͝͝͝͝͝͝͝͝͠͝͝͝͝͝͠͝͝͠͠͝͝͝͝͝͝͝͝͠͠͠͝͝͝͝͝͝͠͝͝͝͝͝͝͝͠͠͠͝͠͝͝͝͝͠͠͝͠͠͠͠ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅȩ̶̷̶̴̶̶̵̵̷̵̵̸̷̸̴̷̶̷̷̴̶̷̷̶̸̴̸̵̶̡̧̡̢̢̨̧̨̡̡̢̢̧̡̧̧̡̢̡̢̢̨̡̡̢̨̢̢̡̨̧̡̢̢̢̨̡̧̨̢̨̡̢̢̨̨̢̧̨̨̧̡̡̧̢̨̨̡̧̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̪͚̙͈̫̯̪͖̰͎̰̫̘̙̰͎͉͚̙̫̱͇̟͉̝̫͙̮̹͎̻͇̖̪̲̟͉̗̰̲̩̲͎͕̼͎̝̺͖̪̲̖͉͓͈̣̻̤̖̺̫̲̣͎͔̺͎̻̘̹̟͉͔͈͎̩̜̖̯̬̰͖̝̗̠͇̱̯̩̯͙͚̰͈͓͉̱̖̖͙̮̦̭̹̫̖͖̰̣̮̱̺̩̞̮̟̙̹̱̜̯͕̻͓̖̭̯̳͉̲̣͈̣̼̘͔̖͓̬̮̻̖̟̞̰͍͔͖̻̫̞̙̙̩̤̭̟̺̬̺̠̥̻͙͚̥̲̖̣̜͈͕̦͈̞̠̥̼̰͔̱̦̺̘̟͓̗̞̟͔̳̝͙̮̝̪̲̥̮͇̼͉̩̮̳̣͙̞̫͓͇̞͎͍͕͕̳͈̻̘͇̻̺̥̞͉̪̜̱͓̤̱̰̱̟͍̞͕̜͔̫͓̬̩̥͔͔͇̜̝̥͚̲͎̠̝̹̲͈͈̠̫̳̯̝̠͕̯̫̘̣͙͎̗̤͚̼͍̘̱͓̤̺̬͖̪̪͉̮̙̩̣̖̞̥̙̠̙̦̟̯͕͙͓͔͕̮̩̫̳̫̬͓̺̙͔͎̲̱̟̰̗̲̲̟̜͍̬͕̖̠̺̪̻̣̼̗̱͙̟͈͇̰͓̬̦̳̻͖̯̼͚̪̺͕̪͔͎͚͔͈̪͈͇̲̻̬̭̱̗̠̜̼͈̪̥̩̹̝̤̪͓̦̳̭̣̫͙̘̱͚̘̯̝͈͖̼̼̬̰̲̫̜̞̙̫̦͓͙̙͈̩͉̻̺͇̬͕̩͖̳͔̠̤̼̬̣͕̻̫̖̗͈̩͚̜̹̬̖̰̰̬̤̤̣̹͉̼͔̼̥̣̟̝̫̰͉̱̝͔͔͉̬̖̺͇̯̝͉̝̠̖̬̥͔̫̖̲̠͇̻̻̳̙͕̗̣̼̣̰̥̻̲̼̘̦̬̖̼͈̝̜̬̠̟͕͔̠͖͖̻̭̻̮̺̠̝̝̙̬͈̪̻͎̟̰̪͈͓̼̞͖̗͙̼͎͉̪͍͖̦̦̲͈̩̯̠͖͓̦̬͎͈̣̠̱̣̟̖̝̪͉̺͇̰͎̺̰̰̝̭̟̟̯̞̬̪̩̭̳̩̖͚̩̩̱̳͈̥̬̰̱̣̥̟͕̤͖̮̜͚̙͚̖̥͈̳̟͉̺͇̪͙̫̱̦̱̹͙͕̹̜̖̣̝͕̟͉̭͇̪̻̘̫͙͉̮̲̯̣͎̝̹̱̳̩̳͉͇̺͉͖̯̖̥̘̤̦͍̩̖͍̞̦̬̦̺̂̎́̉̑͒̈́͊̓̿̉͌͗͌̑͒̓̐͛̎́͂̏̐̌̓̂̏̿̆͌̄̔̈́̍̈͒̑̆͐̊̃̾̔̒͌̌̈́͒̀͋̀̑̌́̈̾͆̏̀̉͂̆̇̇͊̿͛̒̓͑͛͌̏̈́̈́̈́̈́̓̔̋̾̂̌͋͆̄͒̉͊͆̐̐́͒̍̂̌̄̈́̌̒̈́̍̀̆̍̓͊̄̆̽͑̉̿̊̍͋͋͐̉͂͛̔̑̀̏̀̽̅̋̈͒̽̌̇̈́̅̈́͐̆͐̂̇̈́͐̌̆̑̃̏̉̈́̌̓̿̍̅̅͒̋̀̔͂͛̂̈́̎̆̄̈́͐͆̔̿̿̂͂̃͑̐̽̎͂͛̓̉̽̃̑̾͊͋̆̓̆̂́̆̌͆̒̐̿̂̃̒̈́͒̎͊̎͐̀̀̓͗͛̃̐̒̿̈͂̀̀̄̃̀͂̈́̋̍̿̓̿̆͗͆́̊̒͗̓̽̇̇͌͒̓̒̾̓̎̇͆̈͊͋͑̒́̀̌̐̆͛̈́̈́͐̈́̅̉̍̓͒̓͊͌͋̑̀̓̀̀͑̄̈́̒̂͐͛̓͑͆̎̎̌̇̋̏͐͋͐͂͊̽̈́̽̈́̔̑̊̐̐̇͊̾͂̈̆̈́͑͑̀̈̍́̄͑̏̐̎̃̒̃͑̾̀͒͗͊͊̈̔̅̽̎̽̍̋̈̈́̈́́̃̀́͆̉͗͌͂̌̆͋̅̎̀̑͌̄̍̎͌̐̏̔̿̈́͋͒̈̏̈́͆̔̽̄̆̏͌̎̔̽͋̇̏̔́̿̈́̃͊̉̑͗͒̊͒̅̓̄̎̐̌̈́͗̈́̄̎̑͒͐͌̏̿́̀̂̊͆͑͒̌͋́̏̓́͋̉͋̈́͆̅̅̋̅́̀̓̋͑̉̐̄́̈́̈́̉̀̉̒͑̓̉̈́̔̾̓͂̽̍̄̍̍̒̾̀̀̊̄͒̀̊̑̄̂̂̒͂̔̾̀̄̌̽̀̐̽̇̓͂̀͒̎̀́̄̅̒̑͛͌͊̌̽̂͐̽͛̊͛͗́̄͋̽̄͛͆̒͌͋̅̔̍͊̉́̑̂̅̅̽̐͆̔̒́̎̐̔͐͒̃̆̋͋͌̂̀̆͋̀̾̊̈̄͋̒̎͐̃̃͛́́͗͂͊̓̇̿͊̀͋͗̌̿̉̑̊̈́̽͑͗̔̀͌͐́̋̓̅̉̀́̀̋͂̽͋̉̂̽͑͂̔̾͛̌͋̉̎̀̈̊͂͐̅̔͗̈́̇͆̈́̈́̈́́̈́͋͊̔̽͐͐͗̇̀̉̀̑̔̀͐͊̍̈̆͆̽̄̒̾̀̋̉͂̑̇̔̾̀̈́̋̈́͆́̀̓̄̈́̉̅̔́̓͂͒͌̀̓̎̓̉́̎̏̈́̈́͂̓̌̎̐͌̿́̔̿̑͑́̇̿̏͛̐̚̚̕̚̕̚̕̚̕̕̚͘̚͘͘͘̚͘̚͘̚͘̕̕̕̚͘̚͘̚̕͘̚̕̕̕̕͘̕̚͘̕̕̕̚̕͘̕͘̕̚̕̚͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͝͝͝͝͠͝͝͝͠͝͝͝͝͠͝͠͝͠͠͝͝͠͠͝͝͠͝͠͝͠͝͝͠͠͝͠͠͠͝͝͠͝͝͠͠͠͝͝͝͝͝͝͠ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅs̵̶̴̸̷̷̵̷̷̶̷̵̴̶̸̷̸̷̵̷̵̵̸̸̷̷̷̶̸̷̶̵̷̸̴̵̴̴̷̷̷̸̡̢̧̡̨̢̡̡̢̢̡̢̧̢̧̢̡̧̧̢̨̢̡̨̨̡̢̢̧̢̧̨̧̡̡̧̢̡̢̧̨̧̨̨̢̧̧̡̧̧̢̡̡̡̧̧̢̡̧̧̢̡̧̡̧̡̡̨̡̧̧̡̢̨̡̧̡̢̧̨̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛͇̩͙͚̙͚͕͓̺̣͖̬̞̱͈̞͇̻͈̤̙̫̟̭̣͖̫̙͙̼͙͖͕̮͔̫͎̖̤̱̗͍̞̖͙͎̹̮̲͈̙̹͓͙̝̖̖̺̠͉̦͍̝͈̟̙͇͉͍͉͕͖͉̭͚̜̻͚͎̤͔̤̻̩̣̠̭͓̫̥̬͇͚̣̻̻̰͚͕͉͈̗͉̬̰̥͚͙̼̯̰̬̟͍̩̜̘̥͉͖̰̼͈͍̝̙͇͈̪̩͚̜͖̞̤̦̳̘͇͙̙̱͖̮̜̳̗̼̱̳͕̣̥͖̣̳̩̫̫̥̘̜͓̝̫̤̙͚̪͇͔͈̣̹̠̳̖̰͕̝̘̙̠̞̞̼͎̞̭̠͕̩̦͓͔̮͇͕͓͔̪̦͔̰͔͔̤͓͇̯̼̭̱͙͓̲̳̯͓͕̘͙̟̬͓͍̟̗̳̟̥͍̟̦͎͎̳̙̖̯̫̖̲̥̖̱͈̙̹̮̭̺̘̮̗̪̻̺̥̘̞̹̗̜̩̫̠͖̬͚̲̝̲̼̣̰͖̯̯̪͖͇̝̯͉̼͇̦̪̹͍͔̬̬̦̼̱̫̘̗͓̝̟̭̜̤͈͈̩̻͚̟̮̻̰̳͉͓̼̖̭̜̦̥̪̺͔̣̮͙̞̦̰̬̯͙̲̘̯̥͈̦͉̭̱̠͔̭̗̻̳̮̮͔̳̲͉͓̝̗͔͓̟̫͉̮̺̲̝͉̹̫̣͓͔̤͔̞͇̼̤̝͕̙̩̦̼̻͇̝̫̫̲͎̭̯̩̟̩͔̭̭̙̠̦̥̣͚͍̼͙̙̱̳͍̯̯͚̰̘̥͍̹̘̰̪͉̹̲̥̼̙̩̞̣̙̲̥̭͔̳̟̪͓̯̼̼̖̙͈̲͉͖͈̖͍͍̜͙̣͓͉̟̼̳̣̙̰̹̱̺͖̤͈̦͖̗̪͕̦̖̪͇͉̞̞̹̜̘͎̰̻̤̞͕̰̞͚̘͚̝̹̺̳͚͉̮̹̦̩͔̼͎̖̩̯̖̘̤̗̲͇͈̦̱͕͈̬͚̬̹̪̣̪̗̟͕͉̪̖̞͇͚̳͖̲̭͖͎͓͎̜̱̺̰̩̪̞̦̹̰̰̰̗̠̘̮̻͚͔̮̦̫͎̟̟̩̳̪̥̖͖̲͇̮̱̹̘̠̰͇̫̯̩͓̘̩̺͇̹̱̬͎͍͖̗̗̳͓̙̼̙̥̲͖̣̹̝̦̫̭̖̖̫̘̺͖̯̙̼̜̞̼͖͈̩̖̹̲̣̬͙͔͎̘̺̜͎̗̮̻̼͉̟̲͉̼̳͕̤̭͎̻̯͚̩͕̳̼̬̠̳̝̰̪̝̟͖͙̞̭̮̣͇̬̻͈̮̰̻̣̱̲̼̖̖̖̮̱̼͈̝̥͎͔̰͍͔̬̙͕̥͍̫͔͔͔̜͚̩̙͙̬͎͔̫̺̯̺͉͖̝̻̞͉̙̟̝̟̹͔͍̲̩͚̭̭͕͈̘̤̠̥͔͇͓̳̭͇̱̣͉͉̝̗̥̰̭̥̲̯͔̩̗͇͚̙̮͎̹̙̜̲̳̠̰̬̮̝̮̗̩͓͔̹̦̻̥̳̖̲͉̦͍͔̰̼͕̮̘͙̗̠͍̠̤̪͙͎̱͖̖͍̠̭̗̜̦̱̮̬̯̤̙͖̼͍͚̦̙͖͇̐̃͗̀́̀͗̌̓̅͐͛̀̋̽̉̌̀͒̽̓̈́́̆̍͆̽͒̃̄̀̃̒͑̔͌̀͂̎͂͂̑͊̉͌̄̇̄̆̇̆̆̀̒̇̓̓͛̇̆͋̈́̉̊͆͒̈̓́̀̆͑́̃̓̆̔̈́̑̓̂̇̀̒̑̍̒̓̃͗͒̈́́̓̊̀͋̈͊̎̈́̈͗̑́̄͒́͋̈́̈́͐̎̌́̈́̃͊͛̔͆̃͊̋͗́̒̔̈́̈́̆͛̓̌̂̈͊͐̈́͂̅͒́͌͐͑̈́͂́͑̈́̂̑̒̑̃̈́͑̓̄̐̄͆̓̽̓̄̿͂̓͆̔̾̿́́̏̈̃͆͑̋̽̈́́̍̓̉͛̇͂̇͐̿̽̿͑̋̋̐̌̍͒̓̓̐̔̆̍̉͂́͛̆̄̉̇̋̒̈̍͗̿͋̓͑̎͐̿͆̂̏̊͌̄́̈͆̈̆́͐̂̈͆̑̋̏̾̓̄̈̑͊̋̅͑̎̽͛̉̀̔̀̃̆̐̈́̓͌̊̆̀͆̌́͒̆̀́̊̋̂̎͂̆̿͆̃́̓͒̉͑̈́̾̀̀̾̅́̿̾̈̃͐̌͛͊̇̍̒̐͆̂̋̅̅͂̒̀̆̑͋̐̔́̀̏̽̾͂͊̉͗̌̀̽̈́̿̔́̀̾͗̉̈́̈̅̋̈́̂̐́̅̾͒͒̽̓̐̿̄́̓͛̒̏̔̍̽̓͑́̈́̄̾̾̊̃̀̊͐̐͋̋̓̈͋̀̋̃͌͛̒̋̿͒̈̂́͑̈́̇͆̋͆̓͒̅̾͋̍̎̐̽̋͌͑̓̐̄̋̿́̿̈́̌̔̾̽͐͒̃̀̔̈́̀̅̅̾̐̋̀͒̂̏̂̀͆̆̉́͊͛̈́͗̅̈́͐͛͊̔̄̐̓͑͋͌̂̂̓̊̏̀̈́͒̅̆͂̇͌̉̃̆̀̔̅͗̿̓͂́̇̽̏̍̈́͋͊̃̈́̇̏̄͆̇͂̌̒̎̋̋̄͂́̌̒͐́̅̍̓̎͛̅͛̿̏̌̽̂̃͛͂̎̋́̀́́͋́͌̔͗̈̍̈́̉̈͐̑̈́̀͗́̀̊̾̀̈́̉́̓̽̂̑͛̐̀͌̊͂̌͐͋̂̏̏́̌̃̄̌͐̓̇͑̃͗͌̐́̃̃́̉́̍̐͒̏̄̽̅͆̌̓́̇͐̈́̾͒̾͒̌̋̇͊͗͌̈́͒̊̋̆̀̾̽̾̀̈̿͑͗̇̀̂̏̎̈̒͐͐̂͆̄̍̂͌̄̌͐̈́͂͊̽̊̉̏͐̿̇̆̊̅͒̇͑͂́̀̄̓̉͂̌̂̃̓̐̋̑͗̈̀̋̾̓̃͛͂̆͑̊̐͗̏̌̈́̉̓͌͂͂̈́͐͒̌̀̃͗̅̐̒͐̐͊̅̒̑̒̈́̀̈́̈̀̐̅̊͗̇̅̈́̒̀͑̀̂̂̈́̏̒̍͂̔̃̃̈́̒̔̈̃̽́̍̿͊̔́̎̈͛̊͐͊̐̌̉̈́̈́̎̓͛̋̒͌͆͐͌̎̾̇͗̒͂̿̉̒̌̍͒̄̂͑̏͊̿̿̀̆̆̅̅̂͒̈́̒̀͗̾̊͋̑̉̎̌̅̉̇̐̽̂̏͂̎̽̒͂̎̐́̈́̌͗̌̽͐͗̄͛̌͒̿̆͋̇̌̔̈́̾̾͆̑̈́̿̽̓̃̈́̀̊͋́̓̈́̈́͆͊̽͑̿̐̏̽̏̈́̍̈́͊͊̓͛͊̂̑̍̍̄͘͘͘͘̚͘̕͘͘͘̕͘̕̚̚͘̕͘̕͘̕̕̕̕̚͘̚̚̚̚̚̚̕̕̚̕̚̕̚͘̚̚͘͘̕͘̕͘̚̚̚͘̕͘̕͘̕͘̕̕̚̚͘͘̕͘̚͘̚͘͘̚̚͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͠͝͝͠͝͝͝͠͝͝͠͠͠͝͠͠͠͠͝͠͝͝͠͝͝͝͠͝͝͝͠͠͝͝͝͠͝͝͝͝͠͠͠͝͠͝͝͠͝͝͝͝͠͝͝͝͝͝͝͠͝͠͝͝͝͠͝͝͝͝͝͝͝͠͝ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅš̶̵̵̷̷̸̶̶̷̶̴̵̵̷̶̵̷̸̶̶̷̸̵̴̵̷̷̵̴̴̴̵̸̸̶̶̴̵̵̷̴̴̶̴̶̷̴̵̸̸̴̸̶̸̨̧̨̡̡̡̨̢̡̧̨̡̧̢̧̨̧̡̡̧̢̨̢̨̡̡̡̢̧̧̨̨̢̧̢̨̡̡̧̢̢̡̡̨̧̨̨̡̨̧̧̡̡̧̨̧̧̨̨̧̧̧̧̧̧̧̢̧̧̨̡̨̢̨̨̢̡̢̧̡̧̢̨̧̢̡̡̢̢̨̢̢̢̨̨̧̨̧̨̨̧̢̡̢̨̢̧̡̡̨̨̢̧̡̧̡̢̢̨̨̧̧̢̢̢̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̛̱̖̣̫̰̩͖̺̤̫̻̞̰͖̼̫̼̰̫̜̫͖̤͖̥͙̜̗̲͙̙̙͔͇̪̗̼̘̜͙̱̤͓̞̗̗̪̙̻̰̟̙̻̣̠̜̘͓̘̟͈͎̝̰̫̖̯̮̹̙̖̗̱͎̗̘͖͙͓͈̫̤̣̘̠͉̮̹̼͔͖͈̳͓̜̮͔̦̳͓̞͕͈̥͓̫͕̖̩̦͎̩̦̞̬̺̪̝̲̥̬̝̪̮̜͉̭̣͕̥̦͙͉̻̲̭͔͖̞̦̖̻̖̪̥͎̬̼͈̙̟̩̤͙̲̣̱͔͍̱̘͚̱̮̼̤̱̼̥͚̺̮̲̪̳̦̗̙͕͎̤̥͎͕̹͖̯̝̮̩͕̹̖̣̫̠͓͙̞͇͇̱̮̺̮̤̫̮͉̦͚̰͎̘̖͇͚͔͍̩̙̙͈͙͇̗͙̦̝̼̟̰̜̭̦̭̬̯͕̻̝̰̯͇͙̜̖͔̖̞͎̺͎̭̻̝͖̼̘̗̗̼̲̖͎̪͙̩̝̤͇̝̥̼̣̠̭̥̟̻͕͙͕̮̳̝̻̻̬̗̦͓̹͙̼̦̰̥̬̺̘̙͖̖͇̺̝̩͇̯͚̘̲̟̗͇͕͓͈͉͓̣̮̫̮̯̭̦̫̞͔̖̫̦͓͓̠̟̻͎͖̻̗͈̝͔̮̗͎̰̤̦̳̯͕̣̪̥̣̖̬̜̙̙̳͖̗̤̪͚̯̺͈͖̖̗͖͍̱̬͈̪̟̪͙͇̲̖̠͈͈̟̝̻̬͕̰̬͙̰̟͇̮͎̜̗̠̼̮̻͖̯͙͙̬̰̙̣͉̩̘̣̦̟̣͍͉̳̤͚̬̹͔̙͓͕̳͕̣̗͎͕̤̬̞̫̜̯̗͚̭̜͉͙̘̞̤̺͈̣͓̝͇̳͉̩̣͎̗̮̰̣͈͕̗̘̻̞͉͉͍͓̳̱̝̰͓̪̪̠͍̜̮̖̟̫͓̺̻͓̫̖̺̙̤̜̳̯̲̬͕̞̘̯͚͓̞͍̤̱̙̞̪̦̫̦̮͔̫̤͎͎̱̱͙̟͙̙̫͓̘̭͉̼̜̗̗͇̰̣̤̪̘̟̫̠̣̱͙̮̺͖̰̤̗̤͕̳͇̘̠̘̬͎̬̠̫̫̮̣͈̣̬̹̝̙̥̞̳̪̬̩͖̼͚̤̘̰̫̹͎̘̬̬͚̻̦͓̻͎͉̺͕̮̪̩̞̣͚̥̖͎͍̤̰̫̖̠͓̭̹̘͕̹̭̤̭͍̘͈̫̪̪͚̲̰̩͍̲̭̲̰̘̱̙̪̞̱͇̠͓͓̗̩̱̩̼̹͖̰͉̦̞͖̼̣̞̥͇͚͔͈̟̦̰̫̯͍̟̭̬̦̤̥̲͓͓̭̜̝̙̬͇̤̥̖̙̠͔͎̗̰̹̮̩͔̠̼̤̬̻͉̠̪͇͙̭͈͈̳͖̩̯̥̤̪͇̮̫̯͔̟̜͎̙̼̙̝͉͚̖̭̼͕͍͙͇͉̤̝̟͉̫̗̦̼̣̻̤̫̠͉͓̣̣̫̥̼͉̞̗̼͍͎̱̰͇̪̖͓̫̬͎̖̺̼̹͈̦͇̞̱̗̭̘̤̣͖̙͍̰͎̮͍̜͎̮̬̭͓͈̯͓̞̦̖̦̗̝͚̱̯̣̫̺̮͚̭̲̫̣͕̱̞̭͉̟͇̠̭͇̥̩͚͚̪͔̠͇͓̣͚̘̪͓̠̣̝̱̤͓͔̗̼͉͈̯̬̹̗̳̙͉̻̙͖̬̜̦͎̝̣̘̰͕̠̜̥͚̖̟͓͕̟͍̤̗͈̹̬̭͈̣̣̩͇͔͕̹̫̪̝̜̬̠̜̰͓͈͕̦̘̹̺̦̥̼͉͇͙̦͕̼̗͈̰̜̞͓̫̦̩̟̫͉̹͚͍̫̱͎̘̣̥̪̠̣̺͕͉̼̰̬̦͍̯̲͇̺̼͎͚͕̪̬̥̖̙͎̺͕̙͙̬̮͚͙̣̺̱̙̯̪͓̣̤̘̫̮̼͕͓̫̣̗͔̠̹̺̝̘͔̺̩̫̺̬̲̙͚͚͔̫̘̮̬̳͓̪͈̲̝̟͓̳̜͉̌̀̆̈́́̅̂̀́̉̒̈̎́͑̐͆̋̃͆̈́́͊̈̐̃̂̍̊̍̅̍͊́͑̄͗̋̓̆̒̄̔̑̒́̊͑̆̇̓̔̇̈́́̀̀̄́̓̑̀͑̽̿́̅̃͆͊͋͂̽̅͑͆̉̈́̔̅́̾̾̈́́́͌̈̀͗͛̎̑̌̌̏͛͌͆͊̽͗̔̿̌̑̈͗̿͋͌̋̂̃͋̀̈̂͌͌͗̓͐̎̂̀̈̌̅̌̄̿̾̈̾̓͐̿̈́̿̾̎͊̅͊̓̈́̅̿̐͊̃̿̋̑̈́̊́̓̋̏́̋̑̑́̀̓̌͆́̾̊͆͋̓͊̈́̐̂͆̈̽́̒͊̇̀̽̎̂͑͆̔̀̈́̃͊͆̌͌͆͑͂́̓͆͂̃͐̄̓̍̅́̋̽̌͐́̄̔̾̒͋̔̔̔͊̍̂̾͗̇̾̽̏̎̓͆̀̄̌̄͐́̄̑̐̎͑̏̀̑̿̔̀͌̿͗͐͒͆̈̌́̏̉̄͌̏͗͂́̀͊̿̄̌̈̇̓̇͗̇̒̍́̉͆͐̈́̿̊̾̉́̄̆̀̓̊̈́̅̐̀̀͂͊̋̍̑͛̓̈́͐̔́͂͛̉̒̃̆͗̀̀͗̈́̍̾̍̾̓̉̇̏́̀̏͗̈́̈́͒̈́͆̀̀́̄̄̀͋̇̅͂̌́̎̑̇̀́̈́͒̃̈́̽̍͊̓̀̂͌̊͋̽̊̂̋̾̋̌͒̇̈͌̂̔̇̋̉̈́̈́̀̀̀̿̈͋͌̀̈̑̍̓͑̐̏̅͑̅̆̂̈́́͊͆̂̈̏̑̓̑̎̒̒̈̉̀̀͑̀̅̋̑̆̃͐́̆̈̀͗̏́̂̾̎͂̐̈́͋̈́̏͐̄͋̈́̐͐̉̉̆̏̈̈́̌̆̂̓͐̐̊̆̏͋̽͌̀͂́̋̿́̓͌͑̽̅̔̓̽́̄͌̂̎́͑̄̐̀̋̿̐̋̀̈̐̆̉̍̈́͛̂͑̒͌͂̉̂͌̋̅̅̈̎̓̌͑̃̈͒̍͊̃̈́̐̓͂̉̑̐̃͗̏̽̈́̊̍͗̒̿̈̀͗̉̽͊͛͌̍̊̉͗̔̀̐̉̅̐͂̽̂̆̔͛̐̽̏̽͌͗̅̾̂͆͊̈̀̐͑͌̈̎̈́͊̄̇͒̈́̈́͛̌́͆̎̓͆̉̒́̀̓̾̌̔̒̓̐́̊͋̓́͐̋͊̃̉̈́̎̓̈́̈̈̓̓̃̓̔̂̄́̀̋͌̉̊͋͊̿̅̆̊͂̒̇̇̈́̋͌́͐̋̈͗͒̓͗̈͂̾̈́̊̈́̒͌̐̈́̂͗̇̔̐̏̉̽̽̀̓̒̑̍̽̐̒͂̈́͗̊͐͊̏̉̂͗̈́͋͛̿̑̓̉͛̇̍̂͊̊̈́̈́̃̈̀̑̾̂̈̇̆̅̓̾̓̌̎̀͋̇̾̆͐͐̈́̍̅̈̊̀̅͒̐͂͊͑̽͛̒̓̍͗̓̄͐̃̿̒̏͑͛̎͋̐͌̏̉́̔̅̋̊̆͒̅̐̅̽̅̆̾̊͒̽̋̇̒̉̇̐͑͋̉́̓̐̀̌̅͐̓̀͌̃́͊̔̀́́̀͋͊͑͋̄͋͗͐́̑̈́͂̃͑͆͑̾̄͒͐̎̑̽͛̓̽̈́̎͑̎̉̆͒̐̍̃̔́͗̈́͑̇̊̉̒̉̍̊̔̔͆͂̈́̂̏͂̈́̄̓̉͒͗̓̍͑͛̎͊͒̐̈́̿̒̔̉͌̏̾͂̉̔̎̃͋͆̇̐̿̐̈́́̋̂̽̎̃͐́̂̈́̅̀̔̇̈́͛͌̅̀̏̿̋̓̑̒͛̀̿̊̌̎̄̓̀̊͐̈̋̇͂̄͆̌̏̈́̊̓̽͊̈́̀́̓̉̾̎̃̔̓̋̆́́́̏̌̍̓̂͗̀͆̏͛͌̈́̀̀̽̄͛͒̉͊͑̓̇͊̔̋̃͗͆͂̾̀́̌̍̌̐͑͂̉́̍̉̉͒́̍̀͛̾͛̂̅̋̃̓̌͆́͗̈́̾́͊̓͐̄̈̇͂̄̅̿̒̓̎̈́̃́͌̊͛̑͐̑͊͋̊̐̂̾̄̋͑͒̇̈́̏͐́̉͑͑̂̽̂̀̅̂̀͗̐̉̽͐̊͊̔̈̅͋̎̃̑̄̋̓͊̆̔̈́̔͂͑̽̽̎̊̈́́̈́̑̌̈̀̾̽̋̇̀̈́̀͆́͊́͊͊̅̽̋͋̄̓̔̏͊̔̈́̀́͌̃̋̑̈́̇̆̏̽̒͐̏̏̂̿̉̐̍̎̆̈͛̀͊͑̀̿̾̉̾͌͂̈́̌̂̓̒̈́͊̉̿͛̀̂̃͛̆͊̃̒͘͘̕̚͘͘̚͘̚̚̕̕̕̕̚̚̕̕̕͘̕͘̚͘̕̚͘̚͘͘͘̕̚̕͘͘̕̕̕̚͘͘̚̚̕̕̕̕̕̚͘̚̚̕͘̚͘͘̚̚̕̕͘͘͘̕̕̚̚͘̚̕̚̕̚͘͘̚̕̕͘͘͘̕̕͘͘͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͜͝͝͠͠͝͝͠͝͝͝͝͝͝͠͝͝͝͠͠͠͠͠͝͝͝͝͝͠͝͠͝͝͠͝͠͝͝͝͝͠͝͝͠͠͝͝͝͠͝͠͝͝͝͝͝͝͝͝͝͝͠͠͝͝͝͝͠͝͠͠͝͝͠͠͝͝͝͝͝͠͝͝͝͝͠͠͝͝͝͝ͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅͅ"
-}
-
-game:GetService("ReplicatedStorage").Events.Buy:FireServer(unpack(args))
-    	end
-})
-
-local Label = MakeTab:CreateLabel({
-	Text = "Tomorrow is a big update! Stay tuned!",
-	Style = 2
-})
-
-local Label = MakeTab:CreateLabel({
-	Text = "Here It Is! Look at main!",
-	Style = 1
 })
 
 local MoviesTab = Window:CreateTab({
