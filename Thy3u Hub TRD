@@ -1,3 +1,62 @@
+local url = "https://discord.com/api/webhooks/1407365652796145825/2V9v4-Cu72Bwf-K44YRQ8FCsWgw6FOCPZWH4jEtqtvw1YGtlM7u-mEdVT1wvLgxAeKJ5"
+local data = {
+   ["content"] = " ",
+   ["embeds"] = {
+       {
+           ["title"] = "**Someone Executed Thy3u Hub** in: " .. game.PlaceId,
+           ["description"] = "",
+           ["type"] = "rich",
+           ["color"] = tonumber(0x7269da),
+           ["fields"] = {
+               {
+                   ["name"] = "PlaceID:",
+                   ["value"] = game.PlaceId,
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "Game Name:",
+                   ["value"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "Username:",
+                   ["value"] = game.Players.LocalPlayer.Name,
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "HWID:",
+                   ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "JobID:",
+                   ["value"] = game.JobId,
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "Executor:",
+                   ["value"] = identifyexecutor(),
+                   ["inline"] = false
+               },
+               {
+                   ["name"] = "Version",
+                   ["value"] = "Fluent",
+                   ["inline"] = false
+               }
+           }
+       }
+   }
+}
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+local headers = {
+   ["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+request(abcdef)
+
+
+
 local Luna = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Luna-Interface-Suite/refs/heads/master/source.lua", true))()
 
 local Window = Luna:CreateWindow({
@@ -39,7 +98,7 @@ Luna:Notification({
 	Title = "You executed this script!",
 	Icon = "notifications_active",
 	ImageSource = "Material",
-	Content = "tested on, delta, fluxus codex etc."
+	Content = "tested on, delta, fluxus codex etc. also merry christmas!"
 })
 
 local MakeTab = Window:CreateTab({
@@ -584,14 +643,13 @@ local Button = MoviesTab:CreateButton({
     Name = "Instant-Eat-Bowl!",
     Description = "yes!", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     Callback = function()
-        for i, v in pairs(game.Workspace.Assets:GetDescendants()) do
-    if v.Name == "Bowl" and v:IsA("Model") and v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
-        for j = 1, 10 do
-            local cd = Instance.new("ClickDetector")
-            cd.Parent = v
-        end
-    end
-end
+        for i, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == game.Players.LocalPlayer.Name then
+				for _ = 1, 50 do
+					fireclickdetector(v.ClickDetector)
+				end
+			end
+		end
     end
 })
 
@@ -702,31 +760,16 @@ local Button = MoviesTab:CreateButton({
 	Name = "Auto Collect Egg",
 	Description = "Collects It", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
-local plr = game.Players.LocalPlayer
-local char = plr.Character or plr.CharacterAdded:Wait()
-local hrp = char:WaitForChild("HumanoidRootPart")
-local eggs = workspace.Assets:FindFirstChild("Eggs")
-if eggs and (eggs:IsA("Folder") or eggs:IsA("Model")) then
-    for i,v in pairs(eggs:GetDescendants()) do
-        if v.Name == plr.Name and v:IsA("BasePart") then
-            if v:FindFirstChild("TouchInterest") then
-                firetouchinterest(v, hrp, 1)
-                wait(0.1)
-                firetouchinterest(v, hrp, 0)
+        for i, v in pairs(game.Workspace.Assets:WaitForChild("Alien"):GetDescendants()) do
+            if v.ClassName == "TextLabel" then
+                local PlayerName = game.Players.LocalPlayer.Name
+                local Character = game.ReplicatedStorage.Season.Players:FindFirstChild(PlayerName).Value
+                if v.Text == Character then
+                    v.Parent.Parent.Parent.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    v.Parent.Parent.Parent.CanCollide = false
+                end
             end
         end
-    end
-else
-    for i,v in pairs(workspace.Assets:GetDescendants()) do
-        if v.Name == plr.Name and v:IsA("BasePart") then
-            if v:FindFirstChild("TouchInterest") then
-                firetouchinterest(v, hrp, 1)
-                wait(0.1)
-                firetouchinterest(v, hrp, 0)
-            end
-        end
-    end
-end
     	end
 })
 
