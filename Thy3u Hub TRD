@@ -304,7 +304,7 @@ local Button = MakeTab:CreateButton({
     	Callback = function()
 for i, v in pairs(game.Workspace:GetDescendants()) do
 			if v.Name == game.Players.LocalPlayer.Name then
-				for _ = 1, 50 do
+				for _ = 1, 10 do
 					fireclickdetector(v.ClickDetector)
 				end
 			end
