@@ -102,20 +102,6 @@ Luna:Notification({
 })
 
 local MakeTab = Window:CreateTab({
-	Name = "Info",
-	Icon = "notifications_active",
-	ImageSource = "Material",
-	ShowTitle = true -- This will determine whether the big header text in the tab will show
-})
-
-local Label = MakeTab:CreateLabel({
-	Text = "leave this tab. there is nothing to see here.",
-	Style = 3 -- Luna Labels Have 3 Styles : A Basic Label, A Green Information Label and A Red Warning Label. Look At The Following Image For More Details
-})
-
-MakeTab:CreateSection("This script is inspired by Syla Hub! Also more features coming soon..                                    ChangeLogs: Crash Name")
-
-local MakeTab = Window:CreateTab({
 	Name = "Camp",
 	Icon = "view_headline",
 	ImageSource = "Material",
