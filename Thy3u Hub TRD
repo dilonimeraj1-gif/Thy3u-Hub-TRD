@@ -116,13 +116,13 @@ local Label = MakeTab:CreateLabel({
 MakeTab:CreateSection("This script is inspired by Syla Hub! Also more features coming soon..                                    ChangeLogs: Crash Name")
 
 local MakeTab = Window:CreateTab({
-	Name = "Main",
+	Name = "Camp",
 	Icon = "view_headline",
 	ImageSource = "Material",
 	ShowTitle = true -- This will determine whether the big header text in the tab will show
 })  
 
-MakeTab:CreateSection("Main  🏡 ")
+MakeTab:CreateSection("Main 🏕 ")
 
 local Button = MakeTab:CreateButton({
 	Name = "Become Male",
