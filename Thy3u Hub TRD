@@ -371,24 +371,6 @@ local Input = MakeTab:CreateInput({
     	end
 }, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
 
-local Input = MakeTab:CreateInput({
-	Name = "Buy Character With ",
-	Description = "",
-	PlaceholderText = "Bypasses ChatFilter",
-	CurrentValue = "", -- the current text
-	Numeric = false, -- When true, the user may only type numbers in the box (Example walkspeed)
-	MaxCharacters = nil, -- if a number, the textbox length cannot exceed the number
-	Enter = true, -- When true, the callback will only be executed when the user presses enter.
-    	Callback = function(Value)
-    local args = {
-    [1] = "Character",
-    [2] = game:GetService("Players").LocalPlayer.Name .. ""
-}
-game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Buy"):FireServer(unpack(args))
-
-    	end
-}, "Input") -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-
 local Button = MakeTab:CreateButton({
 	Name = "Kill Everbody In SwordFight",
 	Description = "kill everyone in sword fight..", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
@@ -645,7 +627,7 @@ local Button = MoviesTab:CreateButton({
     Callback = function()
         for i, v in pairs(game.Workspace:GetDescendants()) do
 			if v.Name == game.Players.LocalPlayer.Name then
-				for _ = 1, 50 do
+				for _ = 1, 10 do
 					fireclickdetector(v.ClickDetector)
 				end
 			end
