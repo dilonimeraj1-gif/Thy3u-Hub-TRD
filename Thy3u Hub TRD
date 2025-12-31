@@ -293,10 +293,12 @@ local sps = game:GetService("StarterPlayer").StarterPlayerScripts
 
 if ps:FindFirstChild("AntiAutoclick") then
     ps.AntiAutoclick:Destroy()
+    wait(0.00001)
 end
 
 if sps:FindFirstChild("AntiAutoclick") then
     sps.AntiAutoclick:Destroy()
+    wait(0.00001)
 end
 
 for i, v in pairs(game.Workspace:GetDescendants()) do
