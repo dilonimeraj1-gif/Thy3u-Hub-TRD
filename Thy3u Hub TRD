@@ -288,11 +288,21 @@ local Button = MakeTab:CreateButton({
 	Name = "Instant-Eat Pancake",
 	Description = "auto eat pancake", -- Creates A Description For Users to know what the button does (looks bad if you use it all the time),
     	Callback = function()
+local ps = game:GetService("Players").LocalPlayer.PlayerScripts
+local sps = game:GetService("StarterPlayer").StarterPlayerScripts
+
+if ps:FindFirstChild("AntiAutoclick") then
+    ps.AntiAutoclick:Destroy()
+end
+
+if sps:FindFirstChild("AntiAutoclick") then
+    sps.AntiAutoclick:Destroy()
+end
+
 for i, v in pairs(game.Workspace:GetDescendants()) do
     if v.Name == game.Players.LocalPlayer.Name then
-        for _ = 1, 10 do
+        for _ = 1, 50 do
             fireclickdetector(v.ClickDetector)
-            wait(0.1)
         end
     end
 end
